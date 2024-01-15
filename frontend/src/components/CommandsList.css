@@ -1,0 +1,37 @@
+.command-list {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 20px;
+}
+
+.command-list h3 {
+    color: #555555;
+}
+
+/* .accordion {
+    margin-top: 20px;
+    /* font-size: 3rem; 
+} */
+
+.command-preview {
+    padding: 10px 16px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #fafafa;
+    box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+    /* box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.1); */
+    /* text-align: center; */
+}
+
+.command-preview:hover {
+    box-shadow: 2px 4px 6px rgba(0,0,0,0.5);
+}
+
+.command-preview h2 {
+    font-size: 20px;
+    color: #486AA8;
+    margin-bottom: 8px;
+}
+
+.command-preview a{
+    text-decoration: none;
+}

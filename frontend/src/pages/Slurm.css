@@ -1,0 +1,77 @@
+.slurm {
+    /* align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 100vh; */
+    padding: 20px;
+    padding-top: 60px;;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    overflow-y: hidden;
+}
+
+.slurm .go-back {
+    position: fixed;
+    top: 70px;
+    left: 60px;
+    z-index: 100;
+}
+
+.slurm h2 {
+    font-size: 20px;
+    color: #486AA8;
+    margin: 20px;
+}
+
+/* .fields .field {
+    text-align: left;
+    margin-bottom: 10px;
+} */
+
+.fields label {
+    display: inline-block;
+    vertical-align: top; 
+    padding-right: 10px;
+}
+
+.fields input {
+    width: 100%;
+    padding: 6px 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+}
+
+.fields .info-icon {
+    background-color: white;
+    display: inline-block;  
+    position: absolute;
+    right: 0;
+    padding: 0; 
+    margin-right: 20px;
+    max-height: 25px;
+}
+
+.slurm button {
+    /* background: white; */
+    color: black;
+    /* border: 1px solid black; */
+    border: 0;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.fields button {
+    background: #486AA8;
+    color: #fff;
+    border: 0;
+}
+
+/* .fields .run-button {
+    margin: 20px;
+} */

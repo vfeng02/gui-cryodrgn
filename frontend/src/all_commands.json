@@ -1,0 +1,3401 @@
+
+{
+    "Preprocess inputs": {
+        "parse_pose_star": {
+            "desc": "Parse image poses from RELION .star file",
+            "args": {
+                "positional arguments": {
+                    "input": {
+                        "help": "RELION .star file"
+                    }
+                },
+                "optional arguments": {
+                    "o": {
+                        "help": "Output pose.pkl",
+                        "metavar": "PKL",
+                        "type": "abspath",
+                        "flags": [
+                            "-o"
+                        ]
+                    }
+                },
+                "optionally provide missing image parameters": {
+                    "D": {
+                        "help": "Box size of reconstruction (pixels)",
+                        "type": "int",
+                        "flags": [
+                            "-D"
+                        ]
+                    },
+                    "Apix": {
+                        "help": "Pixel size (A); Required if translations are specified in Angstroms",
+                        "type": "float",
+                        "flags": [
+                            "--Apix"
+                        ]
+                    }
+                }
+            }
+        },
+        "parse_pose_csparc": {
+            "desc": "Parse image poses from a cryoSPARC .cs metafile",
+            "args": {
+                "positional arguments": {
+                    "input": {
+                        "help": "Cryosparc .cs file"
+                    }
+                },
+                "optional arguments": {
+                    "abinit": {
+                        "const": true,
+                        "default": false,
+                        "help": "Flag if results are from ab-initio reconstruction",
+                        "nargs": 0,
+                        "flags": [
+                            "--abinit"
+                        ]
+                    },
+                    "hetrefine": {
+                        "const": true,
+                        "default": false,
+                        "help": "Flag if results are from a heterogeneous refinements (default: homogeneous refinement)",
+                        "nargs": 0,
+                        "flags": [
+                            "--hetrefine"
+                        ]
+                    },
+                    "D": {
+                        "help": "Box size of reconstruction (pixels)",
+                        "type": "int",
+                        "flags": [
+                            "-D"
+                        ]
+                    },
+                    "o": {
+                        "help": "Output pose.pkl",
+                        "metavar": "PKL",
+                        "type": "abspath",
+                        "flags": [
+                            "-o"
+                        ]
+                    }
+                }
+            }
+        },
+        "parse_ctf_star": {
+            "desc": "Parse CTF parameters from a RELION .star file",
+            "args": {
+                "positional arguments": {
+                    "star": {
+                        "help": "Input"
+                    }
+                },
+                "optional arguments": {
+                    "o": {
+                        "help": "Output pkl of CTF parameters",
+                        "type": "abspath",
+                        "flags": [
+                            "-o"
+                        ]
+                    },
+                    "png": {
+                        "help": "Optionally plot the CTF",
+                        "metavar": "PNG",
+                        "type": "abspath",
+                        "flags": [
+                            "--png"
+                        ]
+                    }
+                },
+                "optionally provide missing image parameters": {
+                    "D": {
+                        "help": "Image size in pixels",
+                        "type": "int",
+                        "flags": [
+                            "-D"
+                        ]
+                    },
+                    "Apix": {
+                        "help": "Angstroms per pixel",
+                        "type": "float",
+                        "flags": [
+                            "--Apix"
+                        ]
+                    },
+                    "kv": {
+                        "help": "Accelerating voltage (kV)",
+                        "type": "float",
+                        "flags": [
+                            "--kv"
+                        ]
+                    },
+                    "cs": {
+                        "help": "Spherical abberation (mm)",
+                        "type": "float",
+                        "flags": [
+                            "--cs"
+                        ]
+                    },
+                    "w": {
+                        "help": "Amplitude contrast ratio",
+                        "type": "float",
+                        "flags": [
+                            "-w"
+                        ]
+                    },
+                    "ps": {
+                        "help": "Phase shift (deg)",
+                        "type": "float",
+                        "flags": [
+                            "--ps"
+                        ]
+                    }
+                }
+            }
+        },
+        "parse_ctf_csparc": {
+            "desc": "Parse CTF parameters from a cryoSPARC particles.cs file",
+            "args": {
+                "positional arguments": {
+                    "cs": {
+                        "help": "Input cryosparc particles.cs file"
+                    }
+                },
+                "optional arguments": {
+                    "o": {
+                        "help": "Output pkl of CTF parameters",
+                        "type": "abspath",
+                        "flags": [
+                            "-o"
+                        ]
+                    },
+                    "png": {
+                        "help": "Optionally plot the CTF",
+                        "metavar": "PNG",
+                        "type": "abspath",
+                        "flags": [
+                            "--png"
+                        ]
+                    }
+                },
+                "optionally provide missing image parameters": {
+                    "D": {
+                        "help": "Image size in pixels",
+                        "type": "int",
+                        "flags": [
+                            "-D"
+                        ]
+                    },
+                    "Apix": {
+                        "help": "Angstroms per pixel",
+                        "type": "float",
+                        "flags": [
+                            "--Apix"
+                        ]
+                    }
+                }
+            }
+        },
+        "downsample": {
+            "desc": "Downsample an image stack or volume by clipping fourier frequencies",
+            "args": {
+                "positional arguments": {
+                    "mrcs": {
+                        "help": "Input particles or volume (.mrc, .mrcs, .star, .cs, or .txt)"
+                    }
+                },
+                "optional arguments": {
+                    "D": {
+                        "help": "New box size in pixels, must be even",
+                        "type": "int",
+                        "flags": [
+                            "-D"
+                        ]
+                    },
+                    "o": {
+                        "help": "Output projection stack (.mrcs)",
+                        "metavar": "MRCS",
+                        "type": "abspath",
+                        "flags": [
+                            "-o"
+                        ]
+                    },
+                    "b": {
+                        "default": 5000,
+                        "help": "Batch size for processing images (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-b"
+                        ]
+                    },
+                    "is_vol": {
+                        "const": true,
+                        "default": false,
+                        "help": "Flag if input .mrc is a volume",
+                        "nargs": 0,
+                        "flags": [
+                            "--is-vol"
+                        ]
+                    },
+                    "chunk": {
+                        "help": "Chunksize (in # of images) to split particle stack when saving",
+                        "type": "int",
+                        "flags": [
+                            "--chunk"
+                        ]
+                    },
+                    "datadir": {
+                        "help": "Optionally provide path to input .mrcs if loading from a .star or .cs file",
+                        "flags": [
+                            "--datadir"
+                        ]
+                    },
+                    "max_threads": {
+                        "default": 16,
+                        "help": "Maximum number of CPU cores for parallelization (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--max-threads"
+                        ]
+                    },
+                    "ind": {
+                        "help": "Filter particle stack by these indices",
+                        "metavar": "PKL",
+                        "type": "abspath",
+                        "flags": [
+                            "--ind"
+                        ]
+                    }
+                }
+            }
+        },
+        "preprocess": {
+            "desc": "Preprocess a dataset for more streamlined cryoDRGN training",
+            "args": {
+                "positional arguments": {
+                    "mrcs": {
+                        "help": "Input particles or volume (.mrc, .mrcs, .star, or .txt)"
+                    }
+                },
+                "optional arguments": {
+                    "o": {
+                        "help": "Output .mrcs",
+                        "metavar": "MRCS",
+                        "type": "abspath",
+                        "flags": [
+                            "-o"
+                        ]
+                    },
+                    "datadir": {
+                        "help": "Optionally provide path to input .mrcs if loading from a .star or .cs file",
+                        "flags": [
+                            "--datadir"
+                        ]
+                    }
+                },
+                "image preprocessing settings": {
+                    "ind": {
+                        "help": "Filter particle stack by these indices",
+                        "metavar": "PKL",
+                        "type": "abspath",
+                        "flags": [
+                            "--ind"
+                        ]
+                    },
+                    "D": {
+                        "help": "New box size in pixels (if downsampling), must be even",
+                        "type": "int",
+                        "flags": [
+                            "-D"
+                        ]
+                    },
+                    "invert_data": {
+                        "const": false,
+                        "default": true,
+                        "help": "Do not invert data sign",
+                        "nargs": 0,
+                        "flags": [
+                            "--uninvert-data"
+                        ]
+                    },
+                    "window_r": {
+                        "default": 0.85,
+                        "help": "Circular windowing mask inner radius (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--window-r"
+                        ]
+                    },
+                    "window": {
+                        "const": false,
+                        "default": true,
+                        "help": "Turn off real space windowing of dataset",
+                        "nargs": 0,
+                        "flags": [
+                            "--no-window"
+                        ]
+                    }
+                },
+                "extra arguments for image downsampling": {
+                    "b": {
+                        "default": 5000,
+                        "help": "Batch size for processing images (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-b"
+                        ]
+                    },
+                    "chunk": {
+                        "default": 100000,
+                        "help": "Chunksize (in # of images) to split particle stack when saving",
+                        "type": "int",
+                        "flags": [
+                            "--chunk"
+                        ]
+                    },
+                    "lazy": {
+                        "const": false,
+                        "default": true,
+                        "help": "Load whole dataset (faster than loading in batches)",
+                        "nargs": 0,
+                        "flags": [
+                            "--no-lazy"
+                        ]
+                    },
+                    "max_threads": {
+                        "default": 16,
+                        "help": "Maximum number of CPU cores for parallelization (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--max-threads"
+                        ]
+                    }
+                },
+                "gpu acceleratation": {
+                    "use_cupy": {
+                        "const": true,
+                        "default": false,
+                        "help": "Use cupy to replace numpy",
+                        "nargs": 0,
+                        "flags": [
+                            "--use-cupy"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "cryoDRGN Training": {
+        "train_vae": {
+            "desc": "Train a VAE for heterogeneous reconstruction with known pose",
+            "args": {
+                "positional arguments": {
+                    "particles": {
+                        "help": "Input particles (.mrcs, .star, .cs, or .txt)",
+                        "type": "abspath"
+                    }
+                },
+                "optional arguments": {
+                    "outdir": {
+                        "help": "Output directory to save model",
+                        "type": "abspath",
+                        "flags": [
+                            "-o",
+                            "--outdir"
+                        ]
+                    },
+                    "zdim": {
+                        "help": "Dimension of latent variable",
+                        "type": "int",
+                        "flags": [
+                            "--zdim"
+                        ]
+                    },
+                    "poses": {
+                        "help": "Image poses (.pkl)",
+                        "type": "abspath",
+                        "flags": [
+                            "--poses"
+                        ]
+                    },
+                    "ctf": {
+                        "help": "CTF parameters (.pkl)",
+                        "metavar": "pkl",
+                        "type": "abspath",
+                        "flags": [
+                            "--ctf"
+                        ]
+                    },
+                    "load": {
+                        "help": "Initialize training from a checkpoint",
+                        "metavar": "WEIGHTS.PKL",
+                        "flags": [
+                            "--load"
+                        ]
+                    },
+                    "checkpoint": {
+                        "default": 1,
+                        "help": "Checkpointing interval in N_EPOCHS (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--checkpoint"
+                        ]
+                    },
+                    "log_interval": {
+                        "default": 1000,
+                        "help": "Logging interval in N_IMGS (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--log-interval"
+                        ]
+                    },
+                    "verbose": {
+                        "const": true,
+                        "default": false,
+                        "help": "Increase verbosity",
+                        "nargs": 0,
+                        "flags": [
+                            "-v",
+                            "--verbose"
+                        ]
+                    },
+                    "seed": {
+                        "default": 45907,
+                        "help": "Random seed",
+                        "type": "int",
+                        "flags": [
+                            "--seed"
+                        ]
+                    }
+                },
+                "dataset loading": {
+                    "ind": {
+                        "help": "Filter particles by these indices",
+                        "metavar": "PKL",
+                        "type": "abspath",
+                        "flags": [
+                            "--ind"
+                        ]
+                    },
+                    "invert_data": {
+                        "const": false,
+                        "default": true,
+                        "help": "Do not invert data sign",
+                        "nargs": 0,
+                        "flags": [
+                            "--uninvert-data"
+                        ]
+                    },
+                    "window": {
+                        "const": false,
+                        "default": true,
+                        "help": "Turn off real space windowing of dataset",
+                        "nargs": 0,
+                        "flags": [
+                            "--no-window"
+                        ]
+                    },
+                    "window_r": {
+                        "default": 0.85,
+                        "help": "Windowing radius (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--window-r"
+                        ]
+                    },
+                    "datadir": {
+                        "help": "Path prefix to particle stack if loading relative paths from a .star or .cs file",
+                        "type": "abspath",
+                        "flags": [
+                            "--datadir"
+                        ]
+                    },
+                    "lazy": {
+                        "const": true,
+                        "default": false,
+                        "help": "Lazy loading if full dataset is too large to fit in memory",
+                        "nargs": 0,
+                        "flags": [
+                            "--lazy"
+                        ]
+                    },
+                    "shuffler_size": {
+                        "default": 0,
+                        "help": "If non-zero, will use a data shuffler for faster lazy data loading.",
+                        "type": "int",
+                        "flags": [
+                            "--shuffler-size"
+                        ]
+                    },
+                    "num_workers": {
+                        "default": 0,
+                        "help": "Number of subprocesses to use as DataLoader workers. If 0, then use the main process for data loading. (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--num-workers"
+                        ]
+                    },
+                    "max_threads": {
+                        "default": 16,
+                        "help": "Maximum number of CPU cores for data loading (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--max-threads"
+                        ]
+                    }
+                },
+                "tilt series parameters": {
+                    "ntilts": {
+                        "default": 10,
+                        "help": "Number of tilts to encode (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--ntilts"
+                        ]
+                    },
+                    "random_tilts": {
+                        "const": true,
+                        "default": false,
+                        "help": "Randomize ordering of tilts series to encoder",
+                        "nargs": 0,
+                        "flags": [
+                            "--random-tilts"
+                        ]
+                    },
+                    "t_emb_dim": {
+                        "default": 64,
+                        "help": "Intermediate embedding dimension (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--t-emb-dim"
+                        ]
+                    },
+                    "tlayers": {
+                        "default": 3,
+                        "help": "Number of hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--tlayers"
+                        ]
+                    },
+                    "tdim": {
+                        "default": 1024,
+                        "help": "Number of nodes in hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--tdim"
+                        ]
+                    },
+                    "dose_per_tilt": {
+                        "help": "Expected dose per tilt (electrons/A^2 per tilt) (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "-d",
+                            "--dose-per-tilt"
+                        ]
+                    },
+                    "angle_per_tilt": {
+                        "default": 3,
+                        "help": "Tilt angle increment per tilt in degrees (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "-a",
+                            "--angle-per-tilt"
+                        ]
+                    }
+                },
+                "training parameters": {
+                    "num_epochs": {
+                        "default": 20,
+                        "help": "Number of training epochs (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-n",
+                            "--num-epochs"
+                        ]
+                    },
+                    "batch_size": {
+                        "default": 8,
+                        "help": "Minibatch size (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-b",
+                            "--batch-size"
+                        ]
+                    },
+                    "wd": {
+                        "default": 0,
+                        "help": "Weight decay in Adam optimizer (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--wd"
+                        ]
+                    },
+                    "lr": {
+                        "default": 0.0001,
+                        "help": "Learning rate in Adam optimizer (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--lr"
+                        ]
+                    },
+                    "beta": {
+                        "help": "Choice of beta schedule or a constant for KLD weight (default: 1/zdim)",
+                        "flags": [
+                            "--beta"
+                        ]
+                    },
+                    "beta_control": {
+                        "help": "KL-Controlled VAE gamma. Beta is KL target",
+                        "type": "float",
+                        "flags": [
+                            "--beta-control"
+                        ]
+                    },
+                    "norm": {
+                        "help": "Data normalization as shift, 1/scale (default: mean, std of dataset)",
+                        "nargs": 2,
+                        "type": "float",
+                        "flags": [
+                            "--norm"
+                        ]
+                    },
+                    "amp": {
+                        "const": false,
+                        "default": true,
+                        "help": "Do not use mixed-precision training",
+                        "nargs": 0,
+                        "flags": [
+                            "--no-amp"
+                        ]
+                    },
+                    "multigpu": {
+                        "const": true,
+                        "default": false,
+                        "help": "Parallelize training across all detected GPUs",
+                        "nargs": 0,
+                        "flags": [
+                            "--multigpu"
+                        ]
+                    }
+                },
+                "pose sgd": {
+                    "do_pose_sgd": {
+                        "const": true,
+                        "default": false,
+                        "help": "Refine poses with gradient descent",
+                        "nargs": 0,
+                        "flags": [
+                            "--do-pose-sgd"
+                        ]
+                    },
+                    "pretrain": {
+                        "default": 1,
+                        "help": "Number of epochs with fixed poses before pose SGD (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--pretrain"
+                        ]
+                    },
+                    "emb_type": {
+                        "choices": [
+                            "s2s2",
+                            "quat"
+                        ],
+                        "default": "quat",
+                        "help": "SO(3) embedding type for pose SGD (default: %(default)s)",
+                        "flags": [
+                            "--emb-type"
+                        ]
+                    },
+                    "pose_lr": {
+                        "default": 0.0003,
+                        "help": "Learning rate for pose optimizer (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--pose-lr"
+                        ]
+                    }
+                },
+                "encoder network": {
+                    "qlayers": {
+                        "default": 3,
+                        "help": "Number of hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--enc-layers"
+                        ]
+                    },
+                    "qdim": {
+                        "default": 1024,
+                        "help": "Number of nodes in hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--enc-dim"
+                        ]
+                    },
+                    "encode_mode": {
+                        "choices": [
+                            "conv",
+                            "resid",
+                            "mlp",
+                            "tilt"
+                        ],
+                        "default": "resid",
+                        "help": "Type of encoder network (default: %(default)s)",
+                        "flags": [
+                            "--encode-mode"
+                        ]
+                    },
+                    "enc_mask": {
+                        "help": "Circular mask of image for encoder (default: D/2; -1 for no mask)",
+                        "type": "int",
+                        "flags": [
+                            "--enc-mask"
+                        ]
+                    },
+                    "use_real": {
+                        "const": true,
+                        "default": false,
+                        "help": "Use real space image for encoder (for convolutional encoder)",
+                        "nargs": 0,
+                        "flags": [
+                            "--use-real"
+                        ]
+                    }
+                },
+                "decoder network": {
+                    "players": {
+                        "default": 3,
+                        "help": "Number of hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--dec-layers"
+                        ]
+                    },
+                    "pdim": {
+                        "default": 1024,
+                        "help": "Number of nodes in hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--dec-dim"
+                        ]
+                    },
+                    "pe_type": {
+                        "choices": [
+                            "geom_ft",
+                            "geom_full",
+                            "geom_lowf",
+                            "geom_nohighf",
+                            "linear_lowf",
+                            "gaussian",
+                            "none"
+                        ],
+                        "default": "gaussian",
+                        "help": "Type of positional encoding (default: %(default)s)",
+                        "flags": [
+                            "--pe-type"
+                        ]
+                    },
+                    "feat_sigma": {
+                        "default": 0.5,
+                        "help": "Scale for random Gaussian features (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--feat-sigma"
+                        ]
+                    },
+                    "pe_dim": {
+                        "help": "Num frequencies in positional encoding (default: image D/2)",
+                        "type": "int",
+                        "flags": [
+                            "--pe-dim"
+                        ]
+                    },
+                    "domain": {
+                        "choices": [
+                            "hartley",
+                            "fourier"
+                        ],
+                        "default": "fourier",
+                        "help": "Volume decoder representation (default: %(default)s)",
+                        "flags": [
+                            "--domain"
+                        ]
+                    },
+                    "activation": {
+                        "choices": [
+                            "relu",
+                            "leaky_relu"
+                        ],
+                        "default": "relu",
+                        "help": "Activation (default: %(default)s)",
+                        "flags": [
+                            "--activation"
+                        ]
+                    }
+                }
+            }
+        },
+        "train_nn": {
+            "desc": "Train a NN to model a 3D density map given 2D images with pose assignments",
+            "args": {
+                "positional arguments": {
+                    "particles": {
+                        "help": "Input particles (.mrcs, .star, .cs, or .txt)",
+                        "type": "abspath"
+                    }
+                },
+                "optional arguments": {
+                    "outdir": {
+                        "help": "Output directory to save model",
+                        "type": "abspath",
+                        "flags": [
+                            "-o",
+                            "--outdir"
+                        ]
+                    },
+                    "poses": {
+                        "help": "Image poses (.pkl)",
+                        "type": "abspath",
+                        "flags": [
+                            "--poses"
+                        ]
+                    },
+                    "ctf": {
+                        "help": "CTF parameters (.pkl)",
+                        "metavar": "pkl",
+                        "type": "abspath",
+                        "flags": [
+                            "--ctf"
+                        ]
+                    },
+                    "load": {
+                        "help": "Initialize training from a checkpoint",
+                        "metavar": "WEIGHTS.PKL",
+                        "flags": [
+                            "--load"
+                        ]
+                    },
+                    "checkpoint": {
+                        "default": 1,
+                        "help": "Checkpointing interval in N_EPOCHS (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--checkpoint"
+                        ]
+                    },
+                    "log_interval": {
+                        "default": 1000,
+                        "help": "Logging interval in N_IMGS (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--log-interval"
+                        ]
+                    },
+                    "verbose": {
+                        "const": true,
+                        "default": false,
+                        "help": "Increase verbosity",
+                        "nargs": 0,
+                        "flags": [
+                            "-v",
+                            "--verbose"
+                        ]
+                    },
+                    "seed": {
+                        "default": 95405,
+                        "help": "Random seed",
+                        "type": "int",
+                        "flags": [
+                            "--seed"
+                        ]
+                    }
+                },
+                "dataset loading": {
+                    "invert_data": {
+                        "const": false,
+                        "default": true,
+                        "help": "Do not invert data sign",
+                        "nargs": 0,
+                        "flags": [
+                            "--uninvert-data"
+                        ]
+                    },
+                    "window": {
+                        "const": false,
+                        "default": true,
+                        "help": "Turn off real space windowing of dataset",
+                        "nargs": 0,
+                        "flags": [
+                            "--no-window"
+                        ]
+                    },
+                    "window_r": {
+                        "default": 0.85,
+                        "help": "Windowing radius (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--window-r"
+                        ]
+                    },
+                    "ind": {
+                        "help": "Filter particle stack by these indices",
+                        "type": "abspath",
+                        "flags": [
+                            "--ind"
+                        ]
+                    },
+                    "lazy": {
+                        "const": true,
+                        "default": false,
+                        "help": "Lazy loading if full dataset is too large to fit in memory",
+                        "nargs": 0,
+                        "flags": [
+                            "--lazy"
+                        ]
+                    },
+                    "shuffler_size": {
+                        "default": 0,
+                        "help": "If non-zero, will use a data shuffler for faster lazy data loading.",
+                        "type": "int",
+                        "flags": [
+                            "--shuffler-size"
+                        ]
+                    },
+                    "datadir": {
+                        "help": "Path prefix to particle stack if loading relative paths from a .star or .cs file",
+                        "type": "abspath",
+                        "flags": [
+                            "--datadir"
+                        ]
+                    }
+                },
+                "training parameters": {
+                    "num_epochs": {
+                        "default": 20,
+                        "help": "Number of training epochs (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-n",
+                            "--num-epochs"
+                        ]
+                    },
+                    "batch_size": {
+                        "default": 8,
+                        "help": "Minibatch size (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-b",
+                            "--batch-size"
+                        ]
+                    },
+                    "wd": {
+                        "default": 0,
+                        "help": "Weight decay in Adam optimizer (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--wd"
+                        ]
+                    },
+                    "lr": {
+                        "default": 0.0001,
+                        "help": "Learning rate in Adam optimizer (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--lr"
+                        ]
+                    },
+                    "norm": {
+                        "help": "Data normalization as shift, 1/scale (default: mean, std of dataset)",
+                        "nargs": 2,
+                        "type": "float",
+                        "flags": [
+                            "--norm"
+                        ]
+                    },
+                    "amp": {
+                        "const": false,
+                        "default": true,
+                        "help": "Do not use mixed-precision training",
+                        "nargs": 0,
+                        "flags": [
+                            "--no-amp"
+                        ]
+                    },
+                    "multigpu": {
+                        "const": true,
+                        "default": false,
+                        "help": "Parallelize training across all detected GPUs",
+                        "nargs": 0,
+                        "flags": [
+                            "--multigpu"
+                        ]
+                    }
+                },
+                "pose sgd": {
+                    "do_pose_sgd": {
+                        "const": true,
+                        "default": false,
+                        "help": "Refine poses with gradient descent",
+                        "nargs": 0,
+                        "flags": [
+                            "--do-pose-sgd"
+                        ]
+                    },
+                    "pretrain": {
+                        "default": 5,
+                        "help": "Number of epochs with fixed poses before pose SGD (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--pretrain"
+                        ]
+                    },
+                    "emb_type": {
+                        "choices": [
+                            "s2s2",
+                            "quat"
+                        ],
+                        "default": "quat",
+                        "help": "SO(3) embedding type for pose SGD (default: %(default)s)",
+                        "flags": [
+                            "--emb-type"
+                        ]
+                    },
+                    "pose_lr": {
+                        "default": 0.0001,
+                        "help": "Learning rate for pose optimizer (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--pose-lr"
+                        ]
+                    }
+                },
+                "network architecture": {
+                    "layers": {
+                        "default": 3,
+                        "help": "Number of hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--layers"
+                        ]
+                    },
+                    "dim": {
+                        "default": 1024,
+                        "help": "Number of nodes in hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--dim"
+                        ]
+                    },
+                    "l_extent": {
+                        "default": 0.5,
+                        "help": "Coordinate lattice size (if not using positional encoding) (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--l-extent"
+                        ]
+                    },
+                    "pe_type": {
+                        "choices": [
+                            "geom_ft",
+                            "geom_full",
+                            "geom_lowf",
+                            "geom_nohighf",
+                            "linear_lowf",
+                            "gaussian",
+                            "none"
+                        ],
+                        "default": "gaussian",
+                        "help": "Type of positional encoding (default: %(default)s)",
+                        "flags": [
+                            "--pe-type"
+                        ]
+                    },
+                    "pe_dim": {
+                        "help": "Num frequencies in positional encoding (default: D/2)",
+                        "type": "int",
+                        "flags": [
+                            "--pe-dim"
+                        ]
+                    },
+                    "domain": {
+                        "choices": [
+                            "hartley",
+                            "fourier"
+                        ],
+                        "default": "fourier",
+                        "help": "Volume decoder representation (default: %(default)s)",
+                        "flags": [
+                            "--domain"
+                        ]
+                    },
+                    "activation": {
+                        "choices": [
+                            "relu",
+                            "leaky_relu"
+                        ],
+                        "default": "relu",
+                        "help": "Activation (default: %(default)s)",
+                        "flags": [
+                            "--activation"
+                        ]
+                    },
+                    "feat_sigma": {
+                        "default": 0.5,
+                        "help": "Scale for random Gaussian features (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--feat-sigma"
+                        ]
+                    }
+                }
+            }
+        }
+
+    },
+    "cryoDRGN Analysis": {
+        "analyze": {
+            "desc": "Visualize latent space and generate volumes",
+            "args": {
+                "positional arguments": {
+                    "workdir": {
+                        "help": "Directory with cryoDRGN results",
+                        "type": "abspath"
+                    },
+                    "epoch": {
+                        "help": "Epoch number N to analyze (0-based indexing, corresponding to z.N.pkl, weights.N.pkl)",
+                        "type": "int"
+                    }
+                },
+                "optional arguments": {
+                    "device": {
+                        "help": "Optionally specify CUDA device",
+                        "type": "int",
+                        "flags": [
+                            "--device"
+                        ]
+                    },
+                    "outdir": {
+                        "help": "Output directory for analysis results (default: [workdir]/analyze.[epoch])",
+                        "flags": [
+                            "-o",
+                            "--outdir"
+                        ]
+                    },
+                    "skip_vol": {
+                        "const": true,
+                        "default": false,
+                        "help": "Skip generation of volumes",
+                        "nargs": 0,
+                        "flags": [
+                            "--skip-vol"
+                        ]
+                    },
+                    "skip_umap": {
+                        "const": true,
+                        "default": false,
+                        "help": "Skip running UMAP",
+                        "nargs": 0,
+                        "flags": [
+                            "--skip-umap"
+                        ]
+                    }
+                },
+                "extra arguments for volume generation": {
+                    "Apix": {
+                        "default": 1,
+                        "help": "Pixel size to add to .mrc header (default: %(default)s A/pix)",
+                        "type": "float",
+                        "flags": [
+                            "--Apix"
+                        ]
+                    },
+                    "flip": {
+                        "const": true,
+                        "default": false,
+                        "help": "Flip handedness of output volumes",
+                        "nargs": 0,
+                        "flags": [
+                            "--flip"
+                        ]
+                    },
+                    "invert": {
+                        "const": true,
+                        "default": false,
+                        "help": "Invert contrast of output volumes",
+                        "nargs": 0,
+                        "flags": [
+                            "--invert"
+                        ]
+                    },
+                    "downsample": {
+                        "help": "Downsample volumes to this box size (pixels)",
+                        "type": "int",
+                        "flags": [
+                            "-d",
+                            "--downsample"
+                        ]
+                    },
+                    "pc": {
+                        "default": 2,
+                        "help": "Number of principal component traversals to generate (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--pc"
+                        ]
+                    },
+                    "ksample": {
+                        "default": 20,
+                        "help": "Number of kmeans samples to generate (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--ksample"
+                        ]
+                    },
+                    "vol_start_index": {
+                        "default": 0,
+                        "help": "Default value of start index for volume generation (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--vol-start-index"
+                        ]
+                    }
+                }
+            }
+        },
+        "pc_traversal": {
+            "desc": "Generate trajectory along PCs",
+            "args": {
+                "positional arguments": {
+                    "z": {
+                        "help": "Input z.pkl"
+                    }
+                },
+                "optional arguments": {
+                    "dim": {
+                        "help": "Choose PC (1-based indexing) (default: all)",
+                        "type": "int",
+                        "flags": [
+                            "--dim"
+                        ]
+                    },
+                    "n": {
+                        "default": 10,
+                        "help": "Number of samples along PC (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-n"
+                        ]
+                    },
+                    "lim": {
+                        "help": "Start and end point of trajectory (default: 5/95th percentile)",
+                        "nargs": 2,
+                        "type": "float",
+                        "flags": [
+                            "--lim"
+                        ]
+                    },
+                    "use_percentile_spacing": {
+                        "const": true,
+                        "default": false,
+                        "help": "Use equally spaced percentiles of the distribution instead of equally spaced points along the PC",
+                        "nargs": 0,
+                        "flags": [
+                            "--use-percentile-spacing"
+                        ]
+                    },
+                    "o": {
+                        "help": "Output directory for pc.X.txt files",
+                        "type": "abspath",
+                        "flags": [
+                            "-o"
+                        ]
+                    }
+                }
+            }
+        },
+        "direct_traversal": {
+            "desc": "Construct z path interpolating between anchor points",
+            "args": {
+                "positional arguments": {
+                    "z": {
+                        "help": "Input z.pkl embeddings"
+                    }
+                },
+                "optional arguments": {
+                    "ind": {
+                        "help": "Text file containing indices of anchor points",
+                        "metavar": ".TXT",
+                        "flags": [
+                            "--ind"
+                        ]
+                    },
+                    "n": {
+                        "default": 6,
+                        "help": "Number of points in between anchors, inclusive (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-n"
+                        ]
+                    },
+                    "loop": {
+                        "const": true,
+                        "default": false,
+                        "help": "Loop to first point",
+                        "nargs": 0,
+                        "flags": [
+                            "--loop"
+                        ]
+                    },
+                    "o": {
+                        "help": "Output .txt file for z-values",
+                        "metavar": "Z.PATH.TXT",
+                        "type": "abspath",
+                        "flags": [
+                            "-o"
+                        ]
+                    }
+                }
+            }
+        },
+        "graph_traversal": {
+            "desc": "Find shortest path along nearest neighbor graph",
+            "args": {
+                "positional arguments": {
+                    "data": {
+                        "help": "Input z.pkl embeddings"
+                    }
+                },
+                "optional arguments": {
+                    "anchors": {
+                        "help": "Index of anchor points",
+                        "nargs": "+",
+                        "type": "int",
+                        "flags": [
+                            "--anchors"
+                        ]
+                    },
+                    "max_neighbors": {
+                        "default": 10,
+                        "type": "int",
+                        "flags": [
+                            "--max-neighbors"
+                        ]
+                    },
+                    "avg_neighbors": {
+                        "default": 5,
+                        "type": "float",
+                        "flags": [
+                            "--avg-neighbors"
+                        ]
+                    },
+                    "batch_size": {
+                        "default": 1000,
+                        "type": "int",
+                        "flags": [
+                            "--batch-size"
+                        ]
+                    },
+                    "max_images": {
+                        "type": "int",
+                        "flags": [
+                            "--max-images"
+                        ]
+                    },
+                    "o": {
+                        "help": "Output .txt file for path indices",
+                        "metavar": "PATH.TXT",
+                        "type": "abspath",
+                        "flags": [
+                            "-o"
+                        ]
+                    },
+                    "out_z": {
+                        "help": "Output .txt file for path z-values",
+                        "metavar": "Z.PATH.TXT",
+                        "type": "abspath",
+                        "flags": [
+                            "--out-z"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "Conformational Landscape Analysis": {
+        "analyze_landscape": {
+            "desc": "Pipeline to analyze cryoDRGN volume distribution",
+            "args": {
+                "positional arguments": {
+                    "workdir": {
+                        "help": "Directory with cryoDRGN results",
+                        "type": "abspath"
+                    },
+                    "epoch": {
+                        "help": "Epoch number N to analyze (0-based indexing, corresponding to z.N.pkl, weights.N.pkl)",
+                        "type": "str"
+                    }
+                },
+                "optional arguments": {
+                    "device": {
+                        "help": "Optionally specify CUDA device",
+                        "type": "int",
+                        "flags": [
+                            "--device"
+                        ]
+                    },
+                    "outdir": {
+                        "help": "Output directory for landscape analysis results (default: [workdir]/landscape.[epoch])",
+                        "type": "abspath",
+                        "flags": [
+                            "-o",
+                            "--outdir"
+                        ]
+                    },
+                    "skip_umap": {
+                        "const": true,
+                        "default": false,
+                        "help": "Skip running UMAP",
+                        "nargs": 0,
+                        "flags": [
+                            "--skip-umap"
+                        ]
+                    },
+                    "vol_ind": {
+                        "help": "Index .pkl for filtering volumes",
+                        "type": "abspath",
+                        "flags": [
+                            "--vol-ind"
+                        ]
+                    }
+                },
+                "extra arguments for volume generation": {
+                    "sketch_size": {
+                        "default": 1000,
+                        "help": "Number of volumes to generate for analysis (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-N",
+                            "--sketch-size"
+                        ]
+                    },
+                    "Apix": {
+                        "default": 1,
+                        "help": "Pixel size to add to .mrc header (default: %(default)s A/pix)",
+                        "type": "float",
+                        "flags": [
+                            "--Apix"
+                        ]
+                    },
+                    "flip": {
+                        "const": true,
+                        "default": false,
+                        "help": "Flip handedness of output volume",
+                        "nargs": 0,
+                        "flags": [
+                            "--flip"
+                        ]
+                    },
+                    "downsample": {
+                        "default": 128,
+                        "help": "Downsample volumes to this box size (pixels) (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-d",
+                            "--downsample"
+                        ]
+                    },
+                    "skip_vol": {
+                        "const": true,
+                        "default": false,
+                        "help": "Skip generation of volumes",
+                        "nargs": 0,
+                        "flags": [
+                            "--skip-vol"
+                        ]
+                    },
+                    "vol_start_index": {
+                        "default": 0,
+                        "help": "Default value of start index for volume generation (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--vol-start-index"
+                        ]
+                    }
+                },
+                "extra arguments for mask generation": {
+                    "thresh": {
+                        "help": "Density value to threshold for masking (default: half of max density value)",
+                        "type": "float",
+                        "flags": [
+                            "--thresh"
+                        ]
+                    },
+                    "dilate": {
+                        "default": 5,
+                        "help": "Dilate initial mask by this amount (default: %(default)s pixels)",
+                        "type": "int",
+                        "flags": [
+                            "--dilate"
+                        ]
+                    },
+                    "mask": {
+                        "help": "Path to a custom mask. Must be same box size as generated volumes.",
+                        "metavar": "MRC",
+                        "type": "abspath",
+                        "flags": [
+                            "--mask"
+                        ]
+                    }
+                },
+                "extra arguments for clustering": {
+                    "linkage": {
+                        "default": "average",
+                        "help": "Linkage for agglomerative clustering (e.g. average, ward) (default: %(default)s)",
+                        "flags": [
+                            "--linkage"
+                        ]
+                    },
+                    "M": {
+                        "default": 10,
+                        "help": "Number of clusters (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-M"
+                        ]
+                    }
+                },
+                "extra arguments for landscape visualization": {
+                    "pc_dim": {
+                        "default": 20,
+                        "help": "PCA dimensionality reduction (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--pc-dim"
+                        ]
+                    },
+                    "plot_dim": {
+                        "default": 5,
+                        "help": "Number of dimensions to plot (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--plot-dim"
+                        ]
+                    }
+                }
+            }
+        },
+        "analyze_landscape_full": {
+            "desc": "",
+            "args": {
+                "positional arguments": {
+                    "workdir": {
+                        "help": "Directory with cryoDRGN results",
+                        "type": "abspath"
+                    },
+                    "epoch": {
+                        "help": "Epoch number N to analyze (0-based indexing, corresponding to z.N.pkl, weights.N.pkl)",
+                        "type": "int"
+                    }
+                },
+                "optional arguments": {
+                    "device": {
+                        "help": "Optionally specify CUDA device",
+                        "type": "int",
+                        "flags": [
+                            "--device"
+                        ]
+                    },
+                    "landscape_dir": {
+                        "help": "Landscape analysis directory (default: [workdir]/landscape.[epoch])",
+                        "type": "abspath",
+                        "flags": [
+                            "--landscape-dir"
+                        ]
+                    },
+                    "outdir": {
+                        "help": "Output directory (default: [workdir]/landscape.[epoch]/landscape_full)",
+                        "type": "abspath",
+                        "flags": [
+                            "-o",
+                            "--outdir"
+                        ]
+                    },
+                    "seed": {
+                        "default": 0,
+                        "help": "Random seed (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--seed"
+                        ]
+                    }
+                },
+                "volume generation arguments": {
+                    "N": {
+                        "default": 10000,
+                        "help": "Number of training volumes to generate (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-N"
+                        ]
+                    },
+                    "flip": {
+                        "const": true,
+                        "default": false,
+                        "help": "Flip handedness",
+                        "nargs": 0,
+                        "flags": [
+                            "--flip"
+                        ]
+                    },
+                    "downsample": {
+                        "default": 128,
+                        "help": "Downsample volumes to this box size (pixels) (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-d",
+                            "--downsample"
+                        ]
+                    },
+                    "skip_vol": {
+                        "const": true,
+                        "default": false,
+                        "help": "Skip generation of volumes",
+                        "nargs": 0,
+                        "flags": [
+                            "--skip-vol"
+                        ]
+                    }
+                },
+                "volume mapping arguments": {
+                    "batch_size": {
+                        "default": 64,
+                        "help": "input batch size for training (default: 64)",
+                        "metavar": "N",
+                        "type": "int",
+                        "flags": [
+                            "--batch-size"
+                        ]
+                    },
+                    "test_batch_size": {
+                        "default": 1000,
+                        "help": "input batch size for testing (default: 1000)",
+                        "metavar": "N",
+                        "type": "int",
+                        "flags": [
+                            "--test-batch-size"
+                        ]
+                    },
+                    "epochs": {
+                        "default": 50,
+                        "help": "number of epochs to train (default: 14)",
+                        "metavar": "N",
+                        "type": "int",
+                        "flags": [
+                            "--epochs"
+                        ]
+                    },
+                    "lr": {
+                        "default": 0.001,
+                        "help": "learning rate (default: 1e-3)",
+                        "metavar": "LR",
+                        "type": "float",
+                        "flags": [
+                            "--lr"
+                        ]
+                    },
+                    "dim": {
+                        "default": 512,
+                        "help": "MLP hidden layer dimension (default: 512)",
+                        "metavar": "N",
+                        "type": "int",
+                        "flags": [
+                            "--dim"
+                        ]
+                    },
+                    "layers": {
+                        "default": 3,
+                        "help": "MLP number of hidden layers (default: 3)",
+                        "metavar": "N",
+                        "type": "int",
+                        "flags": [
+                            "--layers"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "cryoDRGN2 Ab Initio Reconstruction": {
+        "abinit_homo": {
+            "desc": "Homogeneous NN reconstruction with hierarchical pose optimization",
+            "args": {
+                "positional arguments": {
+                    "particles": {
+                        "help": "Input particles (.mrcs, .star, .cs, or .txt)",
+                        "type": "abspath"
+                    }
+                },
+                "optional arguments": {
+                    "outdir": {
+                        "help": "Output directory to save model",
+                        "type": "abspath",
+                        "flags": [
+                            "-o",
+                            "--outdir"
+                        ]
+                    },
+                    "ctf": {
+                        "help": "CTF parameters (.pkl)",
+                        "metavar": "pkl",
+                        "type": "abspath",
+                        "flags": [
+                            "--ctf"
+                        ]
+                    },
+                    "norm": {
+                        "help": "Data normalization as shift, 1/scale (default: mean, std of dataset)",
+                        "nargs": 2,
+                        "type": "float",
+                        "flags": [
+                            "--norm"
+                        ]
+                    },
+                    "load": {
+                        "help": "Initialize training from a checkpoint",
+                        "flags": [
+                            "--load"
+                        ]
+                    },
+                    "load_poses": {
+                        "help": "Initialize training from a checkpoint",
+                        "type": "abspath",
+                        "flags": [
+                            "--load-poses"
+                        ]
+                    },
+                    "checkpoint": {
+                        "default": 1,
+                        "help": "Checkpointing interval in N_EPOCHS (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--checkpoint"
+                        ]
+                    },
+                    "log_interval": {
+                        "default": 1000,
+                        "help": "Logging interval in N_IMGS (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--log-interval"
+                        ]
+                    },
+                    "verbose": {
+                        "const": true,
+                        "default": false,
+                        "help": "Increase verbosity",
+                        "nargs": 0,
+                        "flags": [
+                            "-v",
+                            "--verbose"
+                        ]
+                    },
+                    "seed": {
+                        "default": 20125,
+                        "help": "Random seed",
+                        "type": "int",
+                        "flags": [
+                            "--seed"
+                        ]
+                    },
+                    "invert_data": {
+                        "const": false,
+                        "default": true,
+                        "help": "Do not invert data sign",
+                        "nargs": 0,
+                        "flags": [
+                            "--uninvert-data"
+                        ]
+                    },
+                    "window": {
+                        "const": false,
+                        "default": true,
+                        "help": "Turn off real space windowing of dataset",
+                        "nargs": 0,
+                        "flags": [
+                            "--no-window"
+                        ]
+                    },
+                    "window_r": {
+                        "default": 0.85,
+                        "help": "Windowing radius (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--window-r"
+                        ]
+                    },
+                    "ind": {
+                        "help": "Filter particle stack by these indices",
+                        "type": "abspath",
+                        "flags": [
+                            "--ind"
+                        ]
+                    },
+                    "lazy": {
+                        "const": true,
+                        "default": false,
+                        "help": "Lazy loading if full dataset is too large to fit in memory",
+                        "nargs": 0,
+                        "flags": [
+                            "--lazy"
+                        ]
+                    },
+                    "shuffler_size": {
+                        "default": 0,
+                        "help": "If non-zero, will use a data shuffler for faster lazy data loading.",
+                        "type": "int",
+                        "flags": [
+                            "--shuffler-size"
+                        ]
+                    }
+                },
+                "tilt series": {
+                    "tilt": {
+                        "help": "Particle stack file (.mrcs)",
+                        "flags": [
+                            "--tilt"
+                        ]
+                    },
+                    "tilt_deg": {
+                        "default": 45,
+                        "help": "X-axis tilt offset in degrees (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--tilt-deg"
+                        ]
+                    }
+                },
+                "training parameters": {
+                    "t_extent": {
+                        "default": 10,
+                        "help": "+/- pixels to search over translations (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--t-extent"
+                        ]
+                    },
+                    "t_ngrid": {
+                        "default": 7,
+                        "help": "Initial grid size for translations (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--t-ngrid"
+                        ]
+                    },
+                    "t_xshift": {
+                        "default": 0,
+                        "help": "X-axis translation shift (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--t-xshift"
+                        ]
+                    },
+                    "t_yshift": {
+                        "default": 0,
+                        "help": "Y-axis translation shift (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--t-yshift"
+                        ]
+                    },
+                    "no_trans": {
+                        "const": true,
+                        "default": false,
+                        "help": "Don't search over translations",
+                        "nargs": 0,
+                        "flags": [
+                            "--no-trans"
+                        ]
+                    },
+                    "pretrain": {
+                        "default": 10000,
+                        "help": "Number of initial iterations with random poses (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--pretrain"
+                        ]
+                    },
+                    "ps_freq": {
+                        "default": 5,
+                        "help": "Frequency of pose inference (default: every %(default)s epochs)",
+                        "type": "int",
+                        "flags": [
+                            "--ps-freq"
+                        ]
+                    },
+                    "num_epochs": {
+                        "default": 30,
+                        "help": "Number of training epochs (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-n",
+                            "--num-epochs"
+                        ]
+                    },
+                    "batch_size": {
+                        "default": 8,
+                        "help": "Minibatch size (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-b",
+                            "--batch-size"
+                        ]
+                    },
+                    "wd": {
+                        "default": 0,
+                        "help": "Weight decay in Adam optimizer (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--wd"
+                        ]
+                    },
+                    "lr": {
+                        "default": 0.0001,
+                        "help": "Learning rate in Adam optimizer (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--lr"
+                        ]
+                    },
+                    "reset_model_every": {
+                        "help": "If set, reset the model every N epochs",
+                        "type": "int",
+                        "flags": [
+                            "--reset-model-every"
+                        ]
+                    },
+                    "reset_optim_every": {
+                        "help": "If set, reset the optimizer every N epochs",
+                        "type": "int",
+                        "flags": [
+                            "--reset-optim-every"
+                        ]
+                    },
+                    "reset_optim_after_pretrain": {
+                        "help": "If set, reset the optimizer every N epochs",
+                        "type": "int",
+                        "flags": [
+                            "--reset-optim-after-pretrain"
+                        ]
+                    }
+                },
+                "pose search parameters": {
+                    "l_start": {
+                        "default": 12,
+                        "help": "Starting L radius (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--l-start"
+                        ]
+                    },
+                    "l_end": {
+                        "default": 32,
+                        "help": "End L radius (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--l-end"
+                        ]
+                    },
+                    "niter": {
+                        "default": 4,
+                        "help": "Number of iterations of grid subdivision (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--niter"
+                        ]
+                    },
+                    "l_ramp_epochs": {
+                        "default": 25,
+                        "help": "Number of epochs to ramp up to --l-end (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--l-ramp-epochs"
+                        ]
+                    },
+                    "probabilistic": {
+                        "const": true,
+                        "default": false,
+                        "help": "Use probabilistic bound",
+                        "nargs": 0,
+                        "flags": [
+                            "--probabilistic"
+                        ]
+                    },
+                    "nkeptposes": {
+                        "default": 8,
+                        "help": "Number of poses to keep at each refinement interation during branch and bound (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--nkeptposes"
+                        ]
+                    },
+                    "base_healpy": {
+                        "default": 2,
+                        "help": "Base healpy grid for pose search. Higher means exponentially higher resolution (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--base-healpy"
+                        ]
+                    },
+                    "pose_model_update_freq": {
+                        "help": "If set, only update the model used for pose search every N examples",
+                        "type": "int",
+                        "flags": [
+                            "--pose-model-update-freq"
+                        ]
+                    }
+                },
+                "network architecture": {
+                    "layers": {
+                        "default": 3,
+                        "help": "Number of hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--layers"
+                        ]
+                    },
+                    "dim": {
+                        "default": 256,
+                        "help": "Number of nodes in hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--dim"
+                        ]
+                    },
+                    "l_extent": {
+                        "default": 0.5,
+                        "help": "Coordinate lattice size (if not using positional encoding) (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--l-extent"
+                        ]
+                    },
+                    "pe_type": {
+                        "choices": [
+                            "geom_ft",
+                            "geom_full",
+                            "geom_lowf",
+                            "geom_nohighf",
+                            "linear_lowf",
+                            "gaussian",
+                            "none"
+                        ],
+                        "default": "gaussian",
+                        "help": "Type of positional encoding (default: %(default)s)",
+                        "flags": [
+                            "--pe-type"
+                        ]
+                    },
+                    "pe_dim": {
+                        "help": "Num frequencies in positional encoding (default: D/2)",
+                        "type": "int",
+                        "flags": [
+                            "--pe-dim"
+                        ]
+                    },
+                    "domain": {
+                        "choices": [
+                            "hartley",
+                            "fourier"
+                        ],
+                        "default": "hartley",
+                        "help": "Volume decoder representation (default: %(default)s)",
+                        "flags": [
+                            "--domain"
+                        ]
+                    },
+                    "activation": {
+                        "choices": [
+                            "relu",
+                            "leaky_relu"
+                        ],
+                        "default": "relu",
+                        "help": "Activation (default: %(default)s)",
+                        "flags": [
+                            "--activation"
+                        ]
+                    },
+                    "feat_sigma": {
+                        "default": 0.5,
+                        "help": "Scale for random Gaussian features (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--feat-sigma"
+                        ]
+                    }
+                }
+            }
+        },
+        "abinit_het": {
+            "desc": "Heterogeneous NN reconstruction with hierarchical pose optimization",
+            "args": {
+                "positional arguments": {
+                    "particles": {
+                        "help": "Input particles (.mrcs, .star, .cs, or .txt)",
+                        "type": "abspath"
+                    }
+                },
+                "optional arguments": {
+                    "outdir": {
+                        "help": "Output directory to save model",
+                        "type": "abspath",
+                        "flags": [
+                            "-o",
+                            "--outdir"
+                        ]
+                    },
+                    "zdim": {
+                        "help": "Dimension of latent variable",
+                        "type": "int",
+                        "flags": [
+                            "--zdim"
+                        ]
+                    },
+                    "ctf": {
+                        "help": "CTF parameters (.pkl)",
+                        "metavar": "pkl",
+                        "type": "abspath",
+                        "flags": [
+                            "--ctf"
+                        ]
+                    },
+                    "load": {
+                        "help": "Initialize training from a checkpoint",
+                        "flags": [
+                            "--load"
+                        ]
+                    },
+                    "load_poses": {
+                        "help": "Initialize training from a checkpoint",
+                        "flags": [
+                            "--load-poses"
+                        ]
+                    },
+                    "checkpoint": {
+                        "default": 1,
+                        "help": "Checkpointing interval in N_EPOCHS (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--checkpoint"
+                        ]
+                    },
+                    "log_interval": {
+                        "default": 1000,
+                        "help": "Logging interval in N_IMGS (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--log-interval"
+                        ]
+                    },
+                    "verbose": {
+                        "const": true,
+                        "default": false,
+                        "help": "Increase verbosity",
+                        "nargs": 0,
+                        "flags": [
+                            "-v",
+                            "--verbose"
+                        ]
+                    },
+                    "seed": {
+                        "default": 86799,
+                        "help": "Random seed",
+                        "type": "int",
+                        "flags": [
+                            "--seed"
+                        ]
+                    }
+                },
+                "dataset loading": {
+                    "ind": {
+                        "help": "Filter particle stack by these indices",
+                        "metavar": "PKL",
+                        "type": "abspath",
+                        "flags": [
+                            "--ind"
+                        ]
+                    },
+                    "invert_data": {
+                        "const": false,
+                        "default": true,
+                        "help": "Do not invert data sign",
+                        "nargs": 0,
+                        "flags": [
+                            "--uninvert-data"
+                        ]
+                    },
+                    "window": {
+                        "const": false,
+                        "default": true,
+                        "help": "Turn off real space windowing of dataset",
+                        "nargs": 0,
+                        "flags": [
+                            "--no-window"
+                        ]
+                    },
+                    "window_r": {
+                        "default": 0.85,
+                        "help": "Windowing radius (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--window-r"
+                        ]
+                    },
+                    "datadir": {
+                        "help": "Path prefix to particle stack if loading relative paths from a .star or .cs file",
+                        "type": "abspath",
+                        "flags": [
+                            "--datadir"
+                        ]
+                    },
+                    "lazy": {
+                        "const": true,
+                        "default": false,
+                        "help": "Lazy loading if full dataset is too large to fit in memory",
+                        "nargs": 0,
+                        "flags": [
+                            "--lazy"
+                        ]
+                    },
+                    "shuffler_size": {
+                        "default": 0,
+                        "help": "If non-zero, will use a data shuffler for faster lazy data loading.",
+                        "type": "int",
+                        "flags": [
+                            "--shuffler-size"
+                        ]
+                    },
+                    "max_threads": {
+                        "default": 16,
+                        "help": "Maximum number of CPU cores for data loading (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--max-threads"
+                        ]
+                    }
+                },
+                "tilt series": {
+                    "tilt": {
+                        "help": "Particle stack file (.mrcs)",
+                        "flags": [
+                            "--tilt"
+                        ]
+                    },
+                    "tilt_deg": {
+                        "default": 45,
+                        "help": "X-axis tilt offset in degrees (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--tilt-deg"
+                        ]
+                    },
+                    "enc_only": {
+                        "const": true,
+                        "default": false,
+                        "help": "Use the tilt pair only in VAE and not in BNB search",
+                        "nargs": 0,
+                        "flags": [
+                            "--enc-only"
+                        ]
+                    }
+                },
+                "training parameters": {
+                    "num_epochs": {
+                        "default": 30,
+                        "help": "Number of training epochs (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-n",
+                            "--num-epochs"
+                        ]
+                    },
+                    "batch_size": {
+                        "default": 8,
+                        "help": "Minibatch size (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-b",
+                            "--batch-size"
+                        ]
+                    },
+                    "wd": {
+                        "default": 0,
+                        "help": "Weight decay in Adam optimizer (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--wd"
+                        ]
+                    },
+                    "lr": {
+                        "default": 0.0001,
+                        "help": "Learning rate in Adam optimizer (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--lr"
+                        ]
+                    },
+                    "beta": {
+                        "help": "Choice of beta schedule or a constant for KLD weight (default: 1/zdim)",
+                        "flags": [
+                            "--beta"
+                        ]
+                    },
+                    "beta_control": {
+                        "help": "KL-Controlled VAE gamma. Beta is KL target",
+                        "type": "float",
+                        "flags": [
+                            "--beta-control"
+                        ]
+                    },
+                    "equivariance": {
+                        "help": "Strength of equivariance loss",
+                        "type": "float",
+                        "flags": [
+                            "--equivariance"
+                        ]
+                    },
+                    "eq_start_it": {
+                        "default": 100000,
+                        "help": "It at which equivariance turned on (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--eq-start-it"
+                        ]
+                    },
+                    "eq_end_it": {
+                        "default": 200000,
+                        "help": "It at which equivariance max (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--eq-end-it"
+                        ]
+                    },
+                    "norm": {
+                        "help": "Data normalization as shift, 1/scale (default: mean, std of dataset)",
+                        "nargs": 2,
+                        "type": "float",
+                        "flags": [
+                            "--norm"
+                        ]
+                    },
+                    "l_ramp_epochs": {
+                        "default": 0,
+                        "help": "Number of epochs to ramp up to --l-end (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--l-ramp-epochs"
+                        ]
+                    },
+                    "l_ramp_model": {
+                        "default": 0,
+                        "help": "If 1, then during ramp only train the model up to l-max (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--l-ramp-model"
+                        ]
+                    },
+                    "reset_model_every": {
+                        "help": "If set, reset the model every N epochs",
+                        "type": "int",
+                        "flags": [
+                            "--reset-model-every"
+                        ]
+                    },
+                    "reset_optim_every": {
+                        "help": "If set, reset the optimizer every N epochs",
+                        "type": "int",
+                        "flags": [
+                            "--reset-optim-every"
+                        ]
+                    },
+                    "reset_optim_after_pretrain": {
+                        "help": "If set, reset the optimizer every N epochs",
+                        "type": "int",
+                        "flags": [
+                            "--reset-optim-after-pretrain"
+                        ]
+                    },
+                    "multigpu": {
+                        "const": true,
+                        "default": false,
+                        "help": "Parallelize training across all detected GPUs",
+                        "nargs": 0,
+                        "flags": [
+                            "--multigpu"
+                        ]
+                    }
+                },
+                "pose search parameters": {
+                    "l_start": {
+                        "default": 12,
+                        "help": "Starting L radius (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--l-start"
+                        ]
+                    },
+                    "l_end": {
+                        "default": 32,
+                        "help": "End L radius (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--l-end"
+                        ]
+                    },
+                    "niter": {
+                        "default": 4,
+                        "help": "Number of iterations of grid subdivision (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--niter"
+                        ]
+                    },
+                    "t_extent": {
+                        "default": 10,
+                        "help": "+/- pixels to search over translations (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--t-extent"
+                        ]
+                    },
+                    "t_ngrid": {
+                        "default": 7,
+                        "help": "Initial grid size for translations (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--t-ngrid"
+                        ]
+                    },
+                    "t_xshift": {
+                        "default": 0,
+                        "help": "X-axis translation shift (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--t-xshift"
+                        ]
+                    },
+                    "t_yshift": {
+                        "default": 0,
+                        "help": "Y-axis translation shift (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--t-yshift"
+                        ]
+                    },
+                    "pretrain": {
+                        "default": 10000,
+                        "help": "Number of initial iterations with random poses (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--pretrain"
+                        ]
+                    },
+                    "ps_freq": {
+                        "default": 5,
+                        "help": "Frequency of pose inference (default: every %(default)s epochs)",
+                        "type": "int",
+                        "flags": [
+                            "--ps-freq"
+                        ]
+                    },
+                    "nkeptposes": {
+                        "default": 8,
+                        "help": "Number of poses to keep at each refinement interation during branch and bound (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--nkeptposes"
+                        ]
+                    },
+                    "base_healpy": {
+                        "default": 2,
+                        "help": "Base healpy grid for pose search. Higher means exponentially higher resolution (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--base-healpy"
+                        ]
+                    },
+                    "pose_model_update_freq": {
+                        "help": "If set, only update the model used for pose search every N examples",
+                        "type": "int",
+                        "flags": [
+                            "--pose-model-update-freq"
+                        ]
+                    }
+                },
+                "encoder network": {
+                    "qlayers": {
+                        "default": 3,
+                        "help": "Number of hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--enc-layers"
+                        ]
+                    },
+                    "qdim": {
+                        "default": 256,
+                        "help": "Number of nodes in hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--enc-dim"
+                        ]
+                    },
+                    "encode_mode": {
+                        "choices": [
+                            "conv",
+                            "resid",
+                            "mlp",
+                            "tilt"
+                        ],
+                        "default": "resid",
+                        "help": "Type of encoder network (default: %(default)s)",
+                        "flags": [
+                            "--encode-mode"
+                        ]
+                    },
+                    "enc_mask": {
+                        "help": "Circular mask of image for encoder (default: D/2; -1 for no mask)",
+                        "type": "int",
+                        "flags": [
+                            "--enc-mask"
+                        ]
+                    },
+                    "use_real": {
+                        "const": true,
+                        "default": false,
+                        "help": "Use real space image for encoder (for convolutional encoder)",
+                        "nargs": 0,
+                        "flags": [
+                            "--use-real"
+                        ]
+                    }
+                },
+                "decoder network": {
+                    "players": {
+                        "default": 3,
+                        "help": "Number of hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--dec-layers"
+                        ]
+                    },
+                    "pdim": {
+                        "default": 256,
+                        "help": "Number of nodes in hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--dec-dim"
+                        ]
+                    },
+                    "pe_type": {
+                        "choices": [
+                            "geom_ft",
+                            "geom_full",
+                            "geom_lowf",
+                            "geom_nohighf",
+                            "linear_lowf",
+                            "gaussian",
+                            "none"
+                        ],
+                        "default": "gaussian",
+                        "help": "Type of positional encoding (default: %(default)s)",
+                        "flags": [
+                            "--pe-type"
+                        ]
+                    },
+                    "feat_sigma": {
+                        "default": 0.5,
+                        "help": "Scale for random Gaussian features (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--feat-sigma"
+                        ]
+                    },
+                    "pe_dim": {
+                        "help": "Num frequencies in positional encoding (default: image D/2)",
+                        "type": "int",
+                        "flags": [
+                            "--pe-dim"
+                        ]
+                    },
+                    "domain": {
+                        "choices": [
+                            "hartley",
+                            "fourier"
+                        ],
+                        "default": "hartley",
+                        "help": "Volume decoder representation (default: %(default)s)",
+                        "flags": [
+                            "--domain"
+                        ]
+                    },
+                    "activation": {
+                        "choices": [
+                            "relu",
+                            "leaky_relu"
+                        ],
+                        "default": "relu",
+                        "help": "Activation (default: %(default)s)",
+                        "flags": [
+                            "--activation"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "Misc": {
+        "eval_images": {
+            "desc": "Evaluate cryoDRGN z and loss for a stack of images",
+            "args": {
+                "positional arguments": {
+                    "particles": {
+                        "help": "Input particles (.mrcs, .star, .cs, or .txt)",
+                        "type": "abspath"
+                    },
+                    "weights": {
+                        "help": "Model weights"
+                    }
+                },
+                "optional arguments": {
+                    "config": {
+                        "help": "CryoDRGN configuration",
+                        "metavar": "PKL",
+                        "flags": [
+                            "-c",
+                            "--config"
+                        ]
+                    },
+                    "o": {
+                        "help": "Output pickle for losses",
+                        "metavar": "PKL",
+                        "type": "abspath",
+                        "flags": [
+                            "-o"
+                        ]
+                    },
+                    "out_z": {
+                        "help": "Output pickle for z",
+                        "metavar": "PKL",
+                        "type": "abspath",
+                        "flags": [
+                            "--out-z"
+                        ]
+                    },
+                    "poses": {
+                        "help": "Image poses (.pkl)",
+                        "type": "abspath",
+                        "flags": [
+                            "--poses"
+                        ]
+                    },
+                    "ctf": {
+                        "help": "CTF parameters (.pkl) if particle stack is not phase flipped",
+                        "metavar": "pkl",
+                        "type": "abspath",
+                        "flags": [
+                            "--ctf"
+                        ]
+                    },
+                    "log_interval": {
+                        "default": 1000,
+                        "help": "Logging interval in N_IMGS (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--log-interval"
+                        ]
+                    },
+                    "batch_size": {
+                        "default": 64,
+                        "help": "Minibatch size (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "-b",
+                            "--batch-size"
+                        ]
+                    },
+                    "beta": {
+                        "help": "KLD weight (default: 1/zdim)",
+                        "type": "float",
+                        "flags": [
+                            "--beta"
+                        ]
+                    },
+                    "verbose": {
+                        "const": true,
+                        "default": false,
+                        "help": "Increaes verbosity",
+                        "nargs": 0,
+                        "flags": [
+                            "-v",
+                            "--verbose"
+                        ]
+                    }
+                },
+                "dataset loading": {
+                    "invert_data": {
+                        "const": false,
+                        "default": true,
+                        "help": "Do not invert data sign",
+                        "nargs": 0,
+                        "flags": [
+                            "--uninvert-data"
+                        ]
+                    },
+                    "window": {
+                        "const": false,
+                        "default": true,
+                        "help": "Turn off real space windowing of dataset",
+                        "nargs": 0,
+                        "flags": [
+                            "--no-window"
+                        ]
+                    },
+                    "window_r": {
+                        "default": 0.85,
+                        "help": "Windowing radius (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--window-r"
+                        ]
+                    },
+                    "ind": {
+                        "help": "Filter particle stack by these indices",
+                        "type": "abspath",
+                        "flags": [
+                            "--ind"
+                        ]
+                    },
+                    "lazy": {
+                        "const": true,
+                        "default": false,
+                        "help": "Lazy loading if full dataset is too large to fit in memory",
+                        "nargs": 0,
+                        "flags": [
+                            "--lazy"
+                        ]
+                    },
+                    "datadir": {
+                        "help": "Path prefix to particle stack if loading relative paths from a .star or .cs file",
+                        "type": "abspath",
+                        "flags": [
+                            "--datadir"
+                        ]
+                    },
+                    "max_threads": {
+                        "default": 16,
+                        "help": "Maximum number of CPU cores for data loading (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--max-threads"
+                        ]
+                    }
+                },
+                "tilt series paramters": {
+                    "ntilts": {
+                        "default": 10,
+                        "help": "Number of tilts to encode (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--ntilts"
+                        ]
+                    },
+                    "random_tilts": {
+                        "const": true,
+                        "default": false,
+                        "help": "Randomize ordering of tilts series to encoder",
+                        "nargs": 0,
+                        "flags": [
+                            "--random-tilts"
+                        ]
+                    },
+                    "t_emb_dim": {
+                        "default": 128,
+                        "help": "Intermediate embedding dimension (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--t-emb-dim"
+                        ]
+                    },
+                    "tlayers": {
+                        "default": 3,
+                        "help": "Number of hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--tlayers"
+                        ]
+                    },
+                    "tdim": {
+                        "default": 1024,
+                        "help": "Number of nodes in hidden layers (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--tdim"
+                        ]
+                    },
+                    "dose_per_tilt": {
+                        "help": "Expected dose per tilt (electrons/A^2 per tilt) (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--dose-per-tilt"
+                        ]
+                    },
+                    "angle_per_tilt": {
+                        "default": 3,
+                        "help": "Tilt angle increment per tilt in degrees (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "--angle-per-tilt"
+                        ]
+                    }
+                },
+                "overwrite architecture hyperparameters in config.yaml": {
+                    "zdim": {
+                        "help": "Dimension of latent variable",
+                        "type": "int",
+                        "flags": [
+                            "--zdim"
+                        ]
+                    },
+                    "norm": {
+                        "help": "Data normalization as shift, 1/scale",
+                        "nargs": 2,
+                        "type": "float",
+                        "flags": [
+                            "--norm"
+                        ]
+                    },
+                    "qlayers": {
+                        "help": "Number of hidden layers",
+                        "type": "int",
+                        "flags": [
+                            "--enc-layers"
+                        ]
+                    },
+                    "qdim": {
+                        "help": "Number of nodes in hidden layers",
+                        "type": "int",
+                        "flags": [
+                            "--enc-dim"
+                        ]
+                    },
+                    "encode_mode": {
+                        "choices": [
+                            "conv",
+                            "resid",
+                            "mlp",
+                            "tilt"
+                        ],
+                        "help": "Type of encoder network",
+                        "flags": [
+                            "--encode-mode"
+                        ]
+                    },
+                    "enc_mask": {
+                        "help": "Circular mask of image for encoder",
+                        "type": "int",
+                        "flags": [
+                            "--enc-mask"
+                        ]
+                    },
+                    "use_real": {
+                        "const": true,
+                        "default": false,
+                        "help": "Use real space image for encoder (for convolutional encoder)",
+                        "nargs": 0,
+                        "flags": [
+                            "--use-real"
+                        ]
+                    },
+                    "players": {
+                        "help": "Number of hidden layers",
+                        "type": "int",
+                        "flags": [
+                            "--dec-layers"
+                        ]
+                    },
+                    "pdim": {
+                        "help": "Number of nodes in hidden layers",
+                        "type": "int",
+                        "flags": [
+                            "--dec-dim"
+                        ]
+                    },
+                    "pe_type": {
+                        "choices": [
+                            "geom_ft",
+                            "geom_full",
+                            "geom_lowf",
+                            "geom_nohighf",
+                            "linear_lowf",
+                            "none"
+                        ],
+                        "help": "Type of positional encoding",
+                        "flags": [
+                            "--pe-type"
+                        ]
+                    },
+                    "feat_sigma": {
+                        "default": 0.5,
+                        "help": "Scale for random Gaussian features",
+                        "type": "float",
+                        "flags": [
+                            "--feat-sigma"
+                        ]
+                    },
+                    "pe_dim": {
+                        "help": "Num sinusoid features in positional encoding (default: D/2)",
+                        "type": "int",
+                        "flags": [
+                            "--pe-dim"
+                        ]
+                    },
+                    "domain": {
+                        "choices": [
+                            "hartley",
+                            "fourier"
+                        ],
+                        "help": "Decoder representation domain",
+                        "flags": [
+                            "--domain"
+                        ]
+                    },
+                    "activation": {
+                        "choices": [
+                            "relu",
+                            "leaky_relu"
+                        ],
+                        "default": "relu",
+                        "help": "Activation (default: %(default)s)",
+                        "flags": [
+                            "--activation"
+                        ]
+                    }
+                }
+            }
+        },
+        "view_config": {
+            "desc": "Display config information of a cryoDRGN job",
+            "args": {
+                "positional arguments": {
+                    "workdir": {
+                        "help": "Directory with cryoDRGN results",
+                        "type": "abspath"
+                    }
+                },
+                "optional arguments": {}
+            }
+        },
+        "eval_vol": {
+            "desc": "Evaluate the decoder at specified values of z",
+            "args": {
+                "positional arguments": {
+                    "weights": {
+                        "help": "Model weights"
+                    }
+                },
+                "optional arguments": {
+                    "config": {
+                        "help": "CryoDRGN config.yaml file",
+                        "metavar": "YAML",
+                        "flags": [
+                            "-c",
+                            "--config"
+                        ]
+                    },
+                    "o": {
+                        "help": "Output .mrc or directory",
+                        "type": "abspath",
+                        "flags": [
+                            "-o"
+                        ]
+                    },
+                    "device": {
+                        "help": "Optionally specify CUDA device",
+                        "type": "int",
+                        "flags": [
+                            "--device"
+                        ]
+                    },
+                    "prefix": {
+                        "default": "vol_",
+                        "help": "Prefix when writing out multiple .mrc files (default: %(default)s)",
+                        "flags": [
+                            "--prefix"
+                        ]
+                    },
+                    "verbose": {
+                        "const": true,
+                        "default": false,
+                        "help": "Increase verbosity",
+                        "nargs": 0,
+                        "flags": [
+                            "-v",
+                            "--verbose"
+                        ]
+                    }
+                },
+                "specify z values": {
+                    "z": {
+                        "help": "Specify one z-value",
+                        "nargs": "*",
+                        "type": "float32",
+                        "flags": [
+                            "-z"
+                        ]
+                    },
+                    "z_start": {
+                        "help": "Specify a starting z-value",
+                        "nargs": "*",
+                        "type": "float32",
+                        "flags": [
+                            "--z-start"
+                        ]
+                    },
+                    "z_end": {
+                        "help": "Specify an ending z-value",
+                        "nargs": "*",
+                        "type": "float32",
+                        "flags": [
+                            "--z-end"
+                        ]
+                    },
+                    "n": {
+                        "default": 10,
+                        "help": "Number of structures between [z_start, z_end]",
+                        "type": "int",
+                        "flags": [
+                            "-n"
+                        ]
+                    },
+                    "zfile": {
+                        "help": "Text file with z-values to evaluate",
+                        "flags": [
+                            "--zfile"
+                        ]
+                    }
+                },
+                "volume arguments": {
+                    "Apix": {
+                        "default": 1,
+                        "help": "Pixel size to add to .mrc header (default: %(default)s A/pix)",
+                        "type": "float",
+                        "flags": [
+                            "--Apix"
+                        ]
+                    },
+                    "flip": {
+                        "const": true,
+                        "default": false,
+                        "help": "Flip handedness of output volume",
+                        "nargs": 0,
+                        "flags": [
+                            "--flip"
+                        ]
+                    },
+                    "invert": {
+                        "const": true,
+                        "default": false,
+                        "help": "Invert contrast of output volume",
+                        "nargs": 0,
+                        "flags": [
+                            "--invert"
+                        ]
+                    },
+                    "downsample": {
+                        "help": "Downsample volumes to this box size (pixels)",
+                        "type": "int",
+                        "flags": [
+                            "-d",
+                            "--downsample"
+                        ]
+                    },
+                    "vol_start_index": {
+                        "default": 0,
+                        "help": "Default value of start index for volume generation (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--vol-start-index"
+                        ]
+                    }
+                },
+                "overwrite architecture hyperparameters in config.yaml": {
+                    "norm": {
+                        "nargs": 2,
+                        "type": "float",
+                        "flags": [
+                            "--norm"
+                        ]
+                    },
+                    "D": {
+                        "help": "Box size",
+                        "type": "int",
+                        "flags": [
+                            "-D"
+                        ]
+                    },
+                    "qlayers": {
+                        "help": "Number of hidden layers",
+                        "type": "int",
+                        "flags": [
+                            "--enc-layers"
+                        ]
+                    },
+                    "qdim": {
+                        "help": "Number of nodes in hidden layers",
+                        "type": "int",
+                        "flags": [
+                            "--enc-dim"
+                        ]
+                    },
+                    "zdim": {
+                        "help": "Dimension of latent variable",
+                        "type": "int",
+                        "flags": [
+                            "--zdim"
+                        ]
+                    },
+                    "encode_mode": {
+                        "choices": [
+                            "conv",
+                            "resid",
+                            "mlp",
+                            "tilt"
+                        ],
+                        "help": "Type of encoder network",
+                        "flags": [
+                            "--encode-mode"
+                        ]
+                    },
+                    "players": {
+                        "help": "Number of hidden layers",
+                        "type": "int",
+                        "flags": [
+                            "--dec-layers"
+                        ]
+                    },
+                    "pdim": {
+                        "help": "Number of nodes in hidden layers",
+                        "type": "int",
+                        "flags": [
+                            "--dec-dim"
+                        ]
+                    },
+                    "enc_mask": {
+                        "help": "Circular mask radius for image encoder",
+                        "type": "int",
+                        "flags": [
+                            "--enc-mask"
+                        ]
+                    },
+                    "pe_type": {
+                        "choices": [
+                            "geom_ft",
+                            "geom_full",
+                            "geom_lowf",
+                            "geom_nohighf",
+                            "linear_lowf",
+                            "none"
+                        ],
+                        "help": "Type of positional encoding",
+                        "flags": [
+                            "--pe-type"
+                        ]
+                    },
+                    "feat_sigma": {
+                        "help": "Scale for random Gaussian features",
+                        "type": "float",
+                        "flags": [
+                            "--feat-sigma"
+                        ]
+                    },
+                    "pe_dim": {
+                        "help": "Num sinusoid features in positional encoding (default: D/2)",
+                        "type": "int",
+                        "flags": [
+                            "--pe-dim"
+                        ]
+                    },
+                    "domain": {
+                        "choices": [
+                            "hartley",
+                            "fourier"
+                        ],
+                        "flags": [
+                            "--domain"
+                        ]
+                    },
+                    "l_extent": {
+                        "help": "Coordinate lattice size",
+                        "type": "float",
+                        "flags": [
+                            "--l-extent"
+                        ]
+                    },
+                    "activation": {
+                        "choices": [
+                            "relu",
+                            "leaky_relu"
+                        ],
+                        "default": "relu",
+                        "help": "Activation (default: %(default)s)",
+                        "flags": [
+                            "--activation"
+                        ]
+                    }
+                }
+            }
+        },
+        "backproject_voxel": {
+            "desc": "Backproject cryo-EM images",
+            "args": {
+                "positional arguments": {
+                    "particles": {
+                        "help": "Input particles (.mrcs, .star, .cs, or .txt)",
+                        "type": "abspath"
+                    }
+                },
+                "optional arguments": {
+                    "poses": {
+                        "help": "Image poses (.pkl)",
+                        "type": "abspath",
+                        "flags": [
+                            "--poses"
+                        ]
+                    },
+                    "ctf": {
+                        "help": "CTF parameters (.pkl) for phase flipping images",
+                        "metavar": "pkl",
+                        "type": "abspath",
+                        "flags": [
+                            "--ctf"
+                        ]
+                    },
+                    "o": {
+                        "help": "Output .mrc file",
+                        "type": "abspath",
+                        "flags": [
+                            "-o"
+                        ]
+                    },
+                    "ctf_alg": {
+                        "choices": [
+                            "flip",
+                            "mul"
+                        ],
+                        "default": "mul",
+                        "type": "str",
+                        "flags": [
+                            "--ctf-alg"
+                        ]
+                    },
+                    "reg_weight": {
+                        "default": 1.0,
+                        "help": "Add this value times the mean weight to the weight map to regularize the volume, reducing noise.Alternatively, you can set --output-sumcount, and then use `cryodrgn_utils regularize_backproject` on the.sums and .counts files to try different regularization constants post hoc.",
+                        "type": "float",
+                        "flags": [
+                            "--reg-weight"
+                        ]
+                    },
+                    "output_sumcount": {
+                        "const": true,
+                        "default": false,
+                        "help": "Output voxel sums and counts so that different regularization weights can be applied post hoc, with `cryodrgn_utils regularize_backproject`.",
+                        "nargs": 0,
+                        "flags": [
+                            "--output-sumcount"
+                        ]
+                    }
+                },
+                "dataset loading options": {
+                    "invert_data": {
+                        "const": false,
+                        "default": true,
+                        "help": "Do not invert data sign",
+                        "nargs": 0,
+                        "flags": [
+                            "--uninvert-data"
+                        ]
+                    },
+                    "datadir": {
+                        "help": "Path prefix to particle stack if loading relative paths from a .star or .cs file",
+                        "type": "abspath",
+                        "flags": [
+                            "--datadir"
+                        ]
+                    },
+                    "lazy": {
+                        "const": true,
+                        "default": false,
+                        "help": "Lazy loading if full dataset is too large to fit in memory",
+                        "nargs": 0,
+                        "flags": [
+                            "--lazy"
+                        ]
+                    },
+                    "ind": {
+                        "help": "Filter particles by these indices",
+                        "metavar": "PKL",
+                        "type": "abspath",
+                        "flags": [
+                            "--ind"
+                        ]
+                    },
+                    "first": {
+                        "help": "Backproject the first N images (default: all images)",
+                        "type": "int",
+                        "flags": [
+                            "--first"
+                        ]
+                    }
+                },
+                "tilt series options": {
+                    "tilt": {
+                        "const": true,
+                        "default": false,
+                        "help": "Flag to treat data as a tilt series from cryo-ET",
+                        "nargs": 0,
+                        "flags": [
+                            "--tilt"
+                        ]
+                    },
+                    "ntilts": {
+                        "default": 10,
+                        "help": "Number of tilts per particle to backproject (default: %(default)s)",
+                        "type": "int",
+                        "flags": [
+                            "--ntilts"
+                        ]
+                    },
+                    "dose_per_tilt": {
+                        "help": "Expected dose per tilt (electrons/A^2 per tilt) (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "-d",
+                            "--dose-per-tilt"
+                        ]
+                    },
+                    "angle_per_tilt": {
+                        "default": 3,
+                        "help": "Tilt angle increment per tilt in degrees (default: %(default)s)",
+                        "type": "float",
+                        "flags": [
+                            "-a",
+                            "--angle-per-tilt"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
