@@ -18,6 +18,10 @@
     z-index: 100;
 }
 
+.go-back button {
+    min-width: 100px;
+}
+
 .slurm h2 {
     font-size: 20px;
     color: #486AA8;
@@ -56,22 +60,13 @@
 }
 
 .slurm button {
-    /* background: white; */
-    color: black;
-    /* border: 1px solid black; */
     border: 0;
     padding: 8px;
     border-radius: 8px;
     cursor: pointer;
-    min-width: 100px;
 }
 
 .fields button {
     background: #486AA8;
     color: #fff;
-    border: 0;
 }
-
-/* .fields .run-button {
-    margin: 20px;
-} */

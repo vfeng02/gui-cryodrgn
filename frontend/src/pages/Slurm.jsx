@@ -7,6 +7,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import '../App.css';
 import './Slurm.css';
 import { useLocation } from 'react-router-dom';
+import PathSelect from "../components/PathSelect";
 
 const Slurm = () => {
     const location = useLocation();
@@ -16,18 +17,17 @@ const Slurm = () => {
     const [openAlert, setOpenAlert] = useState(false);
     const [runOutput, setRunOutput] = useState("");
 
-    async function onSelectDir(fieldName) {
-        // const dirHandle = await window.showDirectoryPicker();
-        // for await (const entry of dirHandle.values()) {
-        //     console.log(entry.kind, entry.name);
-        // }
-
+    async function saveAndRun(slurm_script) {
+        // const command = "sbatch";
         const command = "python3";
-        const path = "/Users/vickyfeng/Desktop/hi.py";
-        const content="print('hello, world!')"
+
+        // const path = values["dir"] + "/" + values["job name"] + ".slurm";
+        const path = values["dir"] + "/" + values["job name"] + ".py";
+        
+        // const content=slurm_script;
+        const content = "print('''" + slurm_script + "''')";
         
         const response = await fetch("http://localhost:3000/run", {
-            // mode:  'no-cors',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -36,23 +36,11 @@ const Slurm = () => {
         });
     
         if (!response.ok) {
-            console.log("Error in running script")
+            return "Error running script";
         }
         else {
-            console.log(response.json())
+            return response.json();
         }
-        // setValues({
-        //     ...values,
-        //     [fieldName]: dirPath.toString(),
-        // });
-    };
-
-    async function saveAndRun() {
-        const fileName = "hello.py";
-        const path = "/Users/vickyfeng/Desktop/Thesis/drgncommands/src/main/" + fileName;
-        const content = "print('hello world')";
-        const result = await window.electronAPI.saveAndRun([path, content]);
-        setRunOutput(result);
     };
 
     async function generateSlurm(e) {
@@ -104,13 +92,7 @@ const Slurm = () => {
         let slurm_script = slurm_configs + slurm_env + generatedCommand;
         // let slurm_script = slurm_configs + slurm_env + "python hi.py > output.txt"; // script for testing on della
 
-        const py_script = "print('hello, world!')";
-
-        // const path = values["dir"] + "/" + values["job name"] + ".slurm";
-        const path = values["dir"] + "/" + values["job name"] + ".py";
-
-        // const result = await window.electronAPI.saveAndRun([path, slurm_script]);
-        const result = await window.electronAPI.saveAndRun([path, py_script]);
+        const result = await saveAndRun(slurm_script);
         setRunOutput(result);
         setOpenAlert(true);
     };
@@ -145,22 +127,7 @@ const Slurm = () => {
         }
         if (field_details.type == "path") {
             return (
-                <div className="path-select">
-                  <input 
-                  data-toggle="tooltip" 
-                  data-placement="top" 
-                  title={field_details.help}
-                  type="text"
-                  required
-                  id={field_name+"_file"}
-                  name={field_name}
-                  value={field_name in values ? values[field_name] : ""}
-                  placeholder='Click to select path'
-                  key={field_name}
-                  readOnly
-                  onClick={() => onSelectDir(field_name)}
-                  />
-                </div>
+                <PathSelect field_name={field_name} field_details={field_details} values={values} setValues={setValues}/>
               )
         }
         return (
@@ -200,7 +167,7 @@ const Slurm = () => {
                 autoHideDuration={10000} 
                 onClose={handleClose}
                 >
-                <Alert onClose={handleClose} severity={runOutput == "Encountered an error" ? "error" : "success"} sx={{ width: '100%' }}>
+                <Alert onClose={handleClose} severity={runOutput == "Error running script" ? "error" : "success"} sx={{ width: '100%' }}>
                     {runOutput}
                 </Alert>
                 </Snackbar>
