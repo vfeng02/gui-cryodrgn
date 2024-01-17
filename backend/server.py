@@ -17,7 +17,7 @@ def list_files(path):
     d['path'] = path
     d['id'] = str(node_id)
     node_id += 1
-    if os.path.isdir(path):
+    if os.path.isdir(path) and (os.path.basename(path) != "node_modules"):
         d['children'] = [list_files(os.path.join(path,x)) for x in os.listdir(path)]
         d['children'].sort(key= lambda x: x['name'])
     return d 
@@ -37,9 +37,6 @@ def save_and_run_script():
     
     process_1 = subprocess.run([command, path], capture_output=True)
     
-    # resp = Flask.response("Done")
-    # resp.headers['Access-Control-Allow-Origin'] = '*'
-    # resp.headers.add("Access-Control-Allow-Origin", "*")
     return jsonify(process_1.stdout.decode('utf-8'))
 
 @app.route('/dirs', methods=['POST'])
@@ -53,7 +50,8 @@ def get_dirs():
 # Running app
 if __name__ == '__main__':
     # process the server side file structure and save to json
-    dir_json = list_files('/Users/vickyfeng/Desktop/Thesis/vite-drgncommands/frontend')
+    # dir_json = list_files(os.path.join('../',os.getcwd()))
+    dir_json = list_files(os.getcwd())
     dir_json['id'] = 'root'
     with open('dirs.json', 'w') as f:
         f.write(json.dumps(dir_json, indent=2, sort_keys=True))

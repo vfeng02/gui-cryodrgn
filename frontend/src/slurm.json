@@ -9,7 +9,7 @@
             "help": "anaconda3 environment (the environment should already be created)"
         },
         "dir": {
-            "type": "path",
+            "type": "abspath",
             "help": "directory the slurm script should be saved in"
         }
     },
@@ -45,8 +45,8 @@
         },
         "use gpu": {
             "flag": "--gres=gpu:1",
-            "type": "toggle",
             "help": "allocate a100 gpu for this task",
+            "const": true,
             "default": false
         },
         "mem per cpu": {
@@ -63,20 +63,20 @@
         },
         "mail type begin": {
             "flag": "--mail-type=begin",
-            "type": "toggle",
             "help": "send email when job begins",
+            "const": true,
             "default": false
         },
         "mail type end": {
             "flag": "--mail-type=end",
-            "type": "toggle",
             "help": "send email when job begins",
+            "const": true,
             "default": false
         },
         "mail type fail": {
             "flag": "--mail-type=fail",
-            "type": "toggle",
             "help": "send email if job fails",
+            "const": true,
             "default": false
         },
         "mail user": {

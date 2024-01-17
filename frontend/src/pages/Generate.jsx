@@ -9,6 +9,8 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useLocation, Link } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import PathSelect from "../components/PathSelect";
+import AccordionGroup from "../components/AccordionGroup";
 
 const Generate = () => {
   const location = useLocation();
@@ -48,7 +50,7 @@ const Generate = () => {
       for (const [arg_name, arg_details] of Object.entries(args_in_group)) {
         if (arg_name in argValues && argValues[arg_name].toString().length > 0) {
           if ("const" in arg_details) {
-            if (argValues[arg_name] == true) {
+            if (argValues[arg_name] != arg_details.default) {
               result += arg_details.flags[0] + " "
             }
           }
@@ -93,22 +95,12 @@ const Generate = () => {
       // render directory selection and return 
       if (arg_details.type == "abspath") {
         return (
-          <div className="path-select">
-            <input 
-            data-toggle="tooltip" 
-            data-placement="top" 
-            title={arg_details.help}
-            type="text"
-            required = {group == "positional arguments"}
-            id={arg_name+"file"}
-            value={arg_name in argValues ? argValues[arg_name] : ""}
-            placeholder='Click to select path'
-            key = {arg_name}
-            readOnly
-            onClick={() => onSelectFile(arg_name)}
-            />
-          </div>
-        )
+        <PathSelect 
+        name={arg_name} 
+        details={arg_details} 
+        required={group == "positional arguments"} 
+        values={argValues} 
+        setValues={setArgValues}/>)
       }
       else {
         type = "number";
@@ -126,10 +118,10 @@ const Generate = () => {
         <div key={arg_name+"_toggle"} className="toggle">
           <Switch
             className="toggle-switch"
-            checked={argValues[arg_name] ?? false}
+            checked={argValues[arg_name] ?? arg_details.default}
             onChange={(e) => updateChecked(arg_name, e.target.checked)}
           />
-          <p>{(argValues[arg_name] ?? false) ? arg_details.const.toString() : arg_details.default.toString()}</p>
+          <p>{(argValues[arg_name] ?? arg_details.default) ? "true" : "false"}</p>
         </div>
       )
     }
@@ -247,10 +239,16 @@ const Generate = () => {
         </div>)}
       {command_args ? (
         <div>
-          <h2 style={(generated.length > 0) ? { top: "140px" } : { top: "60px" }}>{command_name}</h2>
+          <h2 className='title-h2' style={(generated.length > 0) ? { top: "140px" } : { top: "60px" }}>{command_name}</h2>
           <div className="arguments">
             <form onSubmit={e => generateCommand(e)}>
-                {Object.entries(command_args).map(([group, args]) =>
+              <AccordionGroup 
+              inputs={command_args} 
+              required_groups={new Set(["positional arguments"])}
+              values={argValues}
+              setValues={setArgValues}
+               />
+                {/* {Object.entries(command_args).map(([group, args]) =>
                   (<div className="accordion">
                     <Accordion key={group} defaultExpanded={group == "positional arguments"}>
                       <AccordionSummary key={group + "_name"} expandIcon={<ExpandMoreIcon />}><strong>{group}</strong></AccordionSummary>
@@ -269,12 +267,12 @@ const Generate = () => {
                       </AccordionDetails>
                     </Accordion> 
                   </div>
-                  ))}
+                  ))} */}
               <button type="submit">Generate Command</button>
             </form>
             <div className="slurm-link">
               <Link to={"/slurm"} state={{generatedCommand: generated}}>
-                <button>Run Slurm Script</button>
+                <button className="secondary-button">Run Slurm Script</button>
               </Link>
             </div>
           </div>

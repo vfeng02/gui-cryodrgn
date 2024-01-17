@@ -6,3 +6,32 @@
   font-family: "Sometype Mono";
   color: #333;
 }
+
+button {
+  background: #486AA8;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.secondary-button {
+  background: white;
+  color: black;
+  border: 1px solid black;
+  min-width: 100px;
+}
+
+.title-h2 {
+  font-size: 20px;
+  color: #486AA8;
+  background-color: white;
+  height: 50px;
+  width: 100%;
+  position: sticky;
+  padding-top: 15px;
+  text-align: center;
+  z-index: 10;
+  top: 60px;
+}

@@ -8,6 +8,7 @@ import '../App.css';
 import './Slurm.css';
 import { useLocation } from 'react-router-dom';
 import PathSelect from "../components/PathSelect";
+import AccordionGroup from "../components/AccordionGroup";
 
 const Slurm = () => {
     const location = useLocation();
@@ -17,16 +18,7 @@ const Slurm = () => {
     const [openAlert, setOpenAlert] = useState(false);
     const [runOutput, setRunOutput] = useState("");
 
-    async function saveAndRun(slurm_script) {
-        // const command = "sbatch";
-        const command = "python3";
-
-        // const path = values["dir"] + "/" + values["job name"] + ".slurm";
-        const path = values["dir"] + "/" + values["job name"] + ".py";
-        
-        // const content=slurm_script;
-        const content = "print('''" + slurm_script + "''')";
-        
+    async function saveAndRun(command, path, content) {
         const response = await fetch("http://localhost:3000/run", {
             method: 'POST',
             headers: {
@@ -65,7 +57,7 @@ const Slurm = () => {
                     slurm_configs += "#" + field_details.default + "\n"
                 }
             }
-            else if (field_details.type == "toggle") {
+            else if ("const" in field_details) {
                 if (field_name in values) { 
                     if (values[field_name]) { // the config should be added
                         slurm_configs += "#SBATCH " + field_details.flag + "\n"
@@ -90,29 +82,33 @@ const Slurm = () => {
         slurm_env += "conda activate " + values["conda env"] + "\n \n";
         
         let slurm_script = slurm_configs + slurm_env + generatedCommand;
-        // let slurm_script = slurm_configs + slurm_env + "python hi.py > output.txt"; // script for testing on della
 
-        const result = await saveAndRun(slurm_script);
+        // const path = values["dir"] + "/" + values["job name"] + ".py";
+        // const result = await saveAndRun("python3", path, "print('''" + slurm_script + "''')");
+        
+        const path = values["dir"] + "/" + values["job name"] + ".slurm";
+        const result = await saveAndRun("sbatch", path, slurm_configs + slurm_env + "python hi.py > output.txt");
+
         setRunOutput(result);
         setOpenAlert(true);
     };
 
-    function updateField(fieldName, newValue) {
-        setValues({
-            ...values,
-            [fieldName]: newValue,
-        });
-    };
-
-    function updateChecked (fieldName, isChecked) {
-        setValues({
-            ...values,
-            [fieldName]: isChecked ? true : false,
-        });
-    };
-
     function renderField(group_name, field_name, field_details) {
-        if (field_details.type == "toggle") {
+        function updateField(fieldName, newValue) {
+            setValues({
+                ...values,
+                [fieldName]: newValue,
+            });
+        };
+    
+        function updateChecked (fieldName, isChecked) {
+            setValues({
+                ...values,
+                [fieldName]: isChecked ? true : false,
+            });
+        };
+
+        if ("const" in field_details) {
             return (
                 <div className="toggle">
                   <Switch
@@ -125,9 +121,9 @@ const Slurm = () => {
                 </div>
               )
         }
-        if (field_details.type == "path") {
+        if (field_details.type == "abspath") {
             return (
-                <PathSelect field_name={field_name} field_details={field_details} values={values} setValues={setValues}/>
+                <PathSelect name={field_name} details={field_details} required={true} values={values} setValues={setValues}/>
               )
         }
         return (
@@ -156,9 +152,9 @@ const Slurm = () => {
 
     return (
         <div className="slurm">
-            <h2>slurm job configurations</h2>
+            <h2 className='title-h2'>slurm job configurations</h2>
             <div className="go-back">
-                <button onClick={() => window.history.back()}>Go Back</button>
+                <button className="secondary-button" onClick={() => window.history.back()}>Go Back</button>
             </div>
             <div className="output">
                 <Snackbar 
@@ -174,7 +170,13 @@ const Slurm = () => {
             </div>
             <div className="fields">
                 <form onSubmit={e => generateSlurm(e)}>
-                    <div className='accordion'>
+                  <AccordionGroup 
+                  inputs={fields} 
+                  required_groups={new Set(["required fields"])}
+                  values={values}
+                  setValues={setValues}
+                  />
+                    {/* <div className='accordion'>
                         {Object.entries(fields).map(([group_name, group_fields]) => (
                             <Accordion key={group_name+"_accordion"} defaultExpanded={group_name == "required fields"}>
                                 <AccordionSummary key={group_name + "_name"} expandIcon={<ExpandMoreIcon />}><strong>{group_name}</strong></AccordionSummary>
@@ -193,7 +195,7 @@ const Slurm = () => {
                                 </AccordionDetails>
                             </Accordion> 
                         ))}
-                    </div>
+                    </div> */}
                     <button type="submit" className='run-button' onClick={(e) => generateSlurm(e)}>Save and run slurm script</button>
                 </form>
             </div>

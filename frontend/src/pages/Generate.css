@@ -21,104 +21,14 @@
 
 .result-bar h3 {
     min-width: 60vw;
-    /* padding: 30px; */
-}
-
-.generate h2 {
-    font-size: 20px;
-    color: #486AA8;
-    background-color: white;
-    height: 50px;
-    width: 100%;
-    position: sticky;
-    padding-top: 15px;
-    text-align: center;
-    z-index: 10;
 }
 
 .arguments {
-    margin: 0 auto;
-    text-align: center;
-    padding: 20px;
-    padding-top: 50px;
-    max-width: 400px;
-    overflow-y: hidden;
+  text-align: center; /* center buttons */
 }
 
-.arguments label {
-    text-align: center;
-    display: block;
-    max-width: 800px;
-}
-
-.arguments input {
-    width: 100%;
-    padding: 6px 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    box-sizing: border-box;
-    display: block;
-    text-align: center;
-    overflow: scroll;
-}
-
-.arguments button {
-    background: #486AA8;
-    color: #fff;
-    border: 0;
-    padding: 8px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.accordion {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.arguments label {
-    display: inline-block;
-    vertical-align: top; 
-    padding-right: 10px;
-}
-
-.arguments .info-icon {
-    background-color: white;
-    display: inline-block;  
-    position: absolute;
-    right: 0;
-    padding: 0; 
-    margin-right: 20px;
-    max-height: 25px;
-}
-
-.toggle {
-    display: grid;
-    grid-template-columns: auto auto;
-    column-gap: 10px;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.toggle p {
-    padding-top: 8px;
+.slurm-link {
+  margin: 15px;
 }
 
 
-.select {
-    width: 100%;
-    max-height: 30px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.slurm-link button {
-    margin: 15px;
-    background: white;
-    color: black;
-    border: 1px solid black;
-}
-
-input:focus::placeholder {
-    color: transparent;
-  }

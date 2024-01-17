@@ -1,0 +1,63 @@
+.accordion-group {
+  padding: 20px;
+  padding-top: 60px;;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  overflow-y: hidden;
+}
+
+.accordion-group label {
+  display: inline-block;
+  vertical-align: top; 
+  padding-right: 10px;
+}
+
+.accordion-group .info-icon {
+  background-color: white;
+  display: inline-block;  
+  position: absolute;
+  right: 0;
+  padding: 0; 
+  margin-right: 20px;
+  max-height: 25px;
+}
+
+.accordion-group input {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: block;
+  text-align: center;
+  overflow: scroll;
+}
+
+.accordion {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.select {
+  width: 100%;
+  max-height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.toggle {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.toggle p {
+  padding-top: 8px;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}

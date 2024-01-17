@@ -6,7 +6,7 @@ import { TreeView, TreeItem } from '@mui/x-tree-view';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-const PathSelect = ({ field_name, field_details, values, setValues }) => {
+const PathSelect = ({ name, details, required, values, setValues }) => {
     const [dirs, setDirs] = useState("");
     const [selected, setSelected] = useState("");
     const [openModal, setOpenModal] = useState(false);
@@ -14,7 +14,7 @@ const PathSelect = ({ field_name, field_details, values, setValues }) => {
     const handleCloseModal = () => {
         setValues({
             ...values,
-            [field_name]: selected,
+            [name]: selected,
         });
         setOpenModal(false);
     };
@@ -52,13 +52,13 @@ const PathSelect = ({ field_name, field_details, values, setValues }) => {
             <input
             data-toggle="tooltip" 
             data-placement="top" 
-            title={field_details.help}
+            title={details.help}
             type="text"
-            id={field_name+"_file"}
-            name={field_name}
-            key={field_name}
-            value={field_name in values ? values[field_name] : ""}
-            required
+            id={name+"_file"}
+            name={name}
+            // key={name}
+            value={name in values ? values[name] : ""}
+            required={required}
             placeholder='Click to select path'
             readOnly
             onClick={handleOpenModal}
@@ -87,15 +87,6 @@ const PathSelect = ({ field_name, field_details, values, setValues }) => {
             </Modal>
         </div>
         </div>
-    // <Box sx={{ minHeight: 110, flexGrow: 1, maxWidth: 300 }}>
-    //     <TreeView
-    //     defaultCollapseIcon={<ExpandMoreIcon />}
-    //     defaultExpanded={['root']}
-    //     defaultExpandIcon={<ChevronRightIcon />}
-    //     >
-    //     {renderTree(dirs)}
-    //     </TreeView>
-    // </Box>
     );
 }
  
