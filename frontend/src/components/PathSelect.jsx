@@ -20,7 +20,7 @@ const PathSelect = ({ name, details, required, values, setValues }) => {
     };
 
     async function getDirs() {
-        const resp = await fetch("http://localhost:3000/dirs", {
+        const resp = await fetch("http://localhost:3001/dirs", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

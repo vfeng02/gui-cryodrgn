@@ -18,7 +18,7 @@ const Generate = () => {
   const [generated, setGenerated] = useState("");
   const [argValues, setArgValues] = useState({});
   const [openAlert, setOpenAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+  const [Message, setAlertMessage] = useState("");
 
   async function onSelectFile(argName) {
     const filePath = await window.electronAPI.selectFile();
@@ -199,6 +199,10 @@ const Generate = () => {
 
   }
 
+  const handleExited = () => {
+    setAlertMessage(undefined);
+  };
+
   function handleClose(event, reason) {
     if (reason === 'clickaway') {
       return;
@@ -226,16 +230,17 @@ const Generate = () => {
             <ContentCopyIcon />
           </IconButton>
         </CopyToClipboard>
-        <Snackbar 
+        {/* <Snackbar 
           open={openAlert} 
           anchorOrigin={{ vertical: 'top', horizontal: 'right'}} 
-          autoHideDuration={3000} 
+          autoHideDuration={2000} 
           onClose={handleClose}
+          TransitionProps={{ onExited: handleExited }}
           >
           <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
             {alertMessage}
           </Alert>
-        </Snackbar>
+        </Snackbar> */}
         </div>)}
       {command_args ? (
         <div>
@@ -248,26 +253,6 @@ const Generate = () => {
               values={argValues}
               setValues={setArgValues}
                />
-                {/* {Object.entries(command_args).map(([group, args]) =>
-                  (<div className="accordion">
-                    <Accordion key={group} defaultExpanded={group == "positional arguments"}>
-                      <AccordionSummary key={group + "_name"} expandIcon={<ExpandMoreIcon />}><strong>{group}</strong></AccordionSummary>
-                      <AccordionDetails key={group + "_details"}>
-                        {Object.entries(args).map(([arg_name, arg_details]) =>(
-                          <div key={arg_name}>
-                            <label>{arg_name}</label>
-                            <Tooltip title={arg_details.help}>
-                              <IconButton className="info-icon">
-                                <InfoOutlinedIcon />
-                              </IconButton>
-                            </Tooltip>
-                            {renderInput(group, arg_name, arg_details)}
-                          </div>
-                        ))}
-                      </AccordionDetails>
-                    </Accordion> 
-                  </div>
-                  ))} */}
               <button type="submit">Generate Command</button>
             </form>
             <div className="slurm-link">

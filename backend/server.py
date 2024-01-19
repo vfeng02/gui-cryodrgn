@@ -50,11 +50,10 @@ def get_dirs():
 # Running app
 if __name__ == '__main__':
     # process the server side file structure and save to json
-    # dir_json = list_files(os.path.join('../',os.getcwd()))
     dir_json = list_files(os.getcwd())
     dir_json['id'] = 'root'
     with open('dirs.json', 'w') as f:
         f.write(json.dumps(dir_json, indent=2, sort_keys=True))
 
-    app.run(debug=True, port=3000)
+    app.run(debug=True, port=3001)
    
