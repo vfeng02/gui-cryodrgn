@@ -5,6 +5,7 @@ import { Modal } from '@mui/material';
 import { TreeView, TreeItem } from '@mui/x-tree-view';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import CustomTextField from './CustomTextField';
 
 const PathSelect = ({ name, details, required, values, setValues }) => {
     const [dirs, setDirs] = useState("");
@@ -49,7 +50,7 @@ const PathSelect = ({ name, details, required, values, setValues }) => {
     return (
         <div>
         <div className='path-select'>
-            <input
+            {/* <input
             data-toggle="tooltip" 
             data-placement="top" 
             title={details.help}
@@ -62,6 +63,26 @@ const PathSelect = ({ name, details, required, values, setValues }) => {
             placeholder='Click to select path'
             readOnly
             onClick={handleOpenModal}
+            /> */}
+            <CustomTextField
+            label={name}
+            helperText={details.help}
+            type="text"
+            id={name+"_file"}
+            name={name}
+            // key={name}
+            size="small"
+            margin="normal"
+            value={name in values ? values[name] : ""}
+            required={required}
+            placeholder='Click to select path'
+            readOnly
+            onClick={handleOpenModal}
+            fullWidth
+            InputLabelProps={{ 
+              shrink: true,
+              style: { color: '#486AA8' },
+            }}
             />
         </div>
         <div className='modal'>

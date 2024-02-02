@@ -1,11 +1,9 @@
 {
     "required fields": {
         "job name": {
-            "type": "text",
             "help": "name that the job and slurm script will be saved under (do not include any extensions, e.g. .slurm)"
         },
         "conda env": {
-            "type": "text",
             "help": "anaconda3 environment (the environment should already be created)"
         },
         "dir": {
@@ -15,13 +13,11 @@
     },
     "optional fields": {
         "conda version": {
-            "type": "text",
             "help": "anaconda3 version",
             "default": "anaconda3/2023.9"
         },
         "shell": {
             "flag": "",
-            "type": "text",
             "help": "unix shell to be used",
             "default": "!/bin/bash"
         },
@@ -51,13 +47,11 @@
         },
         "mem per cpu": {
             "flag": "--mem-per-cpu",
-            "type": "text",
             "help": "memory per cpu-core (4G is default)",
             "default": "4G"
         },
         "time": {
             "flag": "--time",
-            "type": "text",
             "help": "total run time limit (HH:MM:SS)",
             "default": "00:10:00"
         },
@@ -81,7 +75,6 @@
         },
         "mail user": {
             "flag": "--mail-user",
-            "type": "text",
             "help": "user email address",
             "default": "<YourNetID>@princeton.edu"
         }

@@ -1,0 +1,24 @@
+.result-bar  {
+  /* background-color: #CCD5E5; */
+  background-color: #A9B6D4;
+  box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.1);
+  height: 80px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  flex-wrap:nowrap;
+  align-items: center;
+  text-align: center;
+  position: sticky;
+  top: 60px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  z-index: 100;
+}
+
+.result-bar h3 {
+  flex-grow:1;       /* take up rest of line */
+  text-align:center; /* centre text in p */
+  font-size: 1.2rem;
+  font-style: italic;
+}

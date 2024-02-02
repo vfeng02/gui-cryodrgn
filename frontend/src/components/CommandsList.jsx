@@ -6,6 +6,9 @@ import '../App.css';
 import './CommandsList.css';
 
 const CommandList = ({ commands }) => {
+
+  // const [formValues, setFormValues] = useState({});
+
   return (
     <div className="command-list">
       {Object.entries(commands).map(([command_group, command_names]) => (

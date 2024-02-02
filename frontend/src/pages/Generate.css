@@ -1,28 +1,5 @@
 /* arguments new command */
 
-.result-bar  {
-    /* background-color: #CCD5E5; */
-    background-color: #A9B6D4;
-    box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.1);
-    height: 80px;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 1.2rem;
-    font-style: italic;
-    position: sticky;
-    top: 60px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    z-index: 100;
-  }
-
-.result-bar h3 {
-    min-width: 60vw;
-}
-
 .arguments {
   text-align: center; /* center buttons */
 }

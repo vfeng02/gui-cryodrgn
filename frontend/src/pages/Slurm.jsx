@@ -14,7 +14,6 @@ const Slurm = () => {
     const location = useLocation();
     const generatedCommand = location.state?.generatedCommand;
     const [values, setValues] = useState({});
-    // const [slurmScript, setSlurmScript] = useState("");
     const [openAlert, setOpenAlert] = useState(false);
     const [runOutput, setRunOutput] = useState("");
 
@@ -93,55 +92,6 @@ const Slurm = () => {
         setOpenAlert(true);
     };
 
-    function renderField(group_name, field_name, field_details) {
-        function updateField(fieldName, newValue) {
-            setValues({
-                ...values,
-                [fieldName]: newValue,
-            });
-        };
-    
-        function updateChecked (fieldName, isChecked) {
-            setValues({
-                ...values,
-                [fieldName]: isChecked ? true : false,
-            });
-        };
-
-        if ("const" in field_details) {
-            return (
-                <div className="toggle">
-                  <Switch
-                    key={field_name + "_toggle"}
-                    className="toggle-switch"
-                    checked={values[field_name] ?? field_details.default}
-                    onChange={(e) => updateChecked(field_name, e.target.checked)}
-                  />
-                  <p>{(field_name in values) ? values[field_name].toString() : field_details.default.toString()}</p>
-                </div>
-              )
-        }
-        if (field_details.type == "abspath") {
-            return (
-                <PathSelect name={field_name} details={field_details} required={true} values={values} setValues={setValues}/>
-              )
-        }
-        return (
-            <input 
-              data-toggle="tooltip" 
-              data-placement="top" 
-              title={field_details.help}
-              type={field_details.type}
-              step={field_details.type == "number" ? 1 : ""}
-              required={group_name == "required fields"}
-              onWheel={field_details.type == "number" ? ((e) => e.target.blur()) : undefined}
-              placeholder={group_name == "required fields" ? "" : field_details.default}
-              key = {field_name}
-              onChange={(e) => updateField(field_name, e.target.value)}
-            />
-          )
-    };
-
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
           return;
@@ -176,26 +126,6 @@ const Slurm = () => {
                   values={values}
                   setValues={setValues}
                   />
-                    {/* <div className='accordion'>
-                        {Object.entries(fields).map(([group_name, group_fields]) => (
-                            <Accordion key={group_name+"_accordion"} defaultExpanded={group_name == "required fields"}>
-                                <AccordionSummary key={group_name + "_name"} expandIcon={<ExpandMoreIcon />}><strong>{group_name}</strong></AccordionSummary>
-                                <AccordionDetails key={group_name + "_details"}>
-                                {Object.entries(group_fields).map(([field_name, field_details]) =>(
-                                    <div key={field_name} className="field">
-                                    <label>{field_name}</label>
-                                    <Tooltip title={field_details.help}>
-                                        <IconButton className="info-icon">
-                                        <InfoOutlinedIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                    {renderField(group_name, field_name, field_details)}
-                                    </div>
-                                ))}
-                                </AccordionDetails>
-                            </Accordion> 
-                        ))}
-                    </div> */}
                     <button type="submit" className='run-button' onClick={(e) => generateSlurm(e)}>Save and run slurm script</button>
                 </form>
             </div>
