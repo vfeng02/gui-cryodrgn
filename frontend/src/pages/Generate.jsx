@@ -2,6 +2,8 @@ import React from 'react';
 import { useState } from "react";
 import '../App.css';
 import './Generate.css';
+import './Generate.css';
+import useHistoryState from "../useHistoryState"
 import Error from "../components/Error";
 import { useLocation, Link } from 'react-router-dom';
 import AccordionGroup from "../components/AccordionGroup";
@@ -13,6 +15,7 @@ const Generate = () => {
   const [command_name, command_args] = location.state?.fromCommand;
   const [generated, setGenerated] = useState("");
   const [argValues, setArgValues] = useState({});
+  // const [argValues, setArgValues] = useHistoryState(command_name+"_argvalues", {});
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 

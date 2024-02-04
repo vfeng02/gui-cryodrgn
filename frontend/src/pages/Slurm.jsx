@@ -34,6 +34,23 @@ const Slurm = () => {
         }
     };
 
+    // async function getCondaEnvs() {
+    //   const response = await fetch("http://localhost:3000/run", {
+    //       method: 'POST',
+    //       headers: {
+    //           'Content-Type': 'application/json'
+    //       },
+    //       // body: JSON.stringify({"command": command, "path": path, "content": content})
+    //   });
+  
+    //   if (!response.ok) {
+    //       return "Error fetching conda environments";
+    //   }
+    //   else {
+    //       return response.json();
+    //   }
+    // };
+
     async function generateSlurm(e) {
         e.preventDefault();
         let slurm_configs = "";

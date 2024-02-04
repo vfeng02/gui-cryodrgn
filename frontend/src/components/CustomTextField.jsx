@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
+import { grey } from '@mui/material/colors';
 import { TextField } from '@mui/material';
 
 const StyledTextField = styled(TextField)({
@@ -11,10 +12,13 @@ const StyledTextField = styled(TextField)({
     '&:hover fieldset': {
       borderColor: '#486AA8',
     },
+    color: '#486AA8',
   },
 });
 
 const CustomTextField = ( props ) => {
+  const theme = useTheme();
+
   return (
     <StyledTextField
     label={props.name}
@@ -33,6 +37,12 @@ const CustomTextField = ( props ) => {
     onClick={props.onClick}
     select={props.select}
     InputProps={props.inputProps}
+    sx={{
+      input: {
+        "&::placeholder": {    
+           color: grey[500],
+        }
+    }}}
     size="small"
     margin={props.margin ?? "normal"}
     fullWidth

@@ -50,39 +50,16 @@ const PathSelect = ({ name, details, required, values, setValues }) => {
     return (
         <div>
         <div className='path-select'>
-            {/* <input
-            data-toggle="tooltip" 
-            data-placement="top" 
-            title={details.help}
-            type="text"
-            id={name+"_file"}
-            name={name}
-            // key={name}
-            value={name in values ? values[name] : ""}
-            required={required}
-            placeholder='Click to select path'
-            readOnly
-            onClick={handleOpenModal}
-            /> */}
             <CustomTextField
-            label={name}
-            helperText={details.help}
+            help={details.help}
             type="text"
-            id={name+"_file"}
+            id={name+"-path"}
             name={name}
-            // key={name}
-            size="small"
-            margin="normal"
             value={name in values ? values[name] : ""}
             required={required}
             placeholder='Click to select path'
             readOnly
             onClick={handleOpenModal}
-            fullWidth
-            InputLabelProps={{ 
-              shrink: true,
-              style: { color: '#486AA8' },
-            }}
             />
         </div>
         <div className='modal'>

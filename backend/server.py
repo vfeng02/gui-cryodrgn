@@ -11,6 +11,7 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 node_id = 0
 
+# scrape file system structure
 def list_files(path):
     global node_id
     d = {'name': os.path.basename(path)}
@@ -21,7 +22,7 @@ def list_files(path):
         d['children'] = [list_files(os.path.join(path,x)) for x in os.listdir(path)]
         d['children'].sort(key= lambda x: x['name'])
     return d 
- 
+
 @app.route('/run', methods=['POST'])
 @cross_origin()
 def save_and_run_script():
@@ -55,5 +56,5 @@ if __name__ == '__main__':
     with open('dirs.json', 'w') as f:
         f.write(json.dumps(dir_json, indent=2, sort_keys=True))
 
-    app.run(debug=True, port=3001)
+    app.run(debug=True, port=3000)
    
