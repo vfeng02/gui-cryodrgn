@@ -4,6 +4,7 @@
             "help": "name that the job and slurm script will be saved under (do not include any extensions, e.g. .slurm)"
         },
         "conda env": {
+            "type": "conda",
             "help": "anaconda3 environment (the environment should already be created)"
         },
         "dir": {

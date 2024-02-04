@@ -47,6 +47,19 @@ def get_dirs():
     dirs = json.load(f)
     f.close()
     return dirs
+
+@app.route('/envs', methods=['POST'])
+@cross_origin()
+def get_envs():
+    print("received request")
+    process_1 = subprocess.run("module load anaconda3/2023.9; conda env list", capture_output=True, shell=True)
+    output = process_1.stdout.decode('utf-8').split('\n')
+    envs_list = []
+    for line in output[2:]: 
+        if len(line) > 0:
+          envs_list.append(line.split(None, 1)[0])
+    print(envs_list)
+    return jsonify(envs_list)
      
 # Running app
 if __name__ == '__main__':
@@ -56,5 +69,5 @@ if __name__ == '__main__':
     with open('dirs.json', 'w') as f:
         f.write(json.dumps(dir_json, indent=2, sort_keys=True))
 
-    app.run(debug=True, port=3000)
+    app.run(debug=True, port=3002)
    

@@ -8,7 +8,7 @@ import PathSelect from "./PathSelect";
 import CustomTextField from './CustomTextField';
 import ConstToggle from './ConstToggle';
 
-const AccordionGroup = ({ inputs, required_groups, values, setValues }) => {
+const AccordionGroup = ({ inputs, required_groups, conda_envs, values, setValues }) => {
     function updateInput(name, newValue) {
         setValues({
             ...values,
@@ -32,6 +32,22 @@ const AccordionGroup = ({ inputs, required_groups, values, setValues }) => {
               required={required} 
               values={values} 
               setValues={setValues}/>)
+            }
+            else if (details.type == "conda") {
+              return (
+                <CustomTextField 
+                name={name}
+                id={name + "-conda-select"}
+                help={details.help}
+                value={values[name] ?? ""}
+                select={true}
+                onChange={(e) => updateInput(name, e.target.value)}
+                menuItems={(conda_envs).map((option) => (
+                  <MenuItem className="menu-options" value={option}>{option}</MenuItem>
+                  )
+                  )}
+                />
+              ) 
             }
             else {
               type = "number";
@@ -150,7 +166,6 @@ const AccordionGroup = ({ inputs, required_groups, values, setValues }) => {
               </Accordion> 
             </div>
           ))}
-          <Typography>Testing</Typography>
     </div>
   );
 }

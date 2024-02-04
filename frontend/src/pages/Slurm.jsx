@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import fields from '../slurm.json';
 import { Accordion, AccordionSummary, AccordionDetails, Tooltip, IconButton, Switch,Alert, Snackbar } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -16,9 +16,10 @@ const Slurm = () => {
     const [values, setValues] = useState({});
     const [openAlert, setOpenAlert] = useState(false);
     const [runOutput, setRunOutput] = useState("");
+    const [condaEnvs, setCondaEnvs] = useState([]);
 
     async function saveAndRun(command, path, content) {
-        const response = await fetch("http://localhost:3000/run", {
+        const response = await fetch("http://localhost:3002/run", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -34,22 +35,25 @@ const Slurm = () => {
         }
     };
 
-    // async function getCondaEnvs() {
-    //   const response = await fetch("http://localhost:3000/run", {
-    //       method: 'POST',
-    //       headers: {
-    //           'Content-Type': 'application/json'
-    //       },
-    //       // body: JSON.stringify({"command": command, "path": path, "content": content})
-    //   });
-  
-    //   if (!response.ok) {
-    //       return "Error fetching conda environments";
-    //   }
-    //   else {
-    //       return response.json();
-    //   }
-    // };
+    async function getCondaEnvs() {
+      const response = await fetch("http://localhost:3002/envs", {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({})
+      });
+
+      if (!response.ok) {
+          return "Error fetching conda environments";
+      }
+      const envs = await response.json();
+      setCondaEnvs(envs);
+    };
+
+    useEffect(() => {
+      getCondaEnvs();
+    },[]);
 
     async function generateSlurm(e) {
         e.preventDefault();
@@ -140,6 +144,7 @@ const Slurm = () => {
                   <AccordionGroup 
                   inputs={fields} 
                   required_groups={new Set(["required fields"])}
+                  conda_envs={condaEnvs}
                   values={values}
                   setValues={setValues}
                   />
