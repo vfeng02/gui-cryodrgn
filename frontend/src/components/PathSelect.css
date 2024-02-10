@@ -8,16 +8,15 @@
   border-radius: 15px;
   overflow:hidden;
   display: flex;
-  margin: 200px auto;
+  margin: auto auto;
   width: 500px;
   min-height: 100px;
-  max-height: 600px;
+  max-height: 400px;
   background-color: white;
 }
 
 .tree-view {
   padding: 20px 100px;
-  /* border-radius: 10px; */
   width: 500px;
   overflow-y: auto;
 }

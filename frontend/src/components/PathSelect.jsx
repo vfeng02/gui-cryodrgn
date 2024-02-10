@@ -28,7 +28,7 @@ const PathSelect = ({ name, details, required, values, setValues }) => {
     },[expanded]);
 
     async function getFiles() {
-        const resp = await fetch("http://localhost:3002/files", {
+        const resp = await fetch("/files", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -78,8 +78,9 @@ const PathSelect = ({ name, details, required, values, setValues }) => {
             onClick={handleOpenModal}
             />
         </div>
-        <div className='modal'>
+        <div>
             <Modal
+            className='modal'
                 open={openModal}
                 onClose={handleCloseModal}
             >
@@ -93,17 +94,6 @@ const PathSelect = ({ name, details, required, values, setValues }) => {
                         >
                         {renderTree(dir)}
                         </TreeView>
-                        {/* <TreeView
-                          expanded={expanded}
-                          onNodeToggle={(e, nodeIds) => setExpanded(nodeIds)}
-                          treeData={dir}
-                          selected={selected}
-                          onNodeSelect={(e, nodeId) => setSelected(nodeId)}
-                          titleRender={(node) => {
-                              return <>{node.title}</>;
-                          }}
-                          lazyLoadFn={getFiles}
-                      /> */}
                     </div>
                 </div>
             </Modal>

@@ -1,9 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from "react";
+import { Snackbar, Alert } from "@mui/material"
 import fields from '../slurm.json';
 import '../App.css';
 import './Slurm.css';
 import { useLocation } from 'react-router-dom';
+import AccordionGroup from '../components/AccordionGroup';
 
 const Slurm = () => {
     const location = useLocation();
@@ -14,7 +16,7 @@ const Slurm = () => {
     const [condaEnvs, setCondaEnvs] = useState([]);
 
     async function saveAndRun(command, path, content) {
-        const response = await fetch("http://localhost:3002/run", {
+        const response = await fetch("/run", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -31,7 +33,7 @@ const Slurm = () => {
     };
 
     async function getCondaEnvs() {
-      const response = await fetch("http://localhost:3002/envs", {
+      const response = await fetch("/envs", {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
