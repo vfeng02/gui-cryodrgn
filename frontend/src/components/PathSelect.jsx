@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import './PathSelect.css';
-import { Modal } from '@mui/material';
-import { TreeView, TreeItem } from '@mui/x-tree-view';
+import { Modal, CircularProgress } from '@mui/material';
+// import { TreeView } from "mui-lazy-tree-view";
+import {TreeView, TreeItem } from '@mui/x-tree-view'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CustomTextField from './CustomTextField';
 
 const PathSelect = ({ name, details, required, values, setValues }) => {
-    const [dirs, setDirs] = useState("");
+    const [dir, setDir] = useState("");
     const [selected, setSelected] = useState("");
     const [openModal, setOpenModal] = useState(false);
+    const [expanded, setExpanded] = useState([]);
+
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => {
         setValues({
@@ -20,32 +23,45 @@ const PathSelect = ({ name, details, required, values, setValues }) => {
         setOpenModal(false);
     };
 
-    async function getDirs() {
-        const resp = await fetch("http://localhost:3002/dirs", {
+    useEffect(() => {
+        getFiles();
+    },[expanded]);
+
+    async function getFiles() {
+        const resp = await fetch("http://localhost:3002/files", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
+            body: JSON.stringify({"expanded": expanded})
         });
         if (!resp.ok) {
-            console.log("Error in getting directories");
+            console.log("Error in getting files");
         }
     
         const data = await resp.json();
-        setDirs(data);
+        setDir(data);
     }
-    
-    useEffect(() => {
-        getDirs();
-    },[]);
 
-    const renderTree = (nodes) => (
-        <TreeItem key={nodes.id} nodeId={nodes.path} label={nodes.name}>
-            {Array.isArray(nodes.children)
-            ? nodes.children.map((node) => renderTree(node))
-            : null}
-        </TreeItem>
-    );
+    const renderTree = (node) => {
+      if (Array.isArray(node.children)) {
+        if (node.children.length === 0) { //directory not expanded
+          return (
+            <TreeItem id={"node-" + node.id} key={node.id} nodeId={node.path} label={node.name}><CircularProgress/></TreeItem>
+          )
+        }
+        // render expanded directory
+        return (
+          <TreeItem id={"node-" + node.id} key={node.id} nodeId={node.path} label={node.name}>
+              {node.children.map((n) => renderTree(n))}
+          </TreeItem>
+      )
+      }
+      // render file 
+      return (
+        <TreeItem id={"node-" + node.id} key={node.id} nodeId={node.path} label={node.name}/>
+      )
+    }
 
     return (
         <div>
@@ -71,15 +87,23 @@ const PathSelect = ({ name, details, required, values, setValues }) => {
                     <div className='tree-view'>
                         <TreeView
                         defaultCollapseIcon={<ExpandMoreIcon />}
-                        defaultExpanded={['root']}
                         defaultExpandIcon={<ChevronRightIcon />}
-                        onNodeSelect={(e, nodeId) => {
-                            console.log(e.target);
-                            setSelected(nodeId);
-                        }}
+                        onNodeToggle={(e, nodeIds) => setExpanded(nodeIds)}
+                        onNodeSelect={(e, nodeId) => setSelected(nodeId)}
                         >
-                        {renderTree(dirs)}
+                        {renderTree(dir)}
                         </TreeView>
+                        {/* <TreeView
+                          expanded={expanded}
+                          onNodeToggle={(e, nodeIds) => setExpanded(nodeIds)}
+                          treeData={dir}
+                          selected={selected}
+                          onNodeSelect={(e, nodeId) => setSelected(nodeId)}
+                          titleRender={(node) => {
+                              return <>{node.title}</>;
+                          }}
+                          lazyLoadFn={getFiles}
+                      /> */}
                     </div>
                 </div>
             </Modal>

@@ -1,14 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import fields from '../slurm.json';
-import { Accordion, AccordionSummary, AccordionDetails, Tooltip, IconButton, Switch,Alert, Snackbar } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import '../App.css';
 import './Slurm.css';
 import { useLocation } from 'react-router-dom';
-import PathSelect from "../components/PathSelect";
-import AccordionGroup from "../components/AccordionGroup";
 
 const Slurm = () => {
     const location = useLocation();
@@ -41,7 +36,6 @@ const Slurm = () => {
           headers: {
               'Content-Type': 'application/json'
           },
-          body: JSON.stringify({})
       });
 
       if (!response.ok) {

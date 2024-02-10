@@ -9,19 +9,57 @@ import json
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-node_id = 0
 
-# scrape file system structure
-def list_files(path):
-    global node_id
-    d = {'name': os.path.basename(path)}
-    d['path'] = path
+# get all files in a directory
+def list_files(dir_path, expanded, node_id):
+    d = {'name': os.path.basename(dir_path)}
+    d['path'] = dir_path
     d['id'] = str(node_id)
     node_id += 1
-    if os.path.isdir(path) and (os.path.basename(path) != "node_modules"):
-        d['children'] = [list_files(os.path.join(path,x)) for x in os.listdir(path)]
-        d['children'].sort(key= lambda x: x['name'])
-    return d 
+    d['children'] = []
+
+    # get the paths of all the children of this dir
+    contents = next(os.walk(dir_path))
+    for x in contents[1]:
+        child = {'path': os.path.join(dir_path,x)}
+        if child['path'] in expanded: 
+            child = list_files(child['path'], expanded, node_id)
+        else: 
+          child['name'] = x
+          child['id'] = str(node_id)
+          node_id += 1
+          child['children'] = []
+        
+        d['children'].append(child)
+
+    for x in contents[2]:
+        child = {'name': x}
+        child['path'] = os.path.join(dir_path,x)
+        child['id'] = str(node_id)
+        node_id += 1
+        d['children'].append(child)
+
+    return d
+
+# def list_files(dir_path):
+#     d = {'title': os.path.basename(dir_path)}
+#     d['key'] = dir_path
+#     d['children'] = []
+
+#     # get the paths of all the children of this dir
+#     contents = next(os.walk(dir_path))
+#     for x in contents[1]:
+#         child = {'title': x}
+#         child['key'] = os.path.join(dir_path,x)
+#         child['children'] = []
+#         d['children'].append(child)
+
+#     for x in contents[2]:
+#         child = {'title': x}
+#         child['key'] = os.path.join(dir_path,x)
+#         d['children'].append(child)
+
+#     return jsonify(d)
 
 @app.route('/run', methods=['POST'])
 @cross_origin()
@@ -40,34 +78,24 @@ def save_and_run_script():
     
     return jsonify(process_1.stdout.decode('utf-8'))
 
-@app.route('/dirs', methods=['POST'])
+@app.route('/files', methods=['POST'])
 @cross_origin()
-def get_dirs():
-    f = open('dirs.json')
-    dirs = json.load(f)
-    f.close()
-    return dirs
+def get_files():
+    expanded=set(request.json['expanded']) # passed in as a list of paths
+    return jsonify(list_files(os.getcwd(), expanded, 0))
 
 @app.route('/envs', methods=['POST'])
 @cross_origin()
 def get_envs():
-    print("received request")
     process_1 = subprocess.run("module load anaconda3/2023.9; conda env list", capture_output=True, shell=True)
     output = process_1.stdout.decode('utf-8').split('\n')
     envs_list = []
     for line in output[2:]: 
         if len(line) > 0:
           envs_list.append(line.split(None, 1)[0])
-    print(envs_list)
     return jsonify(envs_list)
      
 # Running app
 if __name__ == '__main__':
-    # process the server side file structure and save to json
-    dir_json = list_files(os.getcwd())
-    dir_json['id'] = 'root'
-    with open('dirs.json', 'w') as f:
-        f.write(json.dumps(dir_json, indent=2, sort_keys=True))
-
     app.run(debug=True, port=3002)
    
