@@ -1,13 +1,11 @@
 import React from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, MenuItem, Typography, Switch, FormLabel } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Accordion, AccordionSummary, AccordionDetails, MenuItem} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import '../App.css';
 import './AccordionGroup.css';
 import PathSelect from "./PathSelect";
 import CustomTextField from './CustomTextField';
 import ConstToggle from './ConstToggle';
-import CommandList from './CommandsList';
 
 const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, values, setValues }) => {
     function updateInput(arg_name, newValue) {

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import { TextField } from '@mui/material';
 
@@ -17,8 +17,6 @@ const StyledTextField = styled(TextField)({
 });
 
 const CustomTextField = ( props ) => {
-  // const theme = useTheme();
-
   return (
     <StyledTextField
     label={props.name}
