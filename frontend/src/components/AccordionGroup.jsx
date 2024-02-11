@@ -7,13 +7,17 @@ import './AccordionGroup.css';
 import PathSelect from "./PathSelect";
 import CustomTextField from './CustomTextField';
 import ConstToggle from './ConstToggle';
+import CommandList from './CommandsList';
 
-const AccordionGroup = ({ inputs, required_groups, conda_envs, values, setValues }) => {
-    function updateInput(name, newValue) {
+const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, values, setValues }) => {
+    function updateInput(arg_name, newValue) {
         setValues({
-            ...values,
-            [name]: newValue,
-        });
+          ...values,
+          [command_name]: {
+              ...values[command_name],
+              [arg_name]: newValue
+          },
+        }); 
     };
 
     function renderInput(required, name, details) {
@@ -26,7 +30,8 @@ const AccordionGroup = ({ inputs, required_groups, conda_envs, values, setValues
             if (details.type == "abspath") {
               return (
               <PathSelect 
-              name={name} 
+              command_name={command_name}
+              arg_name={name} 
               key={name+"-path-select"}
               details={details} 
               required={required} 
@@ -39,7 +44,7 @@ const AccordionGroup = ({ inputs, required_groups, conda_envs, values, setValues
                 name={name}
                 id={name + "-conda-select"}
                 help={details.help}
-                value={values[name] ?? ""}
+                value={values[command_name] ? (values[command_name][name] ?? "") : ""}
                 select={true}
                 onChange={(e) => updateInput(name, e.target.value)}
                 menuItems={(conda_envs).map((option) => (
@@ -63,27 +68,10 @@ const AccordionGroup = ({ inputs, required_groups, conda_envs, values, setValues
         if ("const" in details) {
             return (
                 <div key={name+"-toggle-container"} className="toggle">
-                {/* <FormLabel sx={{color: '#486AA8', fontSize: '0.75em'}}>{name}</FormLabel>
-                <div className="toggle-switch">
-                  <Switch
-                    // key={name + "_toggle"}
-                    checked={values[name] ?? details.default}
-                    onChange={(e) => updateChecked(name, e.target.checked)}
-                  />
-                  <p>{(values[name] ?? details.default) ? "true" : "false"}</p>
-                </div> */}
-                {/* <CustomTextField
-                name={name}
-                id={name + "_toggle"}
-                inputProps={{endAdornment: <Switch
-                  checked={values[name] ?? details.default}
-                  onChange={(e) => updateChecked(name, e.target.checked)}
-                />}}
-                menuItems={<p>{(values[name] ?? details.default) ? "true" : "false"}</p>}
-                /> */}
                 <ConstToggle
-                name={name}
-                initialValue={values[name] ?? details.default}
+                command_name={command_name}
+                arg_name={name}
+                initialValue={values[command_name] ? (values[command_name][name] ?? details.default) : details.default}
                 help={details.help}
                 values={values}
                 setValues={setValues}
@@ -100,7 +88,7 @@ const AccordionGroup = ({ inputs, required_groups, conda_envs, values, setValues
               name={name}
               id={name + "_select"}
               help={details.help}
-              value={values[name] ?? ""}
+              value={values[command_name] ? (values[command_name][name] ?? "") : ""}
               placeholder={details.default.toString()}
               select={true}
               onChange={(e) => updateInput(name, e.target.value)}
@@ -128,6 +116,7 @@ const AccordionGroup = ({ inputs, required_groups, conda_envs, values, setValues
             margin="dense"
             onWheel={onWheel}
             required={required}
+            value={values[command_name] ? values[command_name][name+index] : undefined}
             placeholder={details.default ? details.default.toString() : ""}
             id={name+index}
             onChange={(e) => updateInput(name+index, e.target.value)}
@@ -144,6 +133,7 @@ const AccordionGroup = ({ inputs, required_groups, conda_envs, values, setValues
             step={step}
             onWheel={onWheel}
             required = {required}
+            value={values[command_name] ? values[command_name][name] : undefined}
             placeholder={details.default ? details.default.toString() : ""}
             onChange={(e) => updateInput(name, e.target.value)}
             />

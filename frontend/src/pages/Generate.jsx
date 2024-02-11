@@ -3,19 +3,16 @@ import { useState } from "react";
 import '../App.css';
 import './Generate.css';
 import './Generate.css';
-import useHistoryState from "../useHistoryState"
 import Error from "../components/Error";
 import { useLocation, Link } from 'react-router-dom';
 import AccordionGroup from "../components/AccordionGroup";
 import ResultBar from "../components/ResultBar";
 
 
-const Generate = () => {
+const Generate = ( {argValues, setArgValues} ) => {
   const location = useLocation();
   const [command_name, command_args] = location.state?.fromCommand;
   const [generated, setGenerated] = useState("");
-  const [argValues, setArgValues] = useState({});
-  // const [argValues, setArgValues] = useHistoryState(command_name+"_argvalues", {});
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
@@ -25,9 +22,9 @@ const Generate = () => {
 
     for (const [_, args_in_group] of Object.entries(command_args)) {
       for (const [arg_name, arg_details] of Object.entries(args_in_group)) {
-        if (arg_name in argValues && argValues[arg_name].toString().length > 0) {
+        if (arg_name in argValues[command_name] && argValues[command_name][arg_name].toString().length > 0) {
           if ("const" in arg_details) {
-            if (argValues[arg_name] != arg_details.default) {
+            if (argValues[command_name][arg_name] != arg_details.default) {
               result += arg_details.flags[0] + " "
             }
           }
@@ -35,15 +32,15 @@ const Generate = () => {
             if ("flags" in arg_details) {
               result += arg_details.flags[0] + " "
             }
-            result += argValues[arg_name] + " "
+            result += argValues[command_name][arg_name] + " "
           }
         }
         else if ("nargs" in arg_details && arg_details.nargs > 1) {
           let multiple_values = ""
           for (let i = 0; i < arg_details.nargs; i++) {
             // does not handle the case when one or multiple values are missing
-            if ((arg_name+i) in argValues && argValues[(arg_name+i)] != null) {
-              multiple_values += argValues[(arg_name+i)] + " "
+            if ((arg_name+i) in argValues[command_name] && argValues[command_name][(arg_name+i)] != null) {
+              multiple_values += argValues[command_name][(arg_name+i)] + " "
             }
           }
           // check for >2 when user types then deletes their input to the multiple argument
@@ -80,6 +77,7 @@ const Generate = () => {
           <div className="arguments">
             <form onSubmit={e => generateCommand(e)}>
               <AccordionGroup 
+              command_name={command_name}
               inputs={command_args} 
               required_groups={new Set(["positional arguments"])}
               values={argValues}
@@ -88,7 +86,7 @@ const Generate = () => {
               <button type="submit">Generate Command</button>
             </form>
             <div className="slurm-link">
-              <Link to={"/slurm"} state={{generatedCommand: generated}}>
+              <Link to={"/slurm"} state={{generatedCommand: generated, commandName: command_name}}>
                 <button className="secondary-button">Run Slurm Script</button>
               </Link>
             </div>

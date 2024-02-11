@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from "react";
 import Navbar from './components/Navbar';
 import './App.css';
 import Home from './pages/Home';
@@ -46,17 +47,19 @@ const theme = createTheme({
   }
 });
 
-
 function App() {
+  const [argValues, setArgValues] = useState({});
+  const [slurmValues, setSlurmValues] = useState({});
+  
   return (
     <>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <Navbar />
           <Routes>
-            <Route exact path='/' element={<Home/>} />
-            <Route exact path='/generate' element={<Generate/>} />
-            <Route exact path='/slurm' element={<Slurm/>} />
+            <Route exact path='/' key="route1" element={<Home/>} />
+            <Route exact path='/generate' key="route1" element={<Generate argValues={argValues} setArgValues={setArgValues}/>} />
+            <Route exact path='/slurm' key="route1" element={<Slurm argValues={argValues} values={slurmValues} setValues={setSlurmValues}/>} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

@@ -5,7 +5,7 @@ import '../App.css';
 import './ConstToggle.css';
 
 
-const ConstToggle = ({  name, initialValue, help, values, setValues }) => {
+const ConstToggle = ({  command_name, arg_name, initialValue, help, values, setValues }) => {
   const [toggle, setToggle] = useState(initialValue);
 
   const handleChange = (event, isTrue) => {
@@ -13,7 +13,10 @@ const ConstToggle = ({  name, initialValue, help, values, setValues }) => {
       setToggle(isTrue);
       setValues({
         ...values,
-        [name]: isTrue ? "true" : "false",
+        [command_name]: {
+            ...values[command_name],
+            [arg_name]: isTrue ? "true" : "false"
+        },
       });
     }
   };
@@ -22,11 +25,11 @@ const ConstToggle = ({  name, initialValue, help, values, setValues }) => {
     <div className='toggle-container'>
       <div className='toggle-button-container'>
         <FormLabel className='toggle-label' sx={{color: '#486AA8', backgroundColor:'#ffffff', fontSize: '0.75em', borderRadius: '16px', textAlign: 'center', paddingRight:'0'}}>
-          {name}</FormLabel>
+          {arg_name}</FormLabel>
         <ToggleButtonGroup
           className='toggle-button'
           value={toggle}
-          key={name+"-toggle-button"}
+          key={arg_name+"-toggle-button"}
           exclusive
           fullWidth
           size="small"

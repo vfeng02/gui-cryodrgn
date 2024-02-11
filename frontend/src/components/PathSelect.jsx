@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CustomTextField from './CustomTextField';
 
-const PathSelect = ({ name, details, required, values, setValues }) => {
+const PathSelect = ({ command_name, arg_name, details, required, values, setValues }) => {
     const [dir, setDir] = useState("");
     const [selected, setSelected] = useState("");
     const [openModal, setOpenModal] = useState(false);
@@ -16,11 +16,14 @@ const PathSelect = ({ name, details, required, values, setValues }) => {
 
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => {
-        setValues({
-            ...values,
-            [name]: selected,
-        });
-        setOpenModal(false);
+      setValues({
+        ...values,
+        [command_name]: {
+            ...values[command_name],
+            [arg_name]: selected
+        },
+      });
+      setOpenModal(false);
     };
 
     useEffect(() => {
@@ -69,9 +72,9 @@ const PathSelect = ({ name, details, required, values, setValues }) => {
             <CustomTextField
             help={details.help}
             type="text"
-            id={name+"-path"}
-            name={name}
-            value={name in values ? values[name] : ""}
+            id={arg_name+"-path"}
+            name={arg_name}
+            value={values[command_name] ? (values[command_name][arg_name] ?? "") : ""}
             required={required}
             placeholder='Click to select path'
             readOnly
