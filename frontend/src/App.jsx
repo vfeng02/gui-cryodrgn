@@ -14,6 +14,9 @@ const theme = createTheme({
     primary: {
       main: '#486AA8',
     },
+    secondary: {
+      main: '#ffffff'
+    }
   },
   typography: {
     fontFamily: 'Sometype Mono',

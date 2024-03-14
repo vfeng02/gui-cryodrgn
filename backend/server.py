@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import subprocess
 import os
-import json
+import argparse
  
 # Initializing flask app
 app = Flask(__name__)
@@ -97,5 +97,10 @@ def get_envs():
      
 # Running app
 if __name__ == '__main__':
-    app.run(debug=True, port=3001)
+    parser = argparse.ArgumentParser(
+                    prog='server',
+                    description='starts a server at the given port address and services requests from the website')
+    parser.add_argument('port', type=int, help='the port to start the server') 
+    args = parser.parse_args()
+    app.run(debug=True, port=args.port)
    

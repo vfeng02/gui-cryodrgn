@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import './PathSelect.css';
-import { Modal, CircularProgress } from '@mui/material';
+import { Modal, CircularProgress, InputAdornment, IconButton } from '@mui/material';
 import {TreeView, TreeItem } from '@mui/x-tree-view'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ClearIcon from '@mui/icons-material/Clear';
 import CustomTextField from './CustomTextField';
 
 const PathSelect = ({ command_name, arg_name, details, required, values, setValues }) => {
@@ -24,6 +25,16 @@ const PathSelect = ({ command_name, arg_name, details, required, values, setValu
       });
       setOpenModal(false);
     };
+
+    const handleClearPath = (e) => {
+      const newValues = values[command_name]
+      delete newValues[arg_name]
+      setValues({
+        ...values,
+        newValues,
+      });
+      e.stopPropagation();
+    }
 
     useEffect(() => {
         getFiles();
@@ -49,13 +60,14 @@ const PathSelect = ({ command_name, arg_name, details, required, values, setValu
       if (Array.isArray(node.children)) {
         if (node.children.length === 0) { //directory not expanded
           return (
-            <TreeItem id={"node-" + node.id} key={node.id} nodeId={node.path} label={node.name}><CircularProgress/></TreeItem>
+            <TreeItem className="loading" id={"node-" + node.id} key={node.id} nodeId={node.path} label={node.name}><CircularProgress/></TreeItem>
           )
         }
         // render expanded directory
         return (
           <TreeItem id={"node-" + node.id} key={node.id} nodeId={node.path} label={node.name}>
               {node.children.map((n) => renderTree(n))}
+              {/* <CircularProgress size={20} /> test loading icon */}
           </TreeItem>
       )
       }
@@ -76,6 +88,15 @@ const PathSelect = ({ command_name, arg_name, details, required, values, setValu
             value={values[command_name] ? (values[command_name][arg_name] ?? "") : ""}
             required={required}
             placeholder='Click to select path'
+            inputProps={{
+              endAdornment: <InputAdornment position="end" className="clear-icon">
+                <IconButton
+              onClick={(e) => handleClearPath(e)}
+              >
+              {values[command_name] ? (values[command_name][arg_name] ? <ClearIcon/> : null) : null}
+            </IconButton>
+            </InputAdornment>
+            }}
             readOnly
             onClick={handleOpenModal}
             />

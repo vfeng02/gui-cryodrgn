@@ -44,6 +44,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
                 help={details.help}
                 value={values[command_name] ? (values[command_name][name] ?? "") : ""}
                 select={true}
+                required={required} 
                 onChange={(e) => updateInput(name, e.target.value)}
                 menuItems={(conda_envs).map((option) => (
                   <MenuItem className="menu-options" value={option}>{option}</MenuItem>
@@ -89,6 +90,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
               value={values[command_name] ? (values[command_name][name] ?? "") : ""}
               placeholder={details.default.toString()}
               select={true}
+              required={required}
               onChange={(e) => updateInput(name, e.target.value)}
               menuItems={(details.choices).map((option) => (
                 <MenuItem className="menu-options" value={option}>{option}</MenuItem>

@@ -1,23 +1,26 @@
 // vite.config.js
 import { defineConfig } from 'vite'
 
-const devServer = "http://localhost:3001"
+const serverPort=3001
+const websitePort=3002
+const server = "http://localhost:" + serverPort.toString()
 
 export default defineConfig({
   server: {
+    port: websitePort,
     proxy: {
       '/files': {
-        target: devServer,
+        target: server,
         changeOrigin: true,
         secure: false,
       },
       '/envs': {
-        target: devServer,
+        target: server,
         changeOrigin: true,
         secure: false,
       },
       '/run': {
-        target: devServer,
+        target: server,
         changeOrigin: true,
         secure: false,
       }

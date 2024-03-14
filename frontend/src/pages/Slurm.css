@@ -1,10 +1,16 @@
-.slurm {
-  text-align: center; /* center buttons */
-}
-
 .slurm .go-back {
     position: fixed;
     top: 70px;
     left: 60px;
     z-index: 100;
 }
+
+.slurm .command-card-container {
+  position: fixed;
+  bottom: 70px;
+  left: 60px;
+  /* width: 20vw; */
+  overflow: hidden;
+  border-radius: 15px;
+}
+

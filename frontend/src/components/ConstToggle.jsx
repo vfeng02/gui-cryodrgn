@@ -24,7 +24,7 @@ const ConstToggle = ({  command_name, arg_name, initialValue, help, values, setV
   return (
     <div className='toggle-container'>
       <div className='toggle-button-container'>
-        <FormLabel className='toggle-label' sx={{color: '#486AA8', backgroundColor:'#ffffff', fontSize: '0.75em', borderRadius: '16px', textAlign: 'center', paddingRight:'0'}}>
+        <FormLabel className='toggle-label' sx={{color: '#486AA8', fontSize: '0.75em', backgroundColor:'#ffffff', borderRadius: '16px', boxShadow: '0 0 .8em #ffffff', paddingLeft:'10px'}}>
           {arg_name}</FormLabel>
         <ToggleButtonGroup
           className='toggle-button'

@@ -10,6 +10,34 @@
         "dir": {
             "type": "abspath",
             "help": "directory the slurm script should be saved in"
+        },
+        "tasks": {
+          "flag": "--ntasks",
+          "type": "number",
+          "help": "total number of tasks across all nodes",
+          "default": 1
+        },
+        "cpus per task": {
+            "flag": "--cpus-per-task",
+            "type": "number",
+            "help": "cpu-cores per task (>1 if multi-threaded tasks)",
+            "default": 1
+        },
+        "mem per cpu": {
+            "flag": "--mem-per-cpu",
+            "help": "memory per cpu-core (4G is default)",
+            "default": "4G"
+        },
+        "use gpu": {
+          "flag": "--gres=gpu:1",
+          "help": "allocate a100 gpu for this task",
+          "const": true,
+          "default": false
+        },
+        "time": {
+            "flag": "--time",
+            "help": "total run time limit (HH:MM:SS)",
+            "default": "00:10:00"
         }
     },
     "optional fields": {
@@ -27,34 +55,6 @@
             "type": "number",
             "help": "node count",
             "default": 1
-        },
-        "tasks": {
-            "flag": "--ntasks",
-            "type": "number",
-            "help": "total number of tasks across all nodes",
-            "default": 1
-        },
-        "cpus per task": {
-            "flag": "--cpus-per-task",
-            "type": "number",
-            "help": "cpu-cores per task (>1 if multi-threaded tasks)",
-            "default": 1
-        },
-        "use gpu": {
-            "flag": "--gres=gpu:1",
-            "help": "allocate a100 gpu for this task",
-            "const": true,
-            "default": false
-        },
-        "mem per cpu": {
-            "flag": "--mem-per-cpu",
-            "help": "memory per cpu-core (4G is default)",
-            "default": "4G"
-        },
-        "time": {
-            "flag": "--time",
-            "help": "total run time limit (HH:MM:SS)",
-            "default": "00:10:00"
         },
         "mail type begin": {
             "flag": "--mail-type=begin",

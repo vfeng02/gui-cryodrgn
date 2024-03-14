@@ -5,13 +5,13 @@ import fields from '../slurm.json';
 import '../App.css';
 import './Slurm.css';
 import { useLocation } from 'react-router-dom';
+import CommandCard from '../components/CommandCard';
 import AccordionGroup from '../components/AccordionGroup';
 
 const Slurm = ( {argValues, values, setValues} ) => {
     const location = useLocation();
     const generatedCommand = location.state?.generatedCommand;
     const commandName = location.state?.commandName;
-    // const [values, setValues] = useState({});
     const [openAlert, setOpenAlert] = useState(false);
     const [runOutput, setRunOutput] = useState("");
     const [condaEnvs, setCondaEnvs] = useState([]);
@@ -137,7 +137,11 @@ const Slurm = ( {argValues, values, setValues} ) => {
                 </Alert>
                 </Snackbar>
             </div>
-            <div className="fields">
+            <div className="command-card-container">
+                {/* <button className="secondary-button">Info</button> */}
+                <CommandCard commandName={commandName} generatedCommand={generatedCommand} argValues={argValues}/>
+            </div>
+            <div className="accordion-group-container">
                 <form onSubmit={e => generateSlurm(e)}>
                   <AccordionGroup 
                   command_name={commandName}
