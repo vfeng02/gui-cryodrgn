@@ -105,7 +105,9 @@ const Slurm = ( {argValues, values, setValues} ) => {
         // const result = await saveAndRun("python3", path, "print('''" + slurm_script + "''')");
         
         const path = values[commandName]["dir"] + "/" + values[commandName]["job name"] + ".slurm";
-        const result = await saveAndRun("sbatch", path, slurm_configs + slurm_env + "python hi.py > output.txt");
+        // const result = await saveAndRun("sbatch", path, slurm_configs + slurm_env + "python hi.py > output.txt")
+        const result = await saveAndRun("sbatch", path, slurm_script);
+
 
         setRunOutput(result);
         setOpenAlert(true);
@@ -138,7 +140,6 @@ const Slurm = ( {argValues, values, setValues} ) => {
                 </Snackbar>
             </div>
             <div className="command-card-container">
-                {/* <button className="secondary-button">Info</button> */}
                 <CommandCard commandName={commandName} generatedCommand={generatedCommand} argValues={argValues}/>
             </div>
             <div className="accordion-group-container">

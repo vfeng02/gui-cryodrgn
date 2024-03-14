@@ -7,13 +7,14 @@ import Error from "../components/Error";
 import { useLocation, Link } from 'react-router-dom';
 import AccordionGroup from "../components/AccordionGroup";
 import ResultBar from "../components/ResultBar";
-
+import Warning from "../components/Warning";
 
 const Generate = ( {argValues, setArgValues} ) => {
   const location = useLocation();
   const [command_name, command_args] = location.state?.fromCommand;
   const [generated, setGenerated] = useState("");
   const [openAlert, setOpenAlert] = useState(false);
+  const [openWarning, setOpenWarning] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
   function generateCommand(e) {
@@ -56,6 +57,7 @@ const Generate = ( {argValues, setArgValues} ) => {
 
     setGenerated(result);
     setAlertMessage("Command generated!");
+    setOpenWarning(false);
     setOpenAlert(true);
     return false;
   }
@@ -86,13 +88,19 @@ const Generate = ( {argValues, setArgValues} ) => {
               <button type="submit">Generate Command</button>
             </form>
             <div className="slurm-link">
+              {(generated.length > 0) ? 
               <Link to={"/slurm"} state={{generatedCommand: generated, commandName: command_name}}>
                 <button className="secondary-button">Run Slurm Script</button>
-              </Link>
+              </Link> :
+                <button className="secondary-button" onClick={() => setOpenWarning(true)}>Run Slurm Script</button>
+              } 
+            </div>
+            <div className='warning'>
+              <Warning openWarning={openWarning} setOpenWarning={setOpenWarning} message="Please click 'Generate Command'"/>
             </div>
           </div>
         </div>
-      ) : <Error errorMessage="Data for this command does not exist" />}
+      ) : <Error errorMessage="Data for this page does not exist; please contact the administrator at vyfeng@princeton.edu" />}
     </div>
   );
 }
