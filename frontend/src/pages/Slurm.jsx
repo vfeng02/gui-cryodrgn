@@ -56,9 +56,10 @@ const Slurm = ( {argValues, values, setValues} ) => {
     async function generateSlurm(e) {
         e.preventDefault();
         let slurm_configs = "";
+        let output_dir = "";
         let slurm_env = "module purge \nmodule load ";
 
-        for (const [field_name, field_details] of Object.entries(fields["optional fields"])) {
+        for (const [field_name, field_details] of [...Object.entries(fields["required fields"]),...Object.entries(fields["optional fields"])]) {
             if (field_name == "conda version") {
                 if (field_name in values[commandName]) {
                     slurm_env += values[commandName][field_name] + "\n"
@@ -66,6 +67,9 @@ const Slurm = ( {argValues, values, setValues} ) => {
                 else {
                     slurm_env += field_details.default + "\n"
                 }
+            }
+            else if (field_name == "dir") {
+              output_dir = values[commandName][field_name]
             }
             else if (field_name == "shell") {
                 if (field_name in values[commandName]) {
@@ -82,7 +86,7 @@ const Slurm = ( {argValues, values, setValues} ) => {
                     }
                 }
                 else if (field_details.default) {
-                    slurm_configs += "#SBATCH" + field_details.flag + "\n"
+                    slurm_configs += "#SBATCH " + field_details.flag + "\n"
                 }
             }
             else {
@@ -96,7 +100,7 @@ const Slurm = ( {argValues, values, setValues} ) => {
                 }
             }
         }
-        slurm_configs += "#SBATCH --job-name=" + values[commandName]["job name"] + "\n \n";
+        // slurm_configs += "#SBATCH --job-name=" + values[commandName]["job name"] + "\n \n";
         slurm_env += "conda activate " + values[commandName]["conda env"] + "\n \n";
         
         let slurm_script = slurm_configs + slurm_env + generatedCommand;
@@ -104,7 +108,7 @@ const Slurm = ( {argValues, values, setValues} ) => {
         // const path = values[commandName]["dir"] + "/" + values[commandName]["job name"] + ".py";
         // const result = await saveAndRun("python3", path, "print('''" + slurm_script + "''')");
         
-        const path = values[commandName]["dir"] + "/" + values[commandName]["job name"] + ".slurm";
+        const path = output_dir + "/" + values[commandName]["job name"] + ".slurm";
         // const result = await saveAndRun("sbatch", path, slurm_configs + slurm_env + "python hi.py > output.txt")
         const result = await saveAndRun("sbatch", path, slurm_script);
 
