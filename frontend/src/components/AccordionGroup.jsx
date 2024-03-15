@@ -1,4 +1,5 @@
 import React from 'react';
+import dayjs from 'dayjs';
 import { Accordion, AccordionSummary, AccordionDetails, MenuItem} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import '../App.css';
@@ -6,6 +7,7 @@ import './AccordionGroup.css';
 import PathSelect from "./PathSelect";
 import CustomTextField from './CustomTextField';
 import ConstToggle from './ConstToggle';
+import CustomTimeField from './CustomTimeField';
 
 const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, values, setValues }) => {
     function updateInput(arg_name, newValue) {
@@ -50,6 +52,20 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
                   <MenuItem className="menu-options" value={option}>{option}</MenuItem>
                   )
                   )}
+                />
+              ) 
+            }
+            else if (details.type == "time") {
+              return (
+                <CustomTimeField
+                  name={name}
+                  id={name + "-time-field"}
+                  help={details.help}
+                  value={values[command_name] ? (values[command_name][name] ?? dayjs(details.default)) : dayjs(details.default)}
+                  // defaultValue={dayjs(details.default)}
+                  select={true}
+                  required={required} 
+                  onChange={(newValue) => updateInput(name, newValue)}
                 />
               ) 
             }
@@ -132,7 +148,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
             type={type}
             step={step}
             onWheel={onWheel}
-            required = {required}
+            required={required}
             value={values[command_name] ? values[command_name][name] : undefined}
             placeholder={details.default ? details.default.toString() : ""}
             onChange={(e) => updateInput(name, e.target.value)}

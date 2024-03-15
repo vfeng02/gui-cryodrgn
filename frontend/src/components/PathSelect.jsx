@@ -5,6 +5,7 @@ import { Modal, CircularProgress, InputAdornment, IconButton } from '@mui/materi
 import {TreeView, TreeItem } from '@mui/x-tree-view'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ClearIcon from '@mui/icons-material/Clear';
 import CustomTextField from './CustomTextField';
 
@@ -15,14 +16,16 @@ const PathSelect = ({ command_name, arg_name, details, required, values, setValu
     const [expanded, setExpanded] = useState([]);
 
     const handleOpenModal = () => setOpenModal(true);
+    const updateValue = (newValue) => setValues({
+      ...values,
+      [command_name]: {
+          ...values[command_name],
+          [arg_name]: newValue
+      },
+    });
+
     const handleCloseModal = () => {
-      setValues({
-        ...values,
-        [command_name]: {
-            ...values[command_name],
-            [arg_name]: selected
-        },
-      });
+      updateValue(selected);
       setOpenModal(false);
     };
 
@@ -87,18 +90,24 @@ const PathSelect = ({ command_name, arg_name, details, required, values, setValu
             name={arg_name}
             value={values[command_name] ? (values[command_name][arg_name] ?? "") : ""}
             required={required}
-            placeholder='Click to select path'
+            placeholder='Click arrow to select path'
             inputProps={{
+              startAdornment: <InputAdornment position="start" className="upload-icon">
+                <IconButton
+                  onClick={handleOpenModal}
+                  >
+                  <FileUploadIcon/>
+                </IconButton>
+            </InputAdornment>,
               endAdornment: <InputAdornment position="end" className="clear-icon">
                 <IconButton
-              onClick={(e) => handleClearPath(e)}
-              >
-              {values[command_name] ? (values[command_name][arg_name] ? <ClearIcon/> : null) : null}
-            </IconButton>
+                  onClick={(e) => handleClearPath(e)}
+                  >
+                  {values[command_name] ? (values[command_name][arg_name] ? <ClearIcon/> : null) : null}
+                </IconButton>
             </InputAdornment>
             }}
-            readOnly
-            onClick={handleOpenModal}
+            onChange={(e) => updateValue(e.target.value)}
             />
         </div>
         <div>

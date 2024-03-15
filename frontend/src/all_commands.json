@@ -5,6 +5,7 @@
             "args": {
                 "positional arguments": {
                     "input": {
+                        "type": "abspath",
                         "help": "RELION .star file"
                     }
                 },
@@ -41,7 +42,8 @@
             "args": {
                 "positional arguments": {
                     "input": {
-                        "help": "Cryosparc .cs file"
+                      "type": "abspath",
+                      "help": "Cryosparc .cs file"
                     }
                 },
                 "optional arguments": {

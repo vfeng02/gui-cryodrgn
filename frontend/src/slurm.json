@@ -1,6 +1,7 @@
 {
     "required fields": {
         "job name": {
+            "flag": "--job-name",
             "help": "name that the job and slurm script will be saved under (do not include any extensions, e.g. .slurm)"
         },
         "conda env": {
@@ -36,8 +37,9 @@
         },
         "time": {
             "flag": "--time",
+            "type": "time",
             "help": "total run time limit (HH:MM:SS)",
-            "default": "00:10:00"
+            "default": "2022-04-02T00:10:00"
         }
     },
     "optional fields": {

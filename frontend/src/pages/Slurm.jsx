@@ -1,4 +1,5 @@
 import React from 'react';
+import dayjs from 'dayjs';
 import { useState, useEffect } from "react";
 import { Snackbar, Alert } from "@mui/material"
 import fields from '../slurm.json';
@@ -7,6 +8,7 @@ import './Slurm.css';
 import { useLocation } from 'react-router-dom';
 import CommandCard from '../components/CommandCard';
 import AccordionGroup from '../components/AccordionGroup';
+import Warning from '../components/Warning';
 
 const Slurm = ( {argValues, values, setValues} ) => {
     const location = useLocation();
@@ -15,8 +17,8 @@ const Slurm = ( {argValues, values, setValues} ) => {
     const [openAlert, setOpenAlert] = useState(false);
     const [runOutput, setRunOutput] = useState("");
     const [condaEnvs, setCondaEnvs] = useState([]);
+    const [openWarning, setOpenWarning] = useState(false);
 
-    // console.log(values);
     async function saveAndRun(command, path, content) {
         const response = await fetch("/run", {
             method: 'POST',
@@ -56,11 +58,14 @@ const Slurm = ( {argValues, values, setValues} ) => {
     async function generateSlurm(e) {
         e.preventDefault();
         let slurm_configs = "";
-        let output_dir = "";
+        let shell = "";
         let slurm_env = "module purge \nmodule load ";
 
         for (const [field_name, field_details] of [...Object.entries(fields["required fields"]),...Object.entries(fields["optional fields"])]) {
-            if (field_name == "conda version") {
+            if (field_name == "conda env" || field_name == "dir") {
+              continue
+            }
+            else if (field_name == "conda version") {
                 if (field_name in values[commandName]) {
                     slurm_env += values[commandName][field_name] + "\n"
                 }
@@ -68,15 +73,12 @@ const Slurm = ( {argValues, values, setValues} ) => {
                     slurm_env += field_details.default + "\n"
                 }
             }
-            else if (field_name == "dir") {
-              output_dir = values[commandName][field_name]
-            }
             else if (field_name == "shell") {
                 if (field_name in values[commandName]) {
-                    slurm_configs += "#" + values[commandName][field_name] + "\n"
+                    shell = "#" + values[commandName][field_name] + "\n"
                 }
                 else {
-                    slurm_configs += "#" + field_details.default + "\n"
+                    shell += "#" + field_details.default + "\n"
                 }
             }
             else if ("const" in field_details) {
@@ -89,6 +91,14 @@ const Slurm = ( {argValues, values, setValues} ) => {
                     slurm_configs += "#SBATCH " + field_details.flag + "\n"
                 }
             }
+            else if ("type" in field_details && field_details["type"] == "time") {
+              if (field_name in values[commandName]) {
+                slurm_configs += "#SBATCH " + field_details.flag + "=" + dayjs(values[commandName][field_name]).format("HH:mm:ss") + "\n"
+              }
+              else {
+                slurm_configs += "#SBATCH " + field_details.flag + "=" + dayjs(field_details.default).format("HH:mm:ss") + "\n"
+            }
+            }
             else {
                 if (field_name in values[commandName]) {
                     slurm_configs += "#SBATCH " + field_details.flag + "=" + values[commandName][field_name] + "\n"
@@ -100,21 +110,24 @@ const Slurm = ( {argValues, values, setValues} ) => {
                 }
             }
         }
-        // slurm_configs += "#SBATCH --job-name=" + values[commandName]["job name"] + "\n \n";
         slurm_env += "conda activate " + values[commandName]["conda env"] + "\n \n";
+        const path = values[commandName]["dir"] + "/" + values[commandName]["job name"] + ".slurm";
         
-        let slurm_script = slurm_configs + slurm_env + generatedCommand;
+        let slurm_script = shell + slurm_configs + slurm_env + generatedCommand;
 
         // const path = values[commandName]["dir"] + "/" + values[commandName]["job name"] + ".py";
         // const result = await saveAndRun("python3", path, "print('''" + slurm_script + "''')");
         
-        const path = output_dir + "/" + values[commandName]["job name"] + ".slurm";
         // const result = await saveAndRun("sbatch", path, slurm_configs + slurm_env + "python hi.py > output.txt")
         const result = await saveAndRun("sbatch", path, slurm_script);
 
-
-        setRunOutput(result);
-        setOpenAlert(true);
+        if (result.length == 0) {
+          setOpenWarning(true);
+        } 
+        else {
+          setRunOutput(result);
+          setOpenAlert(true);
+        }
     };
 
     function handleClose(event, reason) {
@@ -156,8 +169,11 @@ const Slurm = ( {argValues, values, setValues} ) => {
                   values={values}
                   setValues={setValues}
                   />
-                    <button type="submit" className='run-button' onClick={(e) => generateSlurm(e)}>Save and run slurm script</button>
+                    <button type="submit" className='run-button'>Save and run slurm script</button>
                 </form>
+            </div>
+            <div className='warning'>
+              <Warning openWarning={openWarning} setOpenWarning={setOpenWarning} message="Error running slurm script, please check configurations"/>
             </div>
         </div>
     );
