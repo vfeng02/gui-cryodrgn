@@ -9,7 +9,7 @@ elif [ $# -gt 1 ]; then
 fi
 
 conda env create --name ${envname} --file=env.yml
-conda activate ${envname}
+sed -i "s/^env.*/env=${envname}/" ./run.sh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash #install nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
