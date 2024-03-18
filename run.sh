@@ -1,6 +1,6 @@
 server=${1}
 website=${2} 
-env=web-env
+env=web-gui-env
 # email=${3}
 
 if [ $# -lt 2 ]; then
@@ -16,10 +16,9 @@ sed -i "s/^const websitePort.*/const websitePort=${website}/" ./frontend/vite.co
 
 module load anaconda3/2023.9
 eval "$(conda shell.bash hook)"
-conda activate web-env
-cd ..
-python vite-drgncommands/backend/server.py $server &
-cd vite-drgncommands/frontend
+conda activate ${env}
+python ./backend/server.py $server &
+cd ./frontend
 npx vite
 cd ../../
 
