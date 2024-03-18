@@ -18,6 +18,9 @@ const Slurm = ( {argValues, values, setValues} ) => {
     const [runOutput, setRunOutput] = useState("");
     const [condaEnvs, setCondaEnvs] = useState([]);
     const [openWarning, setOpenWarning] = useState(false);
+    // console.log(values[commandName]?(values[commandName]["required fields"]? (values[commandName]["required fields"]["use gpu"] ?? "") : "") : "")
+    // console.log(values[commandName]?(values[commandName]["required fields"]? (values[commandName]["required fields"]["dir"] ?? "") : "") : "")
+    // console.log(values[commandName]?(values[commandName]["required fields"]?? "") : "")
 
     async function saveAndRun(command, path, content) {
         const response = await fetch("/run", {

@@ -34,6 +34,8 @@ const CustomTextField = ( props ) => {
     onChange={props.onChange}
     onClick={props.onClick}
     select={props.select}
+    multiline={props.multiline}
+    maxRows={props.maxRows}
     InputProps={props.inputProps}
     sx={{
       input: {

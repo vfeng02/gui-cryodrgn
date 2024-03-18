@@ -10,7 +10,7 @@
 /* on macOS, scroll bars are not automatically visible. force scroll bar to always be shown. */
 ::-webkit-scrollbar {
   -webkit-appearance: none;
-  width: 2px;
+  width: 4px;
   height: 10px;
 }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import './PathSelect.css';
-import { Modal, CircularProgress, InputAdornment, IconButton } from '@mui/material';
+import { Modal, CircularProgress, InputAdornment, IconButton, Button } from '@mui/material';
 import {TreeView, TreeItem } from '@mui/x-tree-view'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -37,6 +37,11 @@ const PathSelect = ({ command_name, arg_name, details, required, values, setValu
         newValues,
       });
       e.stopPropagation();
+    }
+
+    const handleConfirm = (e) => {
+      e.preventDefault();
+      setOpenModal(false);
     }
 
     useEffect(() => {
@@ -92,6 +97,8 @@ const PathSelect = ({ command_name, arg_name, details, required, values, setValu
             value={values[command_name] ? (values[command_name][arg_name] ?? "") : ""}
             required={required}
             placeholder='Click arrow to select path'
+            multiline={true}
+            maxRows={3}
             inputProps={{
               startAdornment: <InputAdornment position="start" className="upload-icon">
                 <IconButton
@@ -118,16 +125,24 @@ const PathSelect = ({ command_name, arg_name, details, required, values, setValu
                 onClose={handleCloseModal}
             >
                 <div className='tree-view-outer'>
-                    <div className='tree-view'>
-                        <TreeView
-                        defaultCollapseIcon={<ExpandMoreIcon />}
-                        defaultExpandIcon={<ChevronRightIcon />}
-                        onNodeToggle={(e, nodeIds) => setExpanded(nodeIds)}
-                        onNodeSelect={(e, nodeId) => setSelected(nodeId)}
-                        >
-                        {renderTree(dir)}
-                        </TreeView>
-                    </div>
+                  <div className='close-modal'>
+                    <IconButton onClick={handleCloseModal}>
+                      <ClearIcon/>
+                    </IconButton>
+                  </div>
+                  <div className='tree-view'>
+                      <TreeView
+                      defaultCollapseIcon={<ExpandMoreIcon />}
+                      defaultExpandIcon={<ChevronRightIcon />}
+                      onNodeToggle={(e, nodeIds) => setExpanded(nodeIds)}
+                      onNodeSelect={(e, nodeId) => setSelected(nodeId)}
+                      >
+                      {renderTree(dir)}
+                      </TreeView>
+                  </div>
+                  <div className='confirm-selected'>
+                    {(selected.length > 0) ? <Button className="secondary-button" onClick={handleCloseModal}>Confirm</Button> : undefined}
+                  </div>
                 </div>
             </Modal>
         </div>

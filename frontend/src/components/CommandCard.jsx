@@ -19,7 +19,6 @@ const CommandCard = ( {commandName, generatedCommand, argValues} ) => {
       {/* <Typography variant="body2" color="primary" gutterBottom>
         Configured arguments:
       </Typography> */}
-      {console.log(argValues[commandName])}
       {Object.entries(argValues[commandName]).map(([arg_name, arg_value]) =>
       <Typography variant="body2"><strong>{arg_name}</strong> {arg_value}</Typography>
       )}

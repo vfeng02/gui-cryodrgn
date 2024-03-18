@@ -2,7 +2,20 @@
   text-align: center; /* center buttons */
 }
 
+/* .generate-button {
+  position: fixed;
+  right: 30px;
+  bottom: 80px;
+} */
+
+/* 
 .slurm-link {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+} */
+
+.slurm-link{
   margin: 15px;
 }
 

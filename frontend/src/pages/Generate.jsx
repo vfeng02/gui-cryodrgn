@@ -88,7 +88,7 @@ const Generate = ( {argValues, setArgValues} ) => {
               values={argValues}
               setValues={setArgValues}
                />
-              <button type="submit">Generate Command</button>
+              <button className='generate-button' type="submit">Generate Command</button>
             </form>
             <div className="slurm-link">
               {(generated.length > 0) ? 
