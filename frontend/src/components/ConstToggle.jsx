@@ -5,7 +5,7 @@ import '../App.css';
 import './ConstToggle.css';
 
 
-const ConstToggle = ({  command_name, arg_name, initialValue, help, values, setValues }) => {
+const ConstToggle = ({  command_name, arg_name, label, initialValue, help, values, setValues }) => {
   const [toggle, setToggle] = useState(initialValue);
 
   const handleChange = (event, isTrue) => {
@@ -24,8 +24,8 @@ const ConstToggle = ({  command_name, arg_name, initialValue, help, values, setV
   return (
     <div className='toggle-container'>
       <div className='toggle-button-container'>
-        <FormLabel className='toggle-label' sx={{color: '#486AA8', fontSize: '0.75em', backgroundColor:'#ffffff', borderRadius: '16px', boxShadow: '0 0 .8em #ffffff', paddingLeft:'10px'}}>
-          {arg_name}</FormLabel>
+        <FormLabel className='toggle-label' sx={{color: '#486AA8', fontSize: '0.75em', backgroundColor:'#ffffff', borderRadius: '0px 0px 16px 0px', boxShadow: '0 0 .8em #ffffff', paddingLeft:'10px'}}>
+          {label}</FormLabel>
         <ToggleButtonGroup
           className='toggle-button'
           value={toggle}

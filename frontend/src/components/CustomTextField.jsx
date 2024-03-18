@@ -19,7 +19,7 @@ const StyledTextField = styled(TextField)({
 const CustomTextField = ( props ) => {
   return (
     <StyledTextField
-    label={props.name}
+    label={props.label}
     helperText={props.help}
     type={props.type}
     step={props.step}

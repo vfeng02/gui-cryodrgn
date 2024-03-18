@@ -84,6 +84,7 @@ const PathSelect = ({ command_name, arg_name, details, required, values, setValu
         <div>
         <div className='path-select'>
             <CustomTextField
+            label={details.flags ? details.flags.join(',') : arg_name}
             help={details.help}
             type="text"
             id={arg_name+"-path"}

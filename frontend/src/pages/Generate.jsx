@@ -76,6 +76,9 @@ const Generate = ( {argValues, setArgValues} ) => {
       {command_args ? (
         <div>
           <h2 className='title-h2' style={(generated.length > 0) ? { top: "140px" } : { top: "50px" }}>{command_name}</h2>
+          <div className="go-back" style={(generated.length > 0) ? { top: "170px" } : { top: "80px" }}>
+            <button className="secondary-button" onClick={() => window.history.back()}>Go Back</button>
+          </div>
           <div className="accordion-group-container">
             <form onSubmit={e => generateCommand(e)}>
               <AccordionGroup 

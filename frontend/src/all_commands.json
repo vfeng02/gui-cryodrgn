@@ -88,7 +88,8 @@
             "args": {
                 "positional arguments": {
                     "star": {
-                        "help": "Input"
+                        "help": "Input",
+                        "type": "abspath"
                     }
                 },
                 "optional arguments": {
@@ -159,7 +160,8 @@
             "args": {
                 "positional arguments": {
                     "cs": {
-                        "help": "Input cryosparc particles.cs file"
+                        "help": "Input cryosparc particles.cs file",
+                        "type": "abspath"
                     }
                 },
                 "optional arguments": {
@@ -202,7 +204,8 @@
             "args": {
                 "positional arguments": {
                     "mrcs": {
-                        "help": "Input particles or volume (.mrc, .mrcs, .star, .cs, or .txt)"
+                        "help": "Input particles or volume (.mrc, .mrcs, .star, .cs, or .txt)",
+                        "type": "abspath"
                     }
                 },
                 "optional arguments": {
@@ -275,7 +278,8 @@
             "args": {
                 "positional arguments": {
                     "mrcs": {
-                        "help": "Input particles or volume (.mrc, .mrcs, .star, or .txt)"
+                        "help": "Input particles or volume (.mrc, .mrcs, .star, or .txt)",
+                        "type": "abspath"
                     }
                 },
                 "optional arguments": {
@@ -394,16 +398,14 @@
                     "particles": {
                         "help": "Input particles (.mrcs, .star, .cs, or .txt)",
                         "type": "abspath"
-                    }
-                },
-                "optional arguments": {
+                    },
                     "outdir": {
-                        "help": "Output directory to save model",
-                        "type": "abspath",
-                        "flags": [
-                            "-o",
-                            "--outdir"
-                        ]
+                      "help": "Output directory to save model",
+                      "type": "abspath",
+                      "flags": [
+                          "-o",
+                          "--outdir"
+                      ]
                     },
                     "zdim": {
                         "help": "Dimension of latent variable",
@@ -426,7 +428,9 @@
                         "flags": [
                             "--ctf"
                         ]
-                    },
+                    }
+                },
+                "optional arguments": {
                     "load": {
                         "help": "Initialize training from a checkpoint",
                         "metavar": "WEIGHTS.PKL",

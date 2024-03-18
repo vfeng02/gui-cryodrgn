@@ -1,5 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import { useState } from "react";
 import { Accordion, AccordionSummary, AccordionDetails, MenuItem} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import '../App.css';
@@ -10,6 +11,8 @@ import ConstToggle from './ConstToggle';
 import CustomTimeField from './CustomTimeField';
 
 const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, values, setValues }) => {
+    // const [expanded, setExpanded] = useState(false);
+
     function updateInput(arg_name, newValue) {
         setValues({
           ...values,
@@ -42,6 +45,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
               return (
                 <CustomTextField 
                 name={name}
+                label={name}
                 id={name + "-conda-select"}
                 help={details.help}
                 value={values[command_name] ? (values[command_name][name] ?? "") : ""}
@@ -85,6 +89,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
                 <div key={name+"-toggle-container"} className="toggle">
                 <ConstToggle
                 command_name={command_name}
+                label={details.flags ? details.flags.join(',') : name}
                 arg_name={name}
                 initialValue={values[command_name] ? (values[command_name][name] ?? details.default) : details.default}
                 help={details.help}
@@ -100,6 +105,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
         if ("choices" in details) {
             return (
               <CustomTextField 
+              label={details.flags ? details.flags.join(',') : name}
               name={name}
               id={name + "_select"}
               help={details.help}
@@ -125,6 +131,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
     
             return (nInputs).map((index) => 
             <CustomTextField
+            label={details.flags ? details.flags.join(',') : name}
             name={index == 0 ? name : ""}
             help={index == details.nargs-1 ? details.help : ""}
             type={type}
@@ -142,6 +149,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
     
         return (
             <CustomTextField 
+            label={details.flags ? details.flags.join(',') : name}
             name={name}
             id={name + "-" + type}
             help={details.help}
@@ -172,6 +180,8 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
               </Accordion> 
             </div>
           ))}
+          {/* <button onClick={() => setExpanded(true)}>Expand all</button>
+          <button onClick={() => setExpanded(false)}>Collapse all</button> */}
     </div>
   );
 }
