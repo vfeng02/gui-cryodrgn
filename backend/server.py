@@ -41,26 +41,6 @@ def list_files(dir_path, expanded, node_id):
 
     return d
 
-# def list_files(dir_path):
-#     d = {'title': os.path.basename(dir_path)}
-#     d['key'] = dir_path
-#     d['children'] = []
-
-#     # get the paths of all the children of this dir
-#     contents = next(os.walk(dir_path))
-#     for x in contents[1]:
-#         child = {'title': x}
-#         child['key'] = os.path.join(dir_path,x)
-#         child['children'] = []
-#         d['children'].append(child)
-
-#     for x in contents[2]:
-#         child = {'title': x}
-#         child['key'] = os.path.join(dir_path,x)
-#         d['children'].append(child)
-
-#     return jsonify(d)
-
 @app.route('/run', methods=['POST'])
 @cross_origin()
 def save_and_run_script():
@@ -82,7 +62,8 @@ def save_and_run_script():
 @cross_origin()
 def get_files():
     expanded=set(request.json['expanded']) # passed in as a list of paths
-    return jsonify(list_files(os.getcwd(), expanded, 0))
+    print("parentdir:", args.parentdir)
+    return jsonify(list_files(args.parentdir, expanded, 0))
 
 @app.route('/envs', methods=['POST'])
 @cross_origin()
@@ -101,6 +82,7 @@ if __name__ == '__main__':
                     prog='server',
                     description='starts a server at the given port address and services requests from the website')
     parser.add_argument('port', type=int, help='the port to start the server') 
+    parser.add_argument('parentdir', type=str, help='the parent directory of the web gui') 
     args = parser.parse_args()
     app.run(debug=True, port=args.port)
    

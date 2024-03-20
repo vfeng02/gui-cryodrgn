@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/vyfeng/.conda/envs/cryodrgn/bin/cryodrgn", line 8, in <module>
+    sys.exit(main())
+  File "/home/vyfeng/.conda/envs/cryodrgn/lib/python3.10/site-packages/cryodrgn/__main__.py", line 72, in main
+    args.func(args)
+  File "/home/vyfeng/.conda/envs/cryodrgn/lib/python3.10/site-packages/cryodrgn/commands/parse_pose_csparc.py", line 36, in main
+    assert args.input.endswith(".cs"), "Input format must be .cs file"
+AssertionError: Input format must be .cs file
