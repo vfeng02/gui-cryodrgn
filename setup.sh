@@ -8,6 +8,7 @@ elif [ $# -gt 1 ]; then
   exit 2
 fi
 
+module load anaconda3/2023.9
 conda env create --name ${envname} --file=env.yml
 sed -i "s/^env.*/env=${envname}/" ./run.sh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash #install nvm
