@@ -29,7 +29,7 @@ echo $parentdir
 
 python ./backend/server.py $server $parentdir &
 cd ./frontend
-npx vite
+npx vite --host
 
 pid_server=$(lsof -t -i :$server)
 pid_website=$(lsof -t -i :$website)
