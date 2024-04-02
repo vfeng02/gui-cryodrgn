@@ -1,7 +1,7 @@
 # server=${1}
 # website=${2} 
 
-# email=${1}
+email=${1}
 
 # if [ $# -lt 2 ]; then
 #   echo 1>&2 "$0: not enough arguments; please enter a port number for the server followed by a port number for the website, e.g., ./run.sh 3001 3002"
@@ -25,10 +25,12 @@ conda activate ${env}
 
 dir=$(pwd)
 parentdir=$(dirname $dir)
-echo $parentdir
+COLOR='\033[1;35m'
+NC='\033[0m' # No Color
 
 python ./backend/server.py $server $parentdir &
 cd ./frontend
+echo -e "${COLOR}ssh -N -f -L localhost:${website}:localhost:${website} ${email}@della.princeton.edu${NC}"
 npx vite --host
 
 pid_server=$(lsof -t -i :$server)

@@ -9,7 +9,7 @@ import AccordionGroup from "../components/AccordionGroup";
 import ResultBar from "../components/ResultBar";
 import Warning from "../components/Warning";
 
-const Generate = ( {argValues, setArgValues} ) => {
+const Generate = ( {argValues, setArgValues } ) => {
   const location = useLocation();
   const [command_name, command_args] = location.state?.fromCommand;
   const [generated, setGenerated] = useState("");
@@ -103,7 +103,7 @@ const Generate = ( {argValues, setArgValues} ) => {
             </div>
           </div>
         </div>
-      ) : <Error errorMessage="Data for this page does not exist; please contact the administrator at vyfeng@princeton.edu" />}
+      ) : <Error errorMessage="Website closed by user or data is stale; please restart the website via the run script or contact vyfeng@princeton.edu" />}
     </div>
   );
 }

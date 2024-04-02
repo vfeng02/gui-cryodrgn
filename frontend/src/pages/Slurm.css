@@ -13,6 +13,14 @@
   border-radius: 15px;
 }
 
+.slurm .slurm-card-container {
+  position: fixed;
+  bottom: 40px;
+  right: 60px;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
 .slurm .run-button {
   margin-bottom: 20px;
 }

@@ -62,7 +62,6 @@ def save_and_run_script():
 @cross_origin()
 def get_files():
     expanded=set(request.json['expanded']) # passed in as a list of paths
-    print("parentdir:", args.parentdir)
     return jsonify(list_files(args.parentdir, expanded, 0))
 
 @app.route('/envs', methods=['POST'])

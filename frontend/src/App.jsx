@@ -53,6 +53,8 @@ const theme = createTheme({
 function App() {
   const [argValues, setArgValues] = useState({});
   const [slurmValues, setSlurmValues] = useState({});
+  const [slurmJobs, setSlurmJobs] = useState({});
+  // const [alive, setAlive] = useState(true);
   
   return (
     <>
@@ -62,7 +64,7 @@ function App() {
           <Routes>
             <Route exact path='/' key="route1" element={<Home/>} />
             <Route exact path='/generate' key="route1" element={<Generate argValues={argValues} setArgValues={setArgValues}/>} />
-            <Route exact path='/slurm' key="route1" element={<Slurm argValues={argValues} values={slurmValues} setValues={setSlurmValues}/>} />
+            <Route exact path='/slurm' key="route1" element={<Slurm argValues={argValues} values={slurmValues} setValues={setSlurmValues} slurmJobs={slurmJobs} setSlurmJobs={setSlurmJobs} />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

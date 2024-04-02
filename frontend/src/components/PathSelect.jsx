@@ -37,6 +37,7 @@ const PathSelect = ({ command_name, arg_name, details, required, values, setValu
         newValues,
       });
       e.stopPropagation();
+      setOpenModal(false);
     }
 
     const handleConfirm = (e) => {
@@ -61,6 +62,8 @@ const PathSelect = ({ command_name, arg_name, details, required, values, setValu
         }
     
         const data = await resp.json();
+        if (data.length == 0) {
+        }
         setDir(data);
     }
 
@@ -126,7 +129,7 @@ const PathSelect = ({ command_name, arg_name, details, required, values, setValu
             >
                 <div className='tree-view-outer'>
                   <div className='close-modal'>
-                    <IconButton onClick={handleCloseModal}>
+                    <IconButton onClick={(e) => handleClearPath(e)}>
                       <ClearIcon/>
                     </IconButton>
                   </div>

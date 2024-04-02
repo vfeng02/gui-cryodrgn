@@ -16,18 +16,21 @@
           "flag": "--ntasks",
           "type": "number",
           "help": "total number of tasks across all nodes",
-          "default": 1
+          "default": 1,
+          "choices": [1, 2, 3, 4]
         },
         "cpus per task": {
             "flag": "--cpus-per-task",
             "type": "number",
             "help": "cpu-cores per task (>1 if multi-threaded tasks)",
-            "default": 1
+            "default": 1,
+            "choices": [1, 2, 3, 4]
         },
         "mem per cpu": {
             "flag": "--mem-per-cpu",
             "help": "memory per cpu-core (4G is default)",
-            "default": "4G"
+            "default": "4G",
+            "choices": ["2G", "4G", "8G", "16G"]
         },
         "use gpu": {
           "flag": "--gres=gpu:1",
@@ -66,7 +69,7 @@
         },
         "mail type end": {
             "flag": "--mail-type=end",
-            "help": "send email when job begins",
+            "help": "send email when job ends",
             "const": true,
             "default": false
         },

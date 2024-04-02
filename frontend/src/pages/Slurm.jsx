@@ -7,10 +7,11 @@ import '../App.css';
 import './Slurm.css';
 import { useLocation } from 'react-router-dom';
 import CommandCard from '../components/CommandCard';
+import SlurmCard from '../components/SlurmCard';
 import AccordionGroup from '../components/AccordionGroup';
 import Warning from '../components/Warning';
 
-const Slurm = ( {argValues, values, setValues} ) => {
+const Slurm = ( {argValues, values, setValues, slurmJobs, setSlurmJobs} ) => {
     const location = useLocation();
     const generatedCommand = location.state?.generatedCommand;
     const commandName = location.state?.commandName;
@@ -32,10 +33,10 @@ const Slurm = ( {argValues, values, setValues} ) => {
         });
     
         if (!response.ok) {
-            return "Error running script";
+          return "Error running script";
         }
         else {
-            return response.json();
+          return response.json();
         }
     };
 
@@ -48,9 +49,10 @@ const Slurm = ( {argValues, values, setValues} ) => {
       });
 
       if (!response.ok) {
-          return "Error fetching conda environments";
+        return "Error fetching conda environments";
       }
       const envs = await response.json();
+
       setCondaEnvs(envs);
     };
 
@@ -175,6 +177,9 @@ const Slurm = ( {argValues, values, setValues} ) => {
                     <button type="submit" className='run-button'>Save and run slurm script</button>
                 </form>
             </div>
+            {/* <div className='slurm-card-container'>
+              <SlurmCard />
+            </div> */}
             <div className='warning'>
               <Warning openWarning={openWarning} setOpenWarning={setOpenWarning} message="Error running slurm script, please check configurations"/>
             </div>

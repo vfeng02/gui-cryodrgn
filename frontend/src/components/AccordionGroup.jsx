@@ -10,7 +10,7 @@ import CustomTextField from './CustomTextField';
 import ConstToggle from './ConstToggle';
 import CustomTimeField from './CustomTimeField';
 
-const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, values, setValues }) => {
+const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, values, setValues}) => {
     // const [expanded, setExpanded] = useState(false);
 
     function updateInput(arg_name, newValue) {
@@ -39,7 +39,8 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
               details={details} 
               required={required} 
               values={values} 
-              setValues={setValues}/>)
+              setValues={setValues}/>
+              )
             }
             else if (details.type == "conda") {
               return (
@@ -110,7 +111,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
               id={name + "_select"}
               help={details.help}
               value={values[command_name] ? (values[command_name][name] ?? "") : ""}
-              placeholder={details.default.toString()}
+              placeholder={details.default}
               select={true}
               required={required}
               onChange={(e) => updateInput(name, e.target.value)}
