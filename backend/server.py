@@ -45,7 +45,9 @@ def list_files(dir_path, expanded, node_id):
 @cross_origin()
 def save_and_run_script():
     command=request.json['command']
-    path = request.json['path']
+    path = request.json['path'] 
+    path = path if path[0] == "/" else args.parentdir+"/"+path
+    print(path)
     content = request.json['content']
 
     # if not os.path.exists(path): os.path.join(path)

@@ -15,7 +15,8 @@ const ConstToggle = ({  command_name, arg_name, label, initialValue, help, value
         ...values,
         [command_name]: {
             ...values[command_name],
-            [arg_name]: isTrue ? "true" : "false"
+            // [arg_name]: isTrue ? "true" : "false"
+            [arg_name]: isTrue
         },
       });
     }

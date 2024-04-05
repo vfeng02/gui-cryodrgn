@@ -92,7 +92,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
                 command_name={command_name}
                 label={details.flags ? details.flags.join(',') : name}
                 arg_name={name}
-                initialValue={values[command_name] ? (values[command_name][name] ?? details.default) : details.default}
+                initialValue={values[command_name] ? ((name in values[command_name]) ? values[command_name][name] : details.default) : details.default}
                 help={details.help}
                 values={values}
                 setValues={setValues}
@@ -147,6 +147,9 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
             />
             );
         }
+
+        // use the command name as the default job name for slurm script, otherwise use the default given by argparse
+        const placeholder = (name == "job name" ? command_name : (details.default ? details.default.toString() : ""))
     
         return (
             <CustomTextField 
@@ -159,7 +162,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
             onWheel={onWheel}
             required={required}
             value={values[command_name] ? values[command_name][name] : undefined}
-            placeholder={details.default ? details.default.toString() : ""}
+            placeholder={placeholder}
             onChange={(e) => updateInput(name, e.target.value)}
             />
         );
@@ -174,7 +177,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
                   <AccordionDetails key={group_name + "-details"}>
                   {Object.entries(group_inputs).map(([name, details]) =>(
                       <div key={name+"-container"} className="input-container">
-                      {renderInput((required_groups.has(group_name)), name, details)}
+                      {renderInput((required_groups.has(group_name)) && !("default" in details), name, details)}
                       </div>
                   ))}
                   </AccordionDetails>

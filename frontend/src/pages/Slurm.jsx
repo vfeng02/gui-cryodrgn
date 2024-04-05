@@ -65,6 +65,7 @@ const Slurm = ( {argValues, values, setValues, slurmJobs, setSlurmJobs} ) => {
         let slurm_configs = "";
         let shell = "";
         let slurm_env = "module purge \nmodule load ";
+        let job_name="";
 
         for (const [field_name, field_details] of [...Object.entries(fields["required fields"]),...Object.entries(fields["optional fields"])]) {
             if (field_name == "conda env" || field_name == "dir") {
@@ -78,12 +79,28 @@ const Slurm = ( {argValues, values, setValues, slurmJobs, setSlurmJobs} ) => {
                     slurm_env += field_details.default + "\n"
                 }
             }
+            else if (field_name == "output dir") {
+              if (field_name in values[commandName]) {
+                slurm_configs += "#SBATCH " + field_details.flag + "=" + values[commandName][field_name] + "/%x%j.out" + "\n"
+              }
+              // else {
+              //   slurm_configs += "#SBATCH " + field_details.flag + "=./" + commandName + "/%x%j.out" + "\n"
+              // }
+            }
+            else if (field_name == "job name") {
+              if (field_name in values[commandName]) {
+                job_name = values[commandName][field_name]
+              }
+              else {
+                job_name = commandName
+              }
+            }
             else if (field_name == "shell") {
                 if (field_name in values[commandName]) {
-                    shell = "#" + values[commandName][field_name] + "\n"
+                    shell = "#!" + values[commandName][field_name] + "\n"
                 }
                 else {
-                    shell += "#" + field_details.default + "\n"
+                    shell += "#!" + field_details.default + "\n"
                 }
             }
             else if ("const" in field_details) {
@@ -116,7 +133,7 @@ const Slurm = ( {argValues, values, setValues, slurmJobs, setSlurmJobs} ) => {
             }
         }
         slurm_env += "conda activate " + values[commandName]["conda env"] + "\n \n";
-        const path = values[commandName]["dir"] + "/" + values[commandName]["job name"] + ".slurm";
+        const path = values[commandName]["dir"] ? (values[commandName]["dir"] + "/" + job_name + ".slurm") : job_name+".slurm";
         
         let slurm_script = shell + slurm_configs + slurm_env + generatedCommand;
 
@@ -134,6 +151,7 @@ const Slurm = ( {argValues, values, setValues, slurmJobs, setSlurmJobs} ) => {
           setOpenAlert(true);
         }
     };
+    // console.log("dir", values[commandName]["dir"])
 
     function handleClose(event, reason) {
         if (reason === 'clickaway') {

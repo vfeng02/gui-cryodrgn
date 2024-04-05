@@ -1,16 +1,13 @@
 {
     "required fields": {
-        "job name": {
-            "flag": "--job-name",
-            "help": "name that the job and slurm script will be saved under (do not include any extensions, e.g. .slurm)"
-        },
         "conda env": {
             "type": "conda",
             "help": "anaconda3 environment (the environment should already be created)"
         },
-        "dir": {
-            "type": "abspath",
-            "help": "directory the slurm script should be saved in"
+        "output dir": {
+          "flag": "--output",
+          "type": "abspath",
+          "help": "directory where the slurm output log will be saved"
         },
         "tasks": {
           "flag": "--ntasks",
@@ -30,7 +27,7 @@
             "flag": "--mem-per-cpu",
             "help": "memory per cpu-core (4G is default)",
             "default": "4G",
-            "choices": ["2G", "4G", "8G", "16G"]
+            "choices": ["2G", "4G", "8G", "16G", "32G", "64G"]
         },
         "use gpu": {
           "flag": "--gres=gpu:1",
@@ -46,14 +43,22 @@
         }
     },
     "optional fields": {
+        "job name": {
+          "flag": "--job-name",
+          "help": "name that the job and slurm script will be saved under (do not include any extensions, e.g. .slurm)"
+        },
+        "dir": {
+          "type": "abspath",
+          "help": "directory the slurm script should be saved in"
+        },
         "conda version": {
             "help": "anaconda3 version",
             "default": "anaconda3/2023.9"
         },
         "shell": {
             "flag": "",
-            "help": "unix shell to be used",
-            "default": "!/bin/bash"
+            "help": "path to the unix shell to be used",
+            "default": "/bin/bash"
         },
         "nodes": {
             "flag": "--nodes",

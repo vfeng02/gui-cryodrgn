@@ -31,7 +31,9 @@ const PathSelect = ({ command_name, arg_name, details, required, values, setValu
 
     const handleClearPath = (e) => {
       const newValues = values[command_name]
-      delete newValues[arg_name]
+      if (command_name in values && arg_name in newValues) {
+        delete newValues[arg_name]
+      }
       setValues({
         ...values,
         newValues,
