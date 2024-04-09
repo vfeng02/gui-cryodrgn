@@ -1,5 +1,5 @@
 import React from 'react';
-import commands from '../all_commands.json';
+import commands from '../../../data/all_commands.json';
 import CommandsList from "../components/CommandsList";
 
 const Home = () => {

@@ -42,6 +42,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
               setValues={setValues}/>
               )
             }
+            // render input field for conda (slurm page only)
             else if (details.type == "conda") {
               return (
                 <CustomTextField 
@@ -60,6 +61,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
                 />
               ) 
             }
+            // render input field for time (slurm page only)
             else if (details.type == "time") {
               return (
                 <CustomTimeField
@@ -77,7 +79,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
             else {
               type = "number";
               step = "1";
-              onWheel = (e) => e.target.blur();
+              onWheel = (e) => e.target.blur(); // prevens updating input by scrolling
               if (details.type == "float") {
                 step = "any";
               }
@@ -97,7 +99,6 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
                 values={values}
                 setValues={setValues}
                 />
-                
                 </div>
             )
         }
@@ -148,7 +149,7 @@ const AccordionGroup = ({ command_name, inputs, required_groups, conda_envs, val
             );
         }
 
-        // use the command name as the default job name for slurm script, otherwise use the default given by argparse
+        // on slurm page, use the command name as the default job name for slurm script, otherwise use the default given by argparse
         const placeholder = (name == "job name" ? command_name : (details.default ? details.default.toString() : ""))
     
         return (

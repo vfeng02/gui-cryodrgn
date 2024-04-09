@@ -2,7 +2,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { useState, useEffect } from "react";
 import { Snackbar, Alert } from "@mui/material"
-import fields from '../slurm.json';
+import fields from '../../../data/slurm.json';
 import '../App.css';
 import './Slurm.css';
 import { useLocation } from 'react-router-dom';

@@ -1,3 +1,0 @@
-usage: cryodrgn parse_pose_csparc [-h] [--abinit] [--hetrefine] -D D -o PKL
-                                  input
-cryodrgn parse_pose_csparc: error: the following arguments are required: -D, -o
