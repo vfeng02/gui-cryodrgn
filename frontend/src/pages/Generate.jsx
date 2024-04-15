@@ -84,7 +84,7 @@ const Generate = ( {argValues, setArgValues } ) => {
               <AccordionGroup 
               command_name={command_name}
               inputs={command_args} 
-              required_groups={new Set(["positional arguments"])}
+              required_groups={new Set(["required arguments"])}
               values={argValues}
               setValues={setArgValues}
                />
