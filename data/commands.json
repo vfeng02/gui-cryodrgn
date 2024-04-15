@@ -457,7 +457,7 @@
                         ]
                     },
                     "seed": {
-                        "default": 93910,
+                        "default": 97873,
                         "help": "Random seed",
                         "type": "int",
                         "flags": [
@@ -901,7 +901,7 @@
                         ]
                     },
                     "seed": {
-                        "default": 87402,
+                        "default": 91012,
                         "help": "Random seed",
                         "type": "int",
                         "flags": [
@@ -1797,7 +1797,7 @@
                         ]
                     },
                     "seed": {
-                        "default": 72157,
+                        "default": 30487,
                         "help": "Random seed",
                         "type": "int",
                         "flags": [
@@ -2204,7 +2204,7 @@
                         ]
                     },
                     "seed": {
-                        "default": 12000,
+                        "default": 45222,
                         "help": "Random seed",
                         "type": "int",
                         "flags": [
