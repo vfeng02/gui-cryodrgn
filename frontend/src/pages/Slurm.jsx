@@ -7,11 +7,10 @@ import '../App.css';
 import './Slurm.css';
 import { useLocation } from 'react-router-dom';
 import CommandCard from '../components/CommandCard';
-import SlurmCard from '../components/SlurmCard';
 import AccordionGroup from '../components/AccordionGroup';
 import Warning from '../components/Warning';
 
-const Slurm = ( {argValues, values, setValues, slurmJobs, setSlurmJobs} ) => {
+const Slurm = ( {argValues, values, setValues} ) => {
     const location = useLocation();
     const generatedCommand = location.state?.generatedCommand;
     const commandName = location.state?.commandName;
@@ -195,9 +194,6 @@ const Slurm = ( {argValues, values, setValues, slurmJobs, setSlurmJobs} ) => {
                     <button type="submit" className='run-button'>Save and run slurm script</button>
                 </form>
             </div>
-            {/* <div className='slurm-card-container'>
-              <SlurmCard />
-            </div> */}
             <div className='warning'>
               <Warning openWarning={openWarning} setOpenWarning={setOpenWarning} message="Error running slurm script, please check configurations"/>
             </div>

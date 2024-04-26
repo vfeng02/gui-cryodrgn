@@ -2,7 +2,6 @@ import React from 'react';
 import { useState } from "react";
 import '../App.css';
 import './Generate.css';
-import './Generate.css';
 import Error from "../components/Error";
 import { useLocation, Link } from 'react-router-dom';
 import AccordionGroup from "../components/AccordionGroup";

@@ -65,7 +65,6 @@ def get_arg_details(module):
     return info
 
 def extract_args(cryodrgn_path):
-# '/scratch/gpfs/vyfeng/cryodrgn'
     sys.path.append(cryodrgn_path)
 
     commands_path = cryodrgn_path + '/cryodrgn/commands'
@@ -76,13 +75,12 @@ def extract_args(cryodrgn_path):
 
     preprocess = ["parse_pose_star", "parse_pose_csparc", "parse_ctf_star", "parse_ctf_csparc", "downsample", "preprocess"]
     training = ["train_vae", "train_nn"]
-    analysis = ["analyze", "pc_traversal", "direct_traversal", "graph_traversal"]
-    conf_analysis = ["analyze_landscape", "analyze_landscape_full"]
+    analysis = ["analyze", "pc_traversal", "direct_traversal", "graph_traversal", "analyze_landscape", "analyze_landscape_full"]
     abinit = ["abinit_homo", "abinit_het"]
     misc = ["eval_images", "view_config", "eval_vol", "backproject_voxel"]
     utils = [f[:-3] for f in os.listdir(commands_utils_path) if (f != '__init__.py' and f != '__pycache__')] + ["analyze_convergence"]
 
-    commands_groups = {"Preprocess Inputs": preprocess, "cryoDRGN Training": training, "cryoDRGN Analysis": analysis, "Conformational Landscape Analysis": conf_analysis, "cryoDRGN2 Ab Initio Reconstruction": abinit, "Misc": misc, "Utils": utils}
+    commands_groups = {"Preprocess Inputs": preprocess, "CryoDRGN Training": training, "CryoDRGN Analysis": analysis, "CryoDRGN2 Ab Initio Reconstruction": abinit, "Misc": misc, "Utils": utils}
     # commands_groups = {"Preprocess Inputs": ["downsample"]}
 
     for path in [commands_path, commands_utils_path, utils_path]:
@@ -98,8 +96,7 @@ def extract_args(cryodrgn_path):
     with open('../data/commands.json', 'w', encoding='utf-8') as f:
             json.dump(all_commands, f, ensure_ascii=False, indent=4)
 
-    #remember to rename output json file
-
+# example usage: python extract.py '/scratch/gpfs/vyfeng/cryodrgn'
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
                     prog='extract',

@@ -10,7 +10,6 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-# get all files in a directory
 def list_files(dir_path, expanded, node_id):
     d = {'name': os.path.basename(dir_path)}
     d['path'] = dir_path
@@ -41,6 +40,24 @@ def list_files(dir_path, expanded, node_id):
 
     return d
 
+@app.route('/files', methods=['POST'])
+@cross_origin()
+def get_files():
+    print(args.parentdir)
+    expanded=set(request.json['expanded']) # passed in as a list of paths
+    return jsonify(list_files(args.parentdir, expanded, 0))
+
+@app.route('/envs', methods=['POST'])
+@cross_origin()
+def get_envs():
+    process_1 = subprocess.run("module load anaconda3/2023.9; conda env list", capture_output=True, shell=True)
+    output = process_1.stdout.decode('utf-8').split('\n')
+    envs_list = []
+    for line in output[2:]: 
+        if len(line) > 0:
+          envs_list.append(line.split(None, 1)[0])
+    return jsonify(envs_list)
+     
 @app.route('/run', methods=['POST'])
 @cross_origin()
 def save_and_run_script():
@@ -60,23 +77,6 @@ def save_and_run_script():
     
     return jsonify(process_1.stdout.decode('utf-8'))
 
-@app.route('/files', methods=['POST'])
-@cross_origin()
-def get_files():
-    expanded=set(request.json['expanded']) # passed in as a list of paths
-    return jsonify(list_files(args.parentdir, expanded, 0))
-
-@app.route('/envs', methods=['POST'])
-@cross_origin()
-def get_envs():
-    process_1 = subprocess.run("module load anaconda3/2023.9; conda env list", capture_output=True, shell=True)
-    output = process_1.stdout.decode('utf-8').split('\n')
-    envs_list = []
-    for line in output[2:]: 
-        if len(line) > 0:
-          envs_list.append(line.split(None, 1)[0])
-    return jsonify(envs_list)
-     
 # Running app
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -87,3 +87,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
     app.run(debug=True, port=args.port)
    
+

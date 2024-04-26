@@ -39,6 +39,7 @@
             "args": {
                 "required arguments": {
                     "input": {
+                        "type": "abspath",
                         "help": "Cryosparc .cs file"
                     },
                     "D": {
@@ -382,7 +383,7 @@
             }
         }
     },
-    "cryoDRGN Training": {
+    "CryoDRGN Training": {
         "train_vae": {
             "desc": "Train a VAE for heterogeneous reconstruction with known pose",
             "args": {
@@ -457,7 +458,7 @@
                         ]
                     },
                     "seed": {
-                        "default": 97873,
+                        "default": 34854,
                         "help": "Random seed",
                         "type": "int",
                         "flags": [
@@ -901,7 +902,7 @@
                         ]
                     },
                     "seed": {
-                        "default": 91012,
+                        "default": 29610,
                         "help": "Random seed",
                         "type": "int",
                         "flags": [
@@ -1150,7 +1151,7 @@
             }
         }
     },
-    "cryoDRGN Analysis": {
+    "CryoDRGN Analysis": {
         "analyze": {
             "desc": "Visualize latent space and generate volumes",
             "args": {
@@ -1416,9 +1417,7 @@
                     }
                 }
             }
-        }
-    },
-    "Conformational Landscape Analysis": {
+        },
         "analyze_landscape": {
             "desc": "Pipeline to analyze cryoDRGN volume distribution",
             "args": {
@@ -1722,7 +1721,7 @@
             }
         }
     },
-    "cryoDRGN2 Ab Initio Reconstruction": {
+    "CryoDRGN2 Ab Initio Reconstruction": {
         "abinit_homo": {
             "desc": "",
             "args": {
@@ -1797,7 +1796,7 @@
                         ]
                     },
                     "seed": {
-                        "default": 30487,
+                        "default": 78141,
                         "help": "Random seed",
                         "type": "int",
                         "flags": [
@@ -2204,7 +2203,7 @@
                         ]
                     },
                     "seed": {
-                        "default": 45222,
+                        "default": 98279,
                         "help": "Random seed",
                         "type": "int",
                         "flags": [
