@@ -1,8 +1,8 @@
 // vite.config.js
 import { defineConfig } from 'vite'
 
-const serverPort=57412
-const websitePort=62219
+const serverPort=28019
+const websitePort=52058
 const server = "http://localhost:" + serverPort.toString()
 
 export default defineConfig({
