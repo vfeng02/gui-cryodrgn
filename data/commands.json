@@ -5,6 +5,7 @@
             "args": {
                 "required arguments": {
                     "input": {
+                        "type": "abspath",
                         "help": "RELION .star file"
                     },
                     "o": {
@@ -85,7 +86,8 @@
             "args": {
                 "required arguments": {
                     "star": {
-                        "help": "Input"
+                        "help": "Input",
+                        "type": "abspath"
                     },
                     "o": {
                         "help": "Output pkl of CTF parameters",
@@ -156,6 +158,7 @@
             "args": {
                 "required arguments": {
                     "cs": {
+                        "type": "abspath",
                         "help": "Input cryosparc particles.cs file"
                     },
                     "o": {
@@ -199,7 +202,8 @@
             "args": {
                 "required arguments": {
                     "mrcs": {
-                        "help": "Input particles or volume (.mrc, .mrcs, .star, .cs, or .txt)"
+                        "help": "Input particles or volume (.mrc, .mrcs, .star, .cs, or .txt)",
+                        "type": "abspath"
                     },
                     "D": {
                         "help": "New box size in pixels, must be even",
@@ -286,6 +290,7 @@
                 "additional arguments": {
                     "datadir": {
                         "help": "Optionally provide path to input .mrcs if loading from a .star or .cs file",
+                        "type": "abspath",
                         "flags": [
                             "--datadir"
                         ]
@@ -1175,6 +1180,7 @@
                     },
                     "outdir": {
                         "help": "Output directory for analysis results (default: [workdir]/analyze.[epoch])",
+                        "type": "abspath",
                         "flags": [
                             "-o",
                             "--outdir"
@@ -1265,6 +1271,7 @@
             "args": {
                 "required arguments": {
                     "z": {
+                        "type": "abspath",
                         "help": "Input z.pkl"
                     },
                     "o": {
@@ -1316,11 +1323,13 @@
             "args": {
                 "required arguments": {
                     "z": {
+                        "type": "abspath",
                         "help": "Input z.pkl embeddings"
                     },
                     "ind": {
                         "help": "Text file containing indices of anchor points",
                         "metavar": ".TXT",
+                        "type": "abspath",
                         "flags": [
                             "--ind"
                         ]
@@ -1360,6 +1369,7 @@
             "args": {
                 "required arguments": {
                     "data": {
+                        "type": "abspath",
                         "help": "Input z.pkl embeddings"
                     },
                     "anchors": {
@@ -2282,6 +2292,7 @@
                 "tilt series": {
                     "tilt": {
                         "help": "Particle stack file (.mrcs)",
+                        "type": "abspath",
                         "flags": [
                             "--tilt"
                         ]
@@ -2999,6 +3010,7 @@
                     "config": {
                         "help": "CryoDRGN config.yaml file",
                         "metavar": "YAML",
+                        "type": "abspath",
                         "flags": [
                             "-c",
                             "--config"
@@ -3406,7 +3418,8 @@
             "args": {
                 "required arguments": {
                     "particles": {
-                        "help": "Input particles (.mrcs, .txt, .star)"
+                        "help": "Input particles (.mrcs, .txt, .star)",
+                        "type": "abspath"
                     },
                     "o": {
                         "help": "Output .star file",
@@ -3419,18 +3432,21 @@
                 "additional arguments": {
                     "ctf": {
                         "help": "Input ctf.pkl",
+                        "type": "abspath",
                         "flags": [
                             "--ctf"
                         ]
                     },
                     "poses": {
                         "help": "Optionally include pose.pkl",
+                        "type": "abspath",
                         "flags": [
                             "--poses"
                         ]
                     },
                     "ind": {
                         "help": "Optionally filter by array of selected indices (.pkl)",
+                        "type": "abspath",
                         "flags": [
                             "--ind"
                         ]
@@ -3507,10 +3523,12 @@
             "args": {
                 "required arguments": {
                     "input": {
-                        "help": "Input .star file"
+                        "help": "Input .star file",
+                        "type": "abspath"
                     },
                     "ind": {
                         "help": "Array of selected indices (.pkl)",
+                        "type": "abspath",
                         "flags": [
                             "--ind"
                         ]
@@ -3541,7 +3559,8 @@
             "args": {
                 "required arguments": {
                     "input": {
-                        "help": "Particle stack (.mrcs) or density map (.mrc)"
+                        "help": "Particle stack (.mrcs) or density map (.mrc)",
+                        "type": "abspath"
                     }
                 }
             }
@@ -3551,7 +3570,8 @@
             "args": {
                 "required arguments": {
                     "particles": {
-                        "help": "Input particles (.cs)"
+                        "help": "Input particles (.cs)",
+                        "type": "abspath"
                     },
                     "o": {
                         "help": "Output .star file",
@@ -3564,24 +3584,28 @@
                 "additional arguments": {
                     "datadir": {
                         "help": "Data/Project directory for cryoSPARC",
+                        "type": "abspath",
                         "flags": [
                             "--datadir"
                         ]
                     },
                     "ctf": {
                         "help": "Input ctf.pkl",
+                        "type": "abspath",
                         "flags": [
                             "--ctf"
                         ]
                     },
                     "poses": {
                         "help": "Optionally include pose.pkl",
+                        "type": "abspath",
                         "flags": [
                             "--poses"
                         ]
                     },
                     "ind": {
                         "help": "Optionally filter by array of selected indices (.pkl)",
+                        "type": "abspath",
                         "flags": [
                             "--ind"
                         ]
@@ -3604,10 +3628,12 @@
                 "required arguments": {
                     "input": {
                         "help": "Input .pkl files",
+                        "type": "abspath",
                         "nargs": "+"
                     },
                     "o": {
                         "help": "Output .pkl file",
+                        "type": "abspath",
                         "flags": [
                             "-o"
                         ]
@@ -3620,12 +3646,14 @@
             "args": {
                 "required arguments": {
                     "mrcs": {
-                        "help": "Input particles or volume (.mrc, .mrcs, .star, .cs, or .txt)"
+                        "help": "Input particles or volume (.mrc, .mrcs, .star, .cs, or .txt)",
+                        "type": "abspath"
                     }
                 },
                 "additional arguments": {
                     "datadir": {
                         "help": "Optionally provide path to input .mrcs if loading from a .star or .cs file",
+                        "type": "abspath",
                         "flags": [
                             "--datadir"
                         ]
@@ -3648,6 +3676,7 @@
                     },
                     "o": {
                         "help": "Optionally, specify image to save",
+                        "type": "abspath",
                         "flags": [
                             "-o"
                         ]
@@ -3660,7 +3689,8 @@
             "args": {
                 "required arguments": {
                     "input": {
-                        "help": "Input volume (.mrc)"
+                        "help": "Input volume (.mrc)",
+                        "type": "abspath"
                     }
                 },
                 "additional arguments": {
@@ -3680,6 +3710,7 @@
             "args": {
                 "required arguments": {
                     "input": {
+                        "type": "abspath",
                         "help": "Input"
                     }
                 }
@@ -3691,6 +3722,7 @@
                 "required arguments": {
                     "input": {
                         "help": "input cryoDRGN fsc text files",
+                        "type": "abspath",
                         "nargs": "+"
                     }
                 },
@@ -3726,6 +3758,7 @@
                     },
                     "o": {
                         "help": "Output selection (.pkl)",
+                        "type": "abspath",
                         "flags": [
                             "-o"
                         ]
@@ -3741,6 +3774,7 @@
                     },
                     "s": {
                         "help": "Optionally save out inverted selection (.pkl)",
+                        "type": "abspath",
                         "flags": [
                             "-s"
                         ]
@@ -3823,10 +3857,12 @@
             "args": {
                 "required arguments": {
                     "mrcs": {
-                        "help": "Input particles (.mrcs, .cs, .star, or .txt)"
+                        "help": "Input particles (.mrcs, .cs, .star, or .txt)",
+                        "type": "abspath"
                     },
                     "trans": {
-                        "help": "Pose or translations pickle (.pkl)"
+                        "help": "Pose or translations pickle (.pkl)",
+                        "type": "abspath"
                     },
                     "o": {
                         "help": "Output particle stack (.mrcs)",
@@ -3847,11 +3883,13 @@
                     },
                     "datadir": {
                         "help": "Optionally overwrite path to starfile .mrcs if loading from a starfile",
+                        "type": "abspath",
                         "flags": [
                             "--datadir"
                         ]
                     },
                     "out_png": {
+                      "type": "abspath",
                         "flags": [
                             "--out-png"
                         ]
@@ -3864,15 +3902,18 @@
             "args": {
                 "required arguments": {
                     "mrcs": {
-                        "help": "Input particles (.mrcs, .txt, .star, or .cs)"
+                        "help": "Input particles (.mrcs, .txt, .star, or .cs)",
+                        "type": "abspath"
                     },
                     "ctf_params": {
-                        "help": "Input CTF parameters (.pkl)"
+                        "help": "Input CTF parameters (.pkl)",
+                        "type": "abspath"
                     }
                 },
                 "additional arguments": {
                     "datadir": {
                         "help": "Optionally overwrite path to starfile .mrcs if loading from a starfile",
+                        "type": "abspath",
                         "flags": [
                             "--datadir"
                         ]
@@ -3892,10 +3933,12 @@
             "args": {
                 "required arguments": {
                     "input": {
-                        "help": "Input particles (.mrcs, .txt, .star, .cs)"
+                        "help": "Input particles (.mrcs, .txt, .star, .cs)",
+                        "type": "abspath"
                     },
                     "ind": {
                         "help": "Selected indices array (.pkl)",
+                        "type": "abspath",
                         "flags": [
                             "--ind"
                         ]
@@ -3904,6 +3947,7 @@
                 "additional arguments": {
                     "o": {
                         "help": "Output .mrcs file",
+                        "type": "abspath",
                         "flags": [
                             "-o"
                         ]
@@ -3916,12 +3960,14 @@
             "args": {
                 "required arguments": {
                     "input": {
-                        "help": "Input data (.pkl)"
+                        "help": "Input data (.pkl)",
+                        "type": "abspath"
                     }
                 },
                 "additional arguments": {
                     "ind": {
                         "help": "Array of selected indices (.pkl)",
+                        "type": "abspath",
                         "flags": [
                             "--ind"
                         ]
@@ -3948,7 +3994,8 @@
             "args": {
                 "required arguments": {
                     "input": {
-                        "help": "Input volume (.mrc)"
+                        "help": "Input volume (.mrc)",
+                        "type": "abspath"
                     }
                 },
                 "additional arguments": {
@@ -3968,7 +4015,7 @@
             "args": {
                 "required arguments": {
                     "outglobs": {
-                        "help": "Path patterns to scan for experiment outputs.Must be relative to current directory.",
+                        "help": "Path patterns to scan for experiment outputs. Must be relative to current directory.",
                         "nargs": "*"
                     }
                 },
@@ -4018,7 +4065,8 @@
             "args": {
                 "required arguments": {
                     "labels": {
-                        "help": "Input labels.pkl"
+                        "help": "Input labels.pkl",
+                        "type": "abspath"
                     }
                 },
                 "additional arguments": {
@@ -4061,7 +4109,8 @@
             "args": {
                 "required arguments": {
                     "input": {
-                        "help": "Input volume (.mrc)"
+                        "help": "Input volume (.mrc)",
+                        "type": "abspath"
                     }
                 },
                 "additional arguments": {
@@ -4075,6 +4124,7 @@
                     },
                     "o": {
                         "help": "Output volume (.mrc)",
+                        "type": "abspath",
                         "flags": [
                             "-o"
                         ]
