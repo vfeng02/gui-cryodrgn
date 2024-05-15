@@ -1,15 +1,13 @@
 {
-  "Preprocess inputs": {
+  "Preprocess Inputs": {
       "parse_pose_star": {
           "desc": "Parse image poses from RELION .star file",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "input": {
                       "type": "abspath",
                       "help": "RELION .star file"
-                  }
-              },
-              "optional arguments": {
+                  },
                   "o": {
                       "help": "Output pose.pkl",
                       "metavar": "PKL",
@@ -40,13 +38,28 @@
       "parse_pose_csparc": {
           "desc": "Parse image poses from a cryoSPARC .cs metafile",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "input": {
-                    "type": "abspath",
-                    "help": "Cryosparc .cs file"
+                      "type": "abspath",
+                      "help": "Cryosparc .cs file"
+                  },
+                  "D": {
+                      "help": "Box size of reconstruction (pixels)",
+                      "type": "int",
+                      "flags": [
+                          "-D"
+                      ]
+                  },
+                  "o": {
+                      "help": "Output pose.pkl",
+                      "metavar": "PKL",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
                   }
               },
-              "optional arguments": {
+              "additional arguments": {
                   "abinit": {
                       "const": true,
                       "default": false,
@@ -64,21 +77,6 @@
                       "flags": [
                           "--hetrefine"
                       ]
-                  },
-                  "D": {
-                      "help": "Box size of reconstruction (pixels)",
-                      "type": "int",
-                      "flags": [
-                          "-D"
-                      ]
-                  },
-                  "o": {
-                      "help": "Output pose.pkl",
-                      "metavar": "PKL",
-                      "type": "abspath",
-                      "flags": [
-                          "-o"
-                      ]
                   }
               }
           }
@@ -86,20 +84,20 @@
       "parse_ctf_star": {
           "desc": "Parse CTF parameters from a RELION .star file",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "star": {
                       "help": "Input",
                       "type": "abspath"
-                  }
-              },
-              "optional arguments": {
+                  },
                   "o": {
                       "help": "Output pkl of CTF parameters",
                       "type": "abspath",
                       "flags": [
                           "-o"
                       ]
-                  },
+                  }
+              },
+              "additional arguments": {
                   "png": {
                       "help": "Optionally plot the CTF",
                       "metavar": "PNG",
@@ -158,20 +156,20 @@
       "parse_ctf_csparc": {
           "desc": "Parse CTF parameters from a cryoSPARC particles.cs file",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "cs": {
-                      "help": "Input cryosparc particles.cs file",
-                      "type": "abspath"
-                  }
-              },
-              "optional arguments": {
+                      "type": "abspath",
+                      "help": "Input cryosparc particles.cs file"
+                  },
                   "o": {
                       "help": "Output pkl of CTF parameters",
                       "type": "abspath",
                       "flags": [
                           "-o"
                       ]
-                  },
+                  }
+              },
+              "additional arguments": {
                   "png": {
                       "help": "Optionally plot the CTF",
                       "metavar": "PNG",
@@ -202,13 +200,11 @@
       "downsample": {
           "desc": "Downsample an image stack or volume by clipping fourier frequencies",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "mrcs": {
                       "help": "Input particles or volume (.mrc, .mrcs, .star, .cs, or .txt)",
                       "type": "abspath"
-                  }
-              },
-              "optional arguments": {
+                  },
                   "D": {
                       "help": "New box size in pixels, must be even",
                       "type": "int",
@@ -223,7 +219,9 @@
                       "flags": [
                           "-o"
                       ]
-                  },
+                  }
+              },
+              "additional arguments": {
                   "b": {
                       "default": 5000,
                       "help": "Batch size for processing images (default: %(default)s)",
@@ -276,13 +274,10 @@
       "preprocess": {
           "desc": "Preprocess a dataset for more streamlined cryoDRGN training",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "mrcs": {
-                      "help": "Input particles or volume (.mrc, .mrcs, .star, or .txt)",
-                      "type": "abspath"
-                  }
-              },
-              "optional arguments": {
+                      "help": "Input particles or volume (.mrc, .mrcs, .star, or .txt)"
+                  },
                   "o": {
                       "help": "Output .mrcs",
                       "metavar": "MRCS",
@@ -290,9 +285,12 @@
                       "flags": [
                           "-o"
                       ]
-                  },
+                  }
+              },
+              "additional arguments": {
                   "datadir": {
                       "help": "Optionally provide path to input .mrcs if loading from a .star or .cs file",
+                      "type": "abspath",
                       "flags": [
                           "--datadir"
                       ]
@@ -390,22 +388,22 @@
           }
       }
   },
-  "cryoDRGN Training": {
+  "CryoDRGN Training": {
       "train_vae": {
           "desc": "Train a VAE for heterogeneous reconstruction with known pose",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "particles": {
                       "help": "Input particles (.mrcs, .star, .cs, or .txt)",
                       "type": "abspath"
                   },
                   "outdir": {
-                    "help": "Output directory to save model",
-                    "type": "abspath",
-                    "flags": [
-                        "-o",
-                        "--outdir"
-                    ]
+                      "help": "Output directory to save model",
+                      "type": "abspath",
+                      "flags": [
+                          "-o",
+                          "--outdir"
+                      ]
                   },
                   "zdim": {
                       "help": "Dimension of latent variable",
@@ -420,7 +418,9 @@
                       "flags": [
                           "--poses"
                       ]
-                  },
+                  }
+              },
+              "additional arguments": {
                   "ctf": {
                       "help": "CTF parameters (.pkl)",
                       "metavar": "pkl",
@@ -428,9 +428,7 @@
                       "flags": [
                           "--ctf"
                       ]
-                  }
-              },
-              "optional arguments": {
+                  },
                   "load": {
                       "help": "Initialize training from a checkpoint",
                       "metavar": "WEIGHTS.PKL",
@@ -465,7 +463,7 @@
                       ]
                   },
                   "seed": {
-                      "default": 45907,
+                      "default": 34854,
                       "help": "Random seed",
                       "type": "int",
                       "flags": [
@@ -845,13 +843,11 @@
       "train_nn": {
           "desc": "Train a NN to model a 3D density map given 2D images with pose assignments",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "particles": {
                       "help": "Input particles (.mrcs, .star, .cs, or .txt)",
                       "type": "abspath"
-                  }
-              },
-              "optional arguments": {
+                  },
                   "outdir": {
                       "help": "Output directory to save model",
                       "type": "abspath",
@@ -866,7 +862,9 @@
                       "flags": [
                           "--poses"
                       ]
-                  },
+                  }
+              },
+              "additional arguments": {
                   "ctf": {
                       "help": "CTF parameters (.pkl)",
                       "metavar": "pkl",
@@ -909,7 +907,7 @@
                       ]
                   },
                   "seed": {
-                      "default": 95405,
+                      "default": 29610,
                       "help": "Random seed",
                       "type": "int",
                       "flags": [
@@ -1157,13 +1155,12 @@
               }
           }
       }
-
   },
-  "cryoDRGN Analysis": {
+  "CryoDRGN Analysis": {
       "analyze": {
           "desc": "Visualize latent space and generate volumes",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "workdir": {
                       "help": "Directory with cryoDRGN results",
                       "type": "abspath"
@@ -1173,7 +1170,7 @@
                       "type": "int"
                   }
               },
-              "optional arguments": {
+              "additional arguments": {
                   "device": {
                       "help": "Optionally specify CUDA device",
                       "type": "int",
@@ -1183,6 +1180,7 @@
                   },
                   "outdir": {
                       "help": "Output directory for analysis results (default: [workdir]/analyze.[epoch])",
+                      "type": "abspath",
                       "flags": [
                           "-o",
                           "--outdir"
@@ -1209,8 +1207,7 @@
               },
               "extra arguments for volume generation": {
                   "Apix": {
-                      "default": 1,
-                      "help": "Pixel size to add to .mrc header (default: %(default)s A/pix)",
+                      "help": "Pixel size to add to .mrc header (default is to infer from ctf.pkl file else 1)",
                       "type": "float",
                       "flags": [
                           "--Apix"
@@ -1272,12 +1269,20 @@
       "pc_traversal": {
           "desc": "Generate trajectory along PCs",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "z": {
+                      "type": "abspath",
                       "help": "Input z.pkl"
+                  },
+                  "o": {
+                      "help": "Output directory for pc.X.txt files",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
                   }
               },
-              "optional arguments": {
+              "additional arguments": {
                   "dim": {
                       "help": "Choose PC (1-based indexing) (default: all)",
                       "type": "int",
@@ -1309,13 +1314,6 @@
                       "flags": [
                           "--use-percentile-spacing"
                       ]
-                  },
-                  "o": {
-                      "help": "Output directory for pc.X.txt files",
-                      "type": "abspath",
-                      "flags": [
-                          "-o"
-                      ]
                   }
               }
           }
@@ -1323,19 +1321,29 @@
       "direct_traversal": {
           "desc": "Construct z path interpolating between anchor points",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "z": {
+                      "type": "abspath",
                       "help": "Input z.pkl embeddings"
-                  }
-              },
-              "optional arguments": {
+                  },
                   "ind": {
                       "help": "Text file containing indices of anchor points",
                       "metavar": ".TXT",
+                      "type": "abspath",
                       "flags": [
                           "--ind"
                       ]
                   },
+                  "o": {
+                      "help": "Output .txt file for z-values",
+                      "metavar": "Z.PATH.TXT",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              },
+              "additional arguments": {
                   "n": {
                       "default": 6,
                       "help": "Number of points in between anchors, inclusive (default: %(default)s)",
@@ -1352,14 +1360,6 @@
                       "flags": [
                           "--loop"
                       ]
-                  },
-                  "o": {
-                      "help": "Output .txt file for z-values",
-                      "metavar": "Z.PATH.TXT",
-                      "type": "abspath",
-                      "flags": [
-                          "-o"
-                      ]
                   }
               }
           }
@@ -1367,12 +1367,11 @@
       "graph_traversal": {
           "desc": "Find shortest path along nearest neighbor graph",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "data": {
+                      "type": "abspath",
                       "help": "Input z.pkl embeddings"
-                  }
-              },
-              "optional arguments": {
+                  },
                   "anchors": {
                       "help": "Index of anchor points",
                       "nargs": "+",
@@ -1381,6 +1380,24 @@
                           "--anchors"
                       ]
                   },
+                  "o": {
+                      "help": "Output .txt file for path indices",
+                      "metavar": "PATH.TXT",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  },
+                  "out_z": {
+                      "help": "Output .txt file for path z-values",
+                      "metavar": "Z.PATH.TXT",
+                      "type": "abspath",
+                      "flags": [
+                          "--out-z"
+                      ]
+                  }
+              },
+              "additional arguments": {
                   "max_neighbors": {
                       "default": 10,
                       "type": "int",
@@ -1407,32 +1424,14 @@
                       "flags": [
                           "--max-images"
                       ]
-                  },
-                  "o": {
-                      "help": "Output .txt file for path indices",
-                      "metavar": "PATH.TXT",
-                      "type": "abspath",
-                      "flags": [
-                          "-o"
-                      ]
-                  },
-                  "out_z": {
-                      "help": "Output .txt file for path z-values",
-                      "metavar": "Z.PATH.TXT",
-                      "type": "abspath",
-                      "flags": [
-                          "--out-z"
-                      ]
                   }
               }
           }
-      }
-  },
-  "Conformational Landscape Analysis": {
+      },
       "analyze_landscape": {
           "desc": "Pipeline to analyze cryoDRGN volume distribution",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "workdir": {
                       "help": "Directory with cryoDRGN results",
                       "type": "abspath"
@@ -1442,7 +1441,7 @@
                       "type": "str"
                   }
               },
-              "optional arguments": {
+              "additional arguments": {
                   "device": {
                       "help": "Optionally specify CUDA device",
                       "type": "int",
@@ -1594,7 +1593,7 @@
       "analyze_landscape_full": {
           "desc": "",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "workdir": {
                       "help": "Directory with cryoDRGN results",
                       "type": "abspath"
@@ -1604,7 +1603,7 @@
                       "type": "int"
                   }
               },
-              "optional arguments": {
+              "additional arguments": {
                   "device": {
                       "help": "Optionally specify CUDA device",
                       "type": "int",
@@ -1732,17 +1731,15 @@
           }
       }
   },
-  "cryoDRGN2 Ab Initio Reconstruction": {
+  "CryoDRGN2 Ab Initio Reconstruction": {
       "abinit_homo": {
-          "desc": "Homogeneous NN reconstruction with hierarchical pose optimization",
+          "desc": "",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "particles": {
                       "help": "Input particles (.mrcs, .star, .cs, or .txt)",
                       "type": "abspath"
-                  }
-              },
-              "optional arguments": {
+                  },
                   "outdir": {
                       "help": "Output directory to save model",
                       "type": "abspath",
@@ -1750,7 +1747,9 @@
                           "-o",
                           "--outdir"
                       ]
-                  },
+                  }
+              },
+              "additional arguments": {
                   "ctf": {
                       "help": "CTF parameters (.pkl)",
                       "metavar": "pkl",
@@ -1807,7 +1806,7 @@
                       ]
                   },
                   "seed": {
-                      "default": 20125,
+                      "default": 78141,
                       "help": "Random seed",
                       "type": "int",
                       "flags": [
@@ -2145,13 +2144,11 @@
       "abinit_het": {
           "desc": "Heterogeneous NN reconstruction with hierarchical pose optimization",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "particles": {
                       "help": "Input particles (.mrcs, .star, .cs, or .txt)",
                       "type": "abspath"
-                  }
-              },
-              "optional arguments": {
+                  },
                   "outdir": {
                       "help": "Output directory to save model",
                       "type": "abspath",
@@ -2166,7 +2163,9 @@
                       "flags": [
                           "--zdim"
                       ]
-                  },
+                  }
+              },
+              "additional arguments": {
                   "ctf": {
                       "help": "CTF parameters (.pkl)",
                       "metavar": "pkl",
@@ -2214,7 +2213,7 @@
                       ]
                   },
                   "seed": {
-                      "default": 86799,
+                      "default": 98279,
                       "help": "Random seed",
                       "type": "int",
                       "flags": [
@@ -2293,6 +2292,7 @@
               "tilt series": {
                   "tilt": {
                       "help": "Particle stack file (.mrcs)",
+                      "type": "abspath",
                       "flags": [
                           "--tilt"
                       ]
@@ -2663,23 +2663,13 @@
       "eval_images": {
           "desc": "Evaluate cryoDRGN z and loss for a stack of images",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "particles": {
                       "help": "Input particles (.mrcs, .star, .cs, or .txt)",
                       "type": "abspath"
                   },
                   "weights": {
                       "help": "Model weights"
-                  }
-              },
-              "optional arguments": {
-                  "config": {
-                      "help": "CryoDRGN configuration",
-                      "metavar": "PKL",
-                      "flags": [
-                          "-c",
-                          "--config"
-                      ]
                   },
                   "o": {
                       "help": "Output pickle for losses",
@@ -2702,6 +2692,16 @@
                       "type": "abspath",
                       "flags": [
                           "--poses"
+                      ]
+                  }
+              },
+              "additional arguments": {
+                  "config": {
+                      "help": "CryoDRGN configuration",
+                      "metavar": "PKL",
+                      "flags": [
+                          "-c",
+                          "--config"
                       ]
                   },
                   "ctf": {
@@ -2992,27 +2992,25 @@
       "view_config": {
           "desc": "Display config information of a cryoDRGN job",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "workdir": {
                       "help": "Directory with cryoDRGN results",
                       "type": "abspath"
                   }
-              },
-              "optional arguments": {}
+              }
           }
       },
       "eval_vol": {
           "desc": "Evaluate the decoder at specified values of z",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "weights": {
                       "help": "Model weights"
-                  }
-              },
-              "optional arguments": {
+                  },
                   "config": {
                       "help": "CryoDRGN config.yaml file",
                       "metavar": "YAML",
+                      "type": "abspath",
                       "flags": [
                           "-c",
                           "--config"
@@ -3024,7 +3022,9 @@
                       "flags": [
                           "-o"
                       ]
-                  },
+                  }
+              },
+              "additional arguments": {
                   "device": {
                       "help": "Optionally specify CUDA device",
                       "type": "int",
@@ -3262,15 +3262,13 @@
           }
       },
       "backproject_voxel": {
-          "desc": "Backproject cryo-EM images",
+          "desc": "",
           "args": {
-              "positional arguments": {
+              "required arguments": {
                   "particles": {
                       "help": "Input particles (.mrcs, .star, .cs, or .txt)",
                       "type": "abspath"
-                  }
-              },
-              "optional arguments": {
+                  },
                   "poses": {
                       "help": "Image poses (.pkl)",
                       "type": "abspath",
@@ -3278,6 +3276,15 @@
                           "--poses"
                       ]
                   },
+                  "o": {
+                      "help": "Output .mrc file",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              },
+              "additional arguments": {
                   "ctf": {
                       "help": "CTF parameters (.pkl) for phase flipping images",
                       "metavar": "pkl",
@@ -3286,11 +3293,13 @@
                           "--ctf"
                       ]
                   },
-                  "o": {
-                      "help": "Output .mrc file",
-                      "type": "abspath",
+                  "half_maps": {
+                      "const": false,
+                      "default": true,
+                      "help": "Don't produce half-maps and FSCs.",
+                      "nargs": 0,
                       "flags": [
-                          "-o"
+                          "--no-half-maps"
                       ]
                   },
                   "ctf_alg": {
@@ -3397,6 +3406,944 @@
                       "flags": [
                           "-a",
                           "--angle-per-tilt"
+                      ]
+                  }
+              }
+          }
+      }
+  },
+  "Utils": {
+      "write_star": {
+          "desc": "",
+          "args": {
+              "required arguments": {
+                  "particles": {
+                      "help": "Input particles (.mrcs, .txt, .star)",
+                      "type": "abspath"
+                  },
+                  "o": {
+                      "help": "Output .star file",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              },
+              "additional arguments": {
+                  "ctf": {
+                      "help": "Input ctf.pkl",
+                      "type": "abspath",
+                      "flags": [
+                          "--ctf"
+                      ]
+                  },
+                  "poses": {
+                      "help": "Optionally include pose.pkl",
+                      "type": "abspath",
+                      "flags": [
+                          "--poses"
+                      ]
+                  },
+                  "ind": {
+                      "help": "Optionally filter by array of selected indices (.pkl)",
+                      "type": "abspath",
+                      "flags": [
+                          "--ind"
+                      ]
+                  },
+                  "full_path": {
+                      "const": true,
+                      "default": false,
+                      "help": "Write the full path to particles (default: relative paths)",
+                      "nargs": 0,
+                      "flags": [
+                          "--full-path"
+                      ]
+                  },
+                  "relion30": {
+                      "const": true,
+                      "default": false,
+                      "help": "Write output in RELION 3.0 format instead of the default 3.1 format.",
+                      "nargs": 0,
+                      "flags": [
+                          "--relion30"
+                      ]
+                  }
+              }
+          }
+      },
+      "fsc": {
+          "desc": "",
+          "args": {
+              "required arguments": {
+                  "volumes": {
+                      "help": "volumes to compare",
+                      "nargs": 2
+                  }
+              },
+              "additional arguments": {
+                  "mask": {
+                      "help": "if given, apply the mask in this file before calculating FSCs",
+                      "type": "abspath",
+                      "flags": [
+                          "--mask"
+                      ]
+                  },
+                  "plot": {
+                      "const": true,
+                      "help": "also plot the FSC curve: optionally supply a .png file name instead of generating one automatically",
+                      "nargs": "?",
+                      "type": "abspath",
+                      "flags": [
+                          "--plot",
+                          "-p"
+                      ]
+                  },
+                  "Apix": {
+                      "default": 1.0,
+                      "help": "Ang/pixels to use when printing the resolutions at thresholds",
+                      "type": "float",
+                      "flags": [
+                          "--Apix"
+                      ]
+                  },
+                  "outtxt": {
+                      "help": "if given, a file to save the FSC values, with each space-delimited row as <resolution> <fsc_val>; otherwise print these to screen",
+                      "type": "abspath",
+                      "flags": [
+                          "--outtxt",
+                          "-o"
+                      ]
+                  }
+              }
+          }
+      },
+      "filter_star": {
+          "desc": "Filter a .star file",
+          "args": {
+              "required arguments": {
+                  "input": {
+                      "help": "Input .star file",
+                      "type": "abspath"
+                  },
+                  "ind": {
+                      "help": "Array of selected indices (.pkl)",
+                      "type": "abspath",
+                      "flags": [
+                          "--ind"
+                      ]
+                  }
+              },
+              "additional arguments": {
+                  "et": {
+                      "const": true,
+                      "default": false,
+                      "help": "Set if .star file includes tilts",
+                      "nargs": 0,
+                      "flags": [
+                          "--et"
+                      ]
+                  },
+                  "o": {
+                      "help": "Output .star file",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              }
+          }
+      },
+      "view_header": {
+          "desc": "View the header metadata of a .mrc or .mrcs file",
+          "args": {
+              "required arguments": {
+                  "input": {
+                      "help": "Particle stack (.mrcs) or density map (.mrc)",
+                      "type": "abspath"
+                  }
+              }
+          }
+      },
+      "write_cs": {
+          "desc": "Create a CryoSparc .cs file from a particle stack and ctf parameters, or an input .cs file",
+          "args": {
+              "required arguments": {
+                  "particles": {
+                      "help": "Input particles (.cs)",
+                      "type": "abspath"
+                  },
+                  "o": {
+                      "help": "Output .star file",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              },
+              "additional arguments": {
+                  "datadir": {
+                      "help": "Data/Project directory for cryoSPARC",
+                      "type": "abspath",
+                      "flags": [
+                          "--datadir"
+                      ]
+                  },
+                  "ctf": {
+                      "help": "Input ctf.pkl",
+                      "type": "abspath",
+                      "flags": [
+                          "--ctf"
+                      ]
+                  },
+                  "poses": {
+                      "help": "Optionally include pose.pkl",
+                      "type": "abspath",
+                      "flags": [
+                          "--poses"
+                      ]
+                  },
+                  "ind": {
+                      "help": "Optionally filter by array of selected indices (.pkl)",
+                      "type": "abspath",
+                      "flags": [
+                          "--ind"
+                      ]
+                  },
+                  "full_path": {
+                      "const": true,
+                      "default": false,
+                      "help": "Write the full path to particles (default: relative paths)",
+                      "nargs": 0,
+                      "flags": [
+                          "--full-path"
+                      ]
+                  }
+              }
+          }
+      },
+      "concat_pkls": {
+          "desc": "Concatenate arrays from multiple .pkl files",
+          "args": {
+              "required arguments": {
+                  "input": {
+                      "help": "Input .pkl files",
+                      "type": "abspath",
+                      "nargs": "+"
+                  },
+                  "o": {
+                      "help": "Output .pkl file",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              }
+          }
+      },
+      "view_mrcs": {
+          "desc": "View images in a particle stack",
+          "args": {
+              "required arguments": {
+                  "mrcs": {
+                      "help": "Input particles or volume (.mrc, .mrcs, .star, .cs, or .txt)",
+                      "type": "abspath"
+                  }
+              },
+              "additional arguments": {
+                  "datadir": {
+                      "help": "Optionally provide path to input .mrcs if loading from a .star or .cs file",
+                      "type": "abspath",
+                      "flags": [
+                          "--datadir"
+                      ]
+                  },
+                  "invert": {
+                      "const": true,
+                      "default": false,
+                      "nargs": 0,
+                      "flags": [
+                          "--invert"
+                      ]
+                  },
+                  "ind": {
+                      "help": "Filter particle stack by these indices",
+                      "metavar": "PKL",
+                      "type": "abspath",
+                      "flags": [
+                          "--ind"
+                      ]
+                  },
+                  "o": {
+                      "help": "Optionally, specify image to save",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              }
+          }
+      },
+      "flip_hand": {
+          "desc": "",
+          "args": {
+              "required arguments": {
+                  "input": {
+                      "help": "Input volume (.mrc)",
+                      "type": "abspath"
+                  }
+              },
+              "additional arguments": {
+                  "outmrc": {
+                      "help": "Output volume (.mrc)",
+                      "type": "abspath",
+                      "flags": [
+                          "--outmrc",
+                          "-o"
+                      ]
+                  }
+              }
+          }
+      },
+      "view_cs_header": {
+          "desc": "View the first row of a cryosparc .cs file",
+          "args": {
+              "required arguments": {
+                  "input": {
+                      "type": "abspath",
+                      "help": "Input"
+                  }
+              }
+          }
+      },
+      "plot_fsc": {
+          "desc": "",
+          "args": {
+              "required arguments": {
+                  "input": {
+                      "help": "input cryoDRGN fsc text files",
+                      "type": "abspath",
+                      "nargs": "+"
+                  }
+              },
+              "additional arguments": {
+                  "Apix": {
+                      "default": 1.0,
+                      "help": "physical pixel size in angstrom",
+                      "type": "float",
+                      "flags": [
+                          "-a",
+                          "--Apix"
+                      ]
+                  },
+                  "outfile": {
+                      "default": "fsc-plot.png",
+                      "help": "output plot file name (.png)",
+                      "type": "str",
+                      "flags": [
+                          "-o",
+                          "--outfile"
+                      ]
+                  }
+              }
+          }
+      },
+      "select_random": {
+          "desc": "Select a random subset of particles",
+          "args": {
+              "required arguments": {
+                  "N": {
+                      "help": "Total number of particles",
+                      "type": "int"
+                  },
+                  "o": {
+                      "help": "Output selection (.pkl)",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              },
+              "additional arguments": {
+                  "n": {
+                      "help": "Number of particles to select",
+                      "type": "int",
+                      "flags": [
+                          "-n"
+                      ]
+                  },
+                  "s": {
+                      "help": "Optionally save out inverted selection (.pkl)",
+                      "type": "abspath",
+                      "flags": [
+                          "-s"
+                      ]
+                  },
+                  "frac": {
+                      "help": "Optionally specify fraction of particles to select",
+                      "type": "float",
+                      "flags": [
+                          "--frac"
+                      ]
+                  },
+                  "seed": {
+                      "default": 0,
+                      "help": "Random seed (default: %(default)s)",
+                      "type": "int",
+                      "flags": [
+                          "--seed"
+                      ]
+                  }
+              }
+          }
+      },
+      "gen_mask": {
+          "desc": "",
+          "args": {
+              "required arguments": {
+                  "input": {
+                      "help": "Input .mrc file for volume to be masked",
+                      "type": "abspath"
+                  },
+                  "output": {
+                      "help": "Output .mrc file for generated mask",
+                      "type": "abspath"
+                  }
+              },
+              "additional arguments": {
+                  "thresh": {
+                      "help": "Density value to threshold for masking (default: half of max density value)",
+                      "type": "float",
+                      "flags": [
+                          "--thresh"
+                      ]
+                  },
+                  "dilate": {
+                      "default": 25,
+                      "help": "Dilate initial mask by this amount (default: %(default)s angstroms)",
+                      "type": "int",
+                      "flags": [
+                          "--dilate"
+                      ]
+                  },
+                  "dist": {
+                      "default": 15,
+                      "help": "Width of cosine edge (default: %(default)s angstroms)",
+                      "type": "int",
+                      "flags": [
+                          "--dist"
+                      ]
+                  },
+                  "Apix": {
+                      "help": "use this A/px value instead of inferring from the input header",
+                      "type": "float",
+                      "flags": [
+                          "--Apix"
+                      ]
+                  },
+                  "png_output": {
+                      "help": "Output .png file for slice plots",
+                      "type": "abspath",
+                      "flags": [
+                          "--png-output",
+                          "-p"
+                      ]
+                  }
+              }
+          }
+      },
+      "translate_mrcs": {
+          "desc": "Translate a particle stack by 2D shifts",
+          "args": {
+              "required arguments": {
+                  "mrcs": {
+                      "help": "Input particles (.mrcs, .cs, .star, or .txt)",
+                      "type": "abspath"
+                  },
+                  "trans": {
+                      "help": "Pose or translations pickle (.pkl)",
+                      "type": "abspath"
+                  },
+                  "o": {
+                      "help": "Output particle stack (.mrcs)",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              },
+              "additional arguments": {
+                  "tscale": {
+                      "default": 1.0,
+                      "help": "Scale translations by this amount (default: %(default)s)",
+                      "type": "float",
+                      "flags": [
+                          "--tscale"
+                      ]
+                  },
+                  "datadir": {
+                      "help": "Optionally overwrite path to starfile .mrcs if loading from a starfile",
+                      "type": "abspath",
+                      "flags": [
+                          "--datadir"
+                      ]
+                  },
+                  "out_png": {
+                    "type": "abspath",
+                      "flags": [
+                          "--out-png"
+                      ]
+                  }
+              }
+          }
+      },
+      "phase_flip": {
+          "desc": "Phase flip images by CTF sign",
+          "args": {
+              "required arguments": {
+                  "mrcs": {
+                      "help": "Input particles (.mrcs, .txt, .star, or .cs)",
+                      "type": "abspath"
+                  },
+                  "ctf_params": {
+                      "help": "Input CTF parameters (.pkl)",
+                      "type": "abspath"
+                  }
+              },
+              "additional arguments": {
+                  "datadir": {
+                      "help": "Optionally overwrite path to starfile .mrcs if loading from a starfile",
+                      "type": "abspath",
+                      "flags": [
+                          "--datadir"
+                      ]
+                  },
+                  "o": {
+                      "help": "Output .mrcs",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              }
+          }
+      },
+      "filter_mrcs": {
+          "desc": "Filter a particle stack",
+          "args": {
+              "required arguments": {
+                  "input": {
+                      "help": "Input particles (.mrcs, .txt, .star, .cs)",
+                      "type": "abspath"
+                  },
+                  "ind": {
+                      "help": "Selected indices array (.pkl)",
+                      "type": "abspath",
+                      "flags": [
+                          "--ind"
+                      ]
+                  }
+              },
+              "additional arguments": {
+                  "o": {
+                      "help": "Output .mrcs file",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              }
+          }
+      },
+      "filter_pkl": {
+          "desc": "Filter cryodrgn data stored in a .pkl file",
+          "args": {
+              "required arguments": {
+                  "input": {
+                      "help": "Input data (.pkl)",
+                      "type": "abspath"
+                  }
+              },
+              "additional arguments": {
+                  "ind": {
+                      "help": "Array of selected indices (.pkl)",
+                      "type": "abspath",
+                      "flags": [
+                          "--ind"
+                      ]
+                  },
+                  "first": {
+                      "help": "Alternatively, save the first N datapoints",
+                      "type": "int",
+                      "flags": [
+                          "--first"
+                      ]
+                  },
+                  "o": {
+                      "help": "Output data (.pkl)",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              }
+          }
+      },
+      "invert_contrast": {
+          "desc": "",
+          "args": {
+              "required arguments": {
+                  "input": {
+                      "help": "Input volume (.mrc)",
+                      "type": "abspath"
+                  }
+              },
+              "additional arguments": {
+                  "outmrc": {
+                      "help": "Output volume (.mrc)",
+                      "type": "abspath",
+                      "flags": [
+                          "--outmrc",
+                          "-o"
+                      ]
+                  }
+              }
+          }
+      },
+      "clean": {
+          "desc": "",
+          "args": {
+              "required arguments": {
+                  "outglobs": {
+                      "help": "Path patterns to scan for experiment outputs. Must be relative to current directory.",
+                      "nargs": "*"
+                  }
+              },
+              "additional arguments": {
+                  "every_n_epochs": {
+                      "default": 5,
+                      "help": "Only save output from every certain number of epochs.",
+                      "type": "int",
+                      "flags": [
+                          "--every-n-epochs",
+                          "-n"
+                      ]
+                  },
+                  "force": {
+                      "default": 0,
+                      "help": "Clean automatically without prompting the user.",
+                      "nargs": 0,
+                      "flags": [
+                          "--force",
+                          "-f"
+                      ]
+                  },
+                  "verbose": {
+                      "default": 0,
+                      "help": "Print more messages about ignored directories, etc.",
+                      "nargs": 0,
+                      "flags": [
+                          "--verbose",
+                          "-v"
+                      ]
+                  },
+                  "dry_run": {
+                      "const": true,
+                      "default": false,
+                      "help": "Only scan directories and identify their status, don't update.",
+                      "nargs": 0,
+                      "flags": [
+                          "--dry-run",
+                          "-d"
+                      ]
+                  }
+              }
+          }
+      },
+      "select_clusters": {
+          "desc": "Select particle or volume data based on (kmeans) cluster labels",
+          "args": {
+              "required arguments": {
+                  "labels": {
+                      "help": "Input labels.pkl",
+                      "type": "abspath"
+                  }
+              },
+              "additional arguments": {
+                  "sel": {
+                      "help": "Ids of clusters to select",
+                      "nargs": "+",
+                      "type": "int",
+                      "flags": [
+                          "--sel"
+                      ]
+                  },
+                  "o": {
+                      "help": "Output particle index selection (.pkl)",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              },
+              "get original particle selection (if trained on a subset of the dataset with --ind)": {
+                  "parent_ind": {
+                      "help": "Parent index .pkl",
+                      "type": "abspath",
+                      "flags": [
+                          "--parent-ind"
+                      ]
+                  },
+                  "N_orig": {
+                      "help": "Number of particles in original dataset",
+                      "type": "int",
+                      "flags": [
+                          "--N-orig"
+                      ]
+                  }
+              }
+          }
+      },
+      "add_psize": {
+          "desc": "Add pixel size to header of .mrc file",
+          "args": {
+              "required arguments": {
+                  "input": {
+                      "help": "Input volume (.mrc)",
+                      "type": "abspath"
+                  }
+              },
+              "additional arguments": {
+                  "Apix": {
+                      "default": 1,
+                      "help": "Angstrom/pixel (default: %(default)s)",
+                      "type": "float",
+                      "flags": [
+                          "--Apix"
+                      ]
+                  },
+                  "o": {
+                      "help": "Output volume (.mrc)",
+                      "type": "abspath",
+                      "flags": [
+                          "-o"
+                      ]
+                  }
+              }
+          }
+      },
+      "analyze_convergence": {
+          "desc": "Visualize convergence and training dynamics",
+          "args": {
+              "required arguments": {
+                  "workdir": {
+                      "help": "Directory with cryoDRGN results",
+                      "type": "abspath"
+                  },
+                  "epoch": {
+                      "help": "Latest epoch number N to analyze convergence (0-based indexing, corresponding to z.N.pkl, weights.N.pkl",
+                      "type": "int"
+                  }
+              },
+              "additional arguments": {
+                  "outdir": {
+                      "help": "Output directory for convergence analysis results (default: [workdir]/convergence.[epoch])",
+                      "type": "abspath",
+                      "flags": [
+                          "-o",
+                          "--outdir"
+                      ]
+                  },
+                  "epoch_interval": {
+                      "default": 5,
+                      "help": "Interval of epochs between calculating most convergence heuristics",
+                      "type": "int",
+                      "flags": [
+                          "--epoch-interval"
+                      ]
+                  }
+              },
+              "umap calculation arguments": {
+                  "force_umap_cpu": {
+                      "const": true,
+                      "default": false,
+                      "help": "Override default UMAP GPU-bound implementation via cuML to use umap-learn library instead",
+                      "nargs": 0,
+                      "flags": [
+                          "--force-umap-cpu"
+                      ]
+                  },
+                  "subset": {
+                      "default": 50000,
+                      "help": "Max number of particles to be used for UMAP calculations. 'None' means use all ptcls",
+                      "flags": [
+                          "--subset"
+                      ]
+                  },
+                  "random_seed": {
+                      "help": "Manually specify the seed used for selection of subset particles",
+                      "flags": [
+                          "--random-seed"
+                      ]
+                  },
+                  "random_state": {
+                      "default": 42,
+                      "help": "Random state seed used by UMAP for reproducibility at slight cost of performance (default 42, None means slightly faster but non-reproducible)",
+                      "type": "int",
+                      "flags": [
+                          "--random-state"
+                      ]
+                  },
+                  "n_epochs_umap": {
+                      "default": 25000,
+                      "help": "Number of epochs to train the UMAP embedding via cuML for a given z.pkl, as described in the cuml.UMAP documentation",
+                      "type": "int",
+                      "flags": [
+                          "--n-epochs-umap"
+                      ]
+                  },
+                  "skip_umap": {
+                      "const": true,
+                      "default": false,
+                      "help": "Skip UMAP embedding. Requires that UMAP be precomputed for downstream calcs. Useful for tweaking volume generation settings.",
+                      "nargs": 0,
+                      "flags": [
+                          "--skip-umap"
+                      ]
+                  }
+              },
+              "sketching umap via local maxima arguments": {
+                  "n_bins": {
+                      "default": 30,
+                      "help": "the number of bins along UMAP1 and UMAP2",
+                      "type": "int",
+                      "flags": [
+                          "--n-bins"
+                      ]
+                  },
+                  "smooth": {
+                      "default": true,
+                      "help": "smooth the 2D histogram before identifying local maxima",
+                      "type": "bool",
+                      "flags": [
+                          "--smooth"
+                      ]
+                  },
+                  "smooth_width": {
+                      "default": 1.0,
+                      "help": "width of gaussian kernel for smoothing 2D histogram expressed as multiple of one bin's width",
+                      "type": "float",
+                      "flags": [
+                          "--smooth-width"
+                      ]
+                  },
+                  "pruned_maxima": {
+                      "default": 12,
+                      "help": "prune poorly-separated maxima until this many maxima remain",
+                      "type": "int",
+                      "flags": [
+                          "--pruned-maxima"
+                      ]
+                  },
+                  "radius": {
+                      "default": 5.0,
+                      "help": "distance at which two maxima are considered poorly-separated and are candidates for pruning (euclidean distance in bin-space)",
+                      "type": "float",
+                      "flags": [
+                          "--radius"
+                      ]
+                  },
+                  "final_maxima": {
+                      "default": 10,
+                      "help": "select this many local maxima, sorted by highest bin count after pruning, for which to generate volumes",
+                      "type": "int",
+                      "flags": [
+                          "--final-maxima"
+                      ]
+                  }
+              },
+              "volume generation arguments": {
+                  "Apix": {
+                      "default": 1.0,
+                      "help": "A/pix of output volume",
+                      "type": "float",
+                      "flags": [
+                          "--Apix"
+                      ]
+                  },
+                  "flip": {
+                      "const": true,
+                      "default": false,
+                      "help": "Flip handedness of output volume",
+                      "nargs": 0,
+                      "flags": [
+                          "--flip"
+                      ]
+                  },
+                  "invert": {
+                      "const": true,
+                      "default": false,
+                      "help": "Invert contrast of output volume",
+                      "nargs": 0,
+                      "flags": [
+                          "--invert"
+                      ]
+                  },
+                  "downsample": {
+                      "help": "Downsample volumes to this box size (pixels). Recommended for boxes > 250-300px",
+                      "type": "int",
+                      "flags": [
+                          "-d",
+                          "--downsample"
+                      ]
+                  },
+                  "device": {
+                      "help": "Specify cuda device for volume generation, None to skip cuda.",
+                      "type": "int",
+                      "flags": [
+                          "--device"
+                      ]
+                  },
+                  "skip_volgen": {
+                      "const": true,
+                      "default": false,
+                      "help": "Skip volume generation. Requires that volumes already exist for downstream CC + FSC calcs",
+                      "nargs": 0,
+                      "flags": [
+                          "--skip-volgen"
+                      ]
+                  }
+              },
+              "mask generation arguments": {
+                  "max_threads": {
+                      "default": 8,
+                      "help": "Max number of threads used to parallelize mask generation",
+                      "type": "int",
+                      "flags": [
+                          "--max-threads"
+                      ]
+                  },
+                  "thresh": {
+                      "help": "Float, isosurface at which to threshold mask; default None uses 50th percentile",
+                      "type": "float",
+                      "flags": [
+                          "--thresh"
+                      ]
+                  },
+                  "dilate": {
+                      "default": 3,
+                      "help": "Number of voxels to dilate thresholded isosurface outwards from mask boundary",
+                      "type": "int",
+                      "flags": [
+                          "--dilate"
+                      ]
+                  },
+                  "dist": {
+                      "default": 10,
+                      "help": "Number of voxels over which to apply a soft cosine falling edge from dilated mask boundary",
+                      "type": "int",
+                      "flags": [
+                          "--dist"
                       ]
                   }
               }
