@@ -43,7 +43,10 @@ def get_arg_details(module):
             if arg.default is not None:
                 details["default"] = arg.default
             if arg.help is not None:
-                details["help"] = arg.help
+                help = arg.help
+                if "%(default)s" in arg.help: 
+                    help = help.replace("%(default)s", str(arg.default))
+                details["help"] = help
             if arg.metavar is not None:
                 details["metavar"] = arg.metavar
             if arg.nargs is not None:
@@ -92,9 +95,12 @@ def extract_args(cryodrgn_path):
           globals()[command] = importlib.import_module(command)
           info = get_arg_details(globals()[command])
           all_commands[group_name][command] = info
-            
-    with open('../data/commands.json', 'w', encoding='utf-8') as f:
-            json.dump(all_commands, f, ensure_ascii=False, indent=4)
+
+    base_dir = os.path.dirname(os.path.dirname(__file__))
+    path = os.path.join(base_dir, "data", "all_commands.json")
+
+    with open(path, 'w', encoding='utf-8') as f:
+            json.dump(all_commands, f, ensure_ascii=False, indent=2)
 
 # example usage: python extract.py '/scratch/gpfs/vyfeng/cryodrgn'
 if __name__ == "__main__":
